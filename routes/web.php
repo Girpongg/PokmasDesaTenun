@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 
 Route::get('/admin/order', function () {
-    return view('order');
+    return view('admin.order');
 });
 Route::prefix('admin')->group(function () {
 
