@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/admin/order', function () {
+    return view('order');
+});
 Route::prefix('admin')->group(function () {
 
     Route::prefix('kategori')->group(function () {
