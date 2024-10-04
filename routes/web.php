@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('/admin/order', function () {
+    return view('order');
+});
+Route::prefix('admin')->group(function () {
+
+    Route::prefix('kategori')->group(function () {
+        Route::get('/', [AdminController::class, 'viewKategori'])->name('viewKategori');
+        Route::post('/', [AdminController::class, 'store'])->name('kategori.store');
+        Route::put('/{id}', [AdminController::class, 'updatenama'])->name('kategori.update');
+        Route::delete('/{id}', [AdminController::class, 'destroy'])->name('kategori.destroy');
+    });
 });
