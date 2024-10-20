@@ -16,9 +16,11 @@ class AdminController extends Controller
 {
     //
 
-
-    public function viewKategori(){
+    public function viewKategori()
+    {
+        
         $kategori = Kategori::get();
+        // dd($kategori);
         $i = 0;
         $data = [];
         foreach ($kategori as $k) {
@@ -91,4 +93,32 @@ class AdminController extends Controller
         return response()->json(['success' => true, 'message' => 'Data has been deleted'], 200);
     }
 
+    public function viewInventory()
+    {
+        $kategori = Kategori::get();
+        $sharedData = [
+            'title' => 'Kategori',
+            'kategori' => $kategori,
+            'unit' => self::units(),
+        ];
+        return view('admin.inventory', $sharedData);
+    }
+
+    private static function units()
+    {
+        return array_map(fn($unit) => $unit->label(), Unit::cases());
+    }
+}
+enum Unit
+{
+    case KiloGram;
+    case Klosan;
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::KiloGram => 'Kilogram (kg)',
+            self::Klosan => 'Klosan',
+        };
+    }
 }

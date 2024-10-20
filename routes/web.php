@@ -29,19 +29,19 @@ Route::prefix('admin')->group(function () {
         Route::put('/{id}', [AdminController::class, 'updatenama'])->name('kategori.update');
         Route::delete('/{id}', [AdminController::class, 'destroy'])->name('kategori.destroy');
     });
-
+    Route::prefix('inventory')->group(function(){
+        Route::get('/', [AdminController::class, 'viewInventory'])->name('viewInventory');
+    });
     Route::prefix('supplier')->group(function () {
         Route::get('/', [SupplierController::class, 'viewSupplier'])->name('viewSupplier');
         Route::post('/', [SupplierController::class, 'store'])->name('supplier.store');
         Route::put('/{id}', [SupplierController::class, 'update'])->name('supplier.update');
         Route::delete('/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
     });
-
     Route::get('/order', function () {
         return view('admin.order');
     });
     Route::get('/purchasing', function () {
         return view('admin.purchasing');
     });
-
 });
