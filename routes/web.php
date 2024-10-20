@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('admin/login', function () {
+    return view('admin.login.login');
+});
 
 
 Route::prefix('admin')->group(function () {
@@ -37,11 +41,16 @@ Route::prefix('admin')->group(function () {
         Route::delete('/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
     });
 
+    Route::prefix('purchase')->group(function () {
+        Route::get('/', [PurchaseController::class, 'viewPurchase'])->name('viewPurchase');
+        Route::post('/', [PurchaseController::class, 'store'])->name('purchase.store');
+        Route::put('/{id}', [PurchaseController::class, 'update'])->name('purchase.update');
+        Route::delete('/{id}', [PurchaseController::class, 'destroy'])->name('purchase.destroy');
+        Route::post('/purchase/update-status/{id}', [PurchaseController::class, 'editStatus'])->name('purchase.editStatus');
+    });
+
     Route::get('/order', function () {
         return view('admin.order');
-    });
-    Route::get('/purchasing', function () {
-        return view('admin.purchasing');
     });
 
 });

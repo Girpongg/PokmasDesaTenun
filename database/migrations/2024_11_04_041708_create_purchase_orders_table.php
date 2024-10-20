@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('OrderDate');
-            $table->dateTime('DeliveryDate');
+            $table->string('title');
+            $table->date('orderDate');
+            $table->date('deliveryDate');
+            $table->boolean('status')->default(0);
+            $table->foreignId('supplier_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
