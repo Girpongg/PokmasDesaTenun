@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,8 +41,11 @@ Route::prefix('admin')->group(function () {
     Route::get('/order', function () {
         return view('admin.order');
     });
-    Route::get('/purchasing', function () {
-        return view('admin.purchasing');
-    });
 
+    Route::prefix('purchasing')->group(function () {
+        Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');
+        Route::post('/store', [PurchaseController::class, 'store'])->name('purchase.store');
+        Route::delete('/delete/{purchase:id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
+        Route::put('/update/{purchase:id}', [PurchaseController::class, 'update'])->name('purchase.update');
+    });
 });
