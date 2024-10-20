@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category');
             $table->integer('quantity');
             $table->integer('unit');
-            $table->integer('purchase_price');
+            $table->integer('price');
             $table->timestamps();
         });
     }

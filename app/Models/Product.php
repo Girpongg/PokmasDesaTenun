@@ -18,7 +18,14 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable; 
+    protected $fillable = [
+        'name',
+        'category_id',
+        'quantity',
+        'unit',
+        'price'
+
+    ];
 
     /**
      * Rules that applied in this model
