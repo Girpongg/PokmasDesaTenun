@@ -33,7 +33,9 @@ Route::prefix('admin')->group(function () {
         Route::put('/{id}', [AdminController::class, 'updatenama'])->name('kategori.update');
         Route::delete('/{id}', [AdminController::class, 'destroy'])->name('kategori.destroy');
     });
-
+    Route::prefix('inventory')->group(function(){
+        Route::get('/', [AdminController::class, 'viewInventory'])->name('viewInventory');
+    });
     Route::prefix('supplier')->group(function () {
         Route::get('/', [SupplierController::class, 'viewSupplier'])->name('viewSupplier');
         Route::post('/', [SupplierController::class, 'store'])->name('supplier.store');
