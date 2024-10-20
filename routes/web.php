@@ -3,7 +3,6 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Route;
 
 /*
