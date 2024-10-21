@@ -96,11 +96,28 @@ class AdminController extends Controller
     public function viewInventory()
     {
         $kategori = Kategori::get();
+        $products = Product::with('kategoris')->get();
+        $data = [];
+
+        foreach ($products as $product) {
+            $temp = [];
+            $temp['id'] = $product->id;
+            $temp['name'] = $product->name;
+            $temp['unit'] = $product->unit;
+            $temp['price'] = $product->price;
+            $temp['quantity'] = $product->quantity;
+            $temp['category'] = $product->kategoris->name??'Belum ada';
+            $data[] = $temp;
+        }
+
         $sharedData = [
             'title' => 'Kategori',
             'kategori' => $kategori,
             'unit' => self::units(),
+            'products' => json_encode($data),
         ];
+
+
         return view('admin.inventory', $sharedData);
     }
 
@@ -144,6 +161,61 @@ class AdminController extends Controller
         $product = Product::create($data);
         return response()->json(['success' => true, 'message' => 'Create new Product', 'data' => $product], 201);
     }
+
+    public function destroyInventory($id)
+    {
+        $product = Product::find($id);
+        if (!$product) {
+            return response()->json(['success' => false, 'message' => 'Data not found'], 404);
+        }
+        $product->delete();
+        return response()->json(['success' => true, 'message' => 'Data has been deleted'], 200);
+    }
+
+
+    public function updateInventory(Request $request, $id){
+        $data = $request->only('name', 'unit', 'price', 'quantity', 'category');
+        $units = array_map(fn($unit) => $unit->label(), Unit::cases());
+
+        $valid = Validator::make(
+            $data,
+            [
+                'name' => 'required|string|max:255',
+                'unit' => 'required|in:' . implode(',', $units),
+                'price' => 'required|numeric|min:0',
+                'quantity' => 'required|numeric|min:0',
+                'category' => 'nullable|exists:kategoris,id',
+            ],
+            [
+                'name.required' => 'Nama produk harus diisi',
+                'name.string' => 'Nama produk harus berupa string',
+                'name.max' => 'Nama produk maksimal 255 karakter',
+                'unit.required' => 'Satuan produk harus diisi',
+                'unit.in' => 'Satuan produk tidak valid',
+                'price.required' => 'Harga produk harus diisi',
+                'price.numeric' => 'Harga produk harus berupa angka',
+                'price.min' => 'Harga produk minimal 0',
+                'quantity.required' => 'Stok produk harus diisi',
+                'quantity.numeric' => 'Stok produk harus berupa angka',
+                'quantity.min' => 'Stok produk minimal 0',
+
+            ],
+        );
+
+        if ($valid->fails()) {
+            dd('halo');
+            return $this->error($valid->errors()->first(), HttpResponseCode::HTTP_NOT_ACCEPTABLE);
+        }
+
+        $product = Product::find($id);
+        if (!$product) {
+            return response()->json(['success' => false, 'message' => 'Data not found'], 404);
+        }
+
+        $product->update($data);
+        return response()->json(['success' => true, 'message' => 'Update Product Success', 'data' => $product], 200);
+
+    }
 }
 enum Unit
 {
@@ -153,7 +225,7 @@ enum Unit
     public function label(): string
     {
         return match ($this) {
-            self::KiloGram => 'Kilogram (kg)',
+            self::KiloGram => 'Kg',
             self::Klosan => 'Klosan',
         };
     }
