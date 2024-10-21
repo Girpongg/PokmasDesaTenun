@@ -416,7 +416,7 @@
                                 icon: 'success',
                                 title: 'Success',
                                 text: data.message,
-                            });
+                            });     
                             window.location.reload(); // Refresh halaman setelah sukses
                         } else {
                             await Swal.fire({
