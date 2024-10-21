@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ExpenditureController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
@@ -47,5 +48,11 @@ Route::prefix('admin')->group(function () {
         Route::post('/store', [PurchaseController::class, 'store'])->name('purchase.store');
         Route::delete('/delete/{purchase:id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
         Route::put('/update/{purchase:id}', [PurchaseController::class, 'update'])->name('purchase.update');
+    });
+    Route::prefix('pengeluaran')->group(function () {
+        Route::get('/', [ExpenditureController::class, 'index'])->name('expenditure.index');
+        Route::post('/store', [ExpenditureController::class, 'store'])->name('expenditure.store');
+        Route::delete('/delete/{expenditure:id}', [ExpenditureController::class, 'delete'])->name('expenditure.delete');
+        Route::put('/update/{expenditure:id}', [ExpenditureController::class, 'update'])->name('expenditure.update');
     });
 });

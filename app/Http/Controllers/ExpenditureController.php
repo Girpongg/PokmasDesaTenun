@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expenditure;
-use App\Models\Purchase;
-use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PurchaseController extends Controller
+class ExpenditureController extends Controller
 {
     public function index()
     {
-        $data['purchases'] = Purchase::with('supplier')->get();
-        $data['suppliers'] = Supplier::all();
-        return view('admin.purchasing', $data);
+        $data['expenditures'] = Expenditure::all();
+        return view('admin.expenditure', $data);
     }
 
     public function store(Request $request)
@@ -24,62 +21,52 @@ class PurchaseController extends Controller
             'quantity' => 'required',
             'price' => 'required',
             'unit' => 'required',
+            'category' => 'required',
             'order_date' => 'required',
-            'supplier_id' => 'required',
         ], [
             'name.required' => 'Nama barang wajib diisi.',
-            'quantity.required' => 'Kuantitas wajib diisi.',
+            'quantity.required' => 'Jumlah/kuantitas wajib diisi.',
             'price.required' => 'Harga wajib diisi.',
             'unit.required' => 'Satuan wajib diisi.',
+            'category.required' => 'Kategori wajib diisi.',
             'order_date.required' => 'Tanggal pemesanan wajib diisi.',
-            'supplier_id.required' => 'Supplier wajib diisi.',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
         }
-        Purchase::create($request->all());
-        Expenditure::create(
-            [
-                'name' => $request->name,
-                'quantity' => $request->quantity,
-                'unit' => $request->unit,
-                'category' => 'Pembelian/Purchasing',
-                'order_date' => $request->order_date,
-                'price' => $request->price,
-            ]
-        );
+        Expenditure::create($request->all());
         return response()->json(['message' => 'Data berhasil disimpan', 'success' => true]);
     }
 
-    public function delete(Purchase $purchase)
+    public function delete(Expenditure $expenditure)
     {
-        $purchase->delete();
+        $expenditure->delete();
         return response()->json(['message' => 'Data berhasil dihapus', 'success' => true]);
     }
 
-    public function update(Request $request, Purchase $purchase)
+    public function update(Request $request, Expenditure $expenditure)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'quantity' => 'required',
             'price' => 'required',
             'unit' => 'required',
+            'category' => 'required',
             'order_date' => 'required',
-            'supplier_id' => 'required',
         ], [
             'name.required' => 'Nama barang wajib diisi.',
-            'quantity.required' => 'Kuantitas wajib diisi.',
+            'quantity.required' => 'Jumlah/kuantitas wajib diisi.',
             'price.required' => 'Harga wajib diisi.',
             'unit.required' => 'Satuan wajib diisi.',
+            'category.required' => 'Kategori wajib diisi.',
             'order_date.required' => 'Tanggal pemesanan wajib diisi.',
-            'supplier_id.required' => 'Supplier wajib diisi.',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
         }
-        $purchase->update($request->all());
+        $expenditure->update($request->all());
         return response()->json(['message' => 'Data berhasil diupdate', 'success' => true]);
     }
 }
