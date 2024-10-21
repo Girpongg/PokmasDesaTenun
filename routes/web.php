@@ -22,6 +22,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function() {
+    return view('user.home');
+});
+
 Route::get('admin/login', function () {
     return view('admin.login.login');
 });

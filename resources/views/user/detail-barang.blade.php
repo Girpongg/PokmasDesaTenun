@@ -8,6 +8,8 @@
     @vite('resources/css/app.css')
 </head>
 <body>
+    @extends('user.layout')
+    @include('user.includes.navbar')
     <div class="grid lg:grid-cols-2">
         <div>
             <div class="flex justify-center">

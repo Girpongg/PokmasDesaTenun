@@ -8,6 +8,8 @@
     @vite('resources/css/app.css')
 </head>
 <body>
+    @extends('user.layout')
+    @include('user.includes.navbar')
     <div class="flex mx-12 my-10">
         <div class="grid grid-cols-3 place-items-center ">
             <div class=" bg-gray-200 w-[220px] h-[385px] mx-2 my-2">
