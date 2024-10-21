@@ -167,72 +167,172 @@
             <!--Modal body-->
             <div class="relative flex-auto p-4" data-te-modal-body-ref>
                 <div class="h-[400px] p-2 overflow-hidden overflow-y-scroll" id="inputContainer">
-                <div class="relative mb-3" data-te-input-wrapper-init>
-                    <input type="text"
-                        class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                        id="customer_name" name="customer_name" placeholder="name" />
-                    <label for="name"
-                        class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">
-                        Nama Customer
-                    </label>
-                </div>
-
-                <div class="flex gap-x-4">
-                    <div class="mb-4 w-full">
-                        <label for="customer_wa" class="ml-1">Nomor WA</label>
-                        <input class="rounded-md w-full animated-input" name="customer_wa" id="customer_wa">
+                    <div class="relative mb-3" data-te-input-wrapper-init>
+                        <input type="text"
+                            class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                            id="customer_name" name="customer_name" placeholder="name" />
+                        <label for="name"
+                            class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">
+                            Nama Customer
+                        </label>
                     </div>
-                    <div class="mb-4 w-full">
-                        <label for="price" class="ml-1">Address</label>
-                        <input class="rounded-md w-full animated-input" id="address">
-                    </div>
-                </div>
 
-                <div class="mb-4 w-full">
-                    <label for="price" class="ml-1">Judul pesan</label>
-                    <input class="rounded-md w-full" id="title">
-                </div>
-
-                <div class="w-full mb-2">
-                    <label for="price" class="ml-1">Upload foto request</label>
-                    <div class="relative z-0 mt-0.5 flex w-full -space-x-px">
-                        <input id="photobutton" type="file"
-                            class="block w-full cursor-pointer appearance-none rounded-l-md border border-gray-200 bg-white px-3 py-2 text-sm transition focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75">
-                        <button type="submit"
-                            class="inline-flex w-auto cursor-pointer select-none appearance-none items-center justify-center space-x-1 rounded-r border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 transition hover:border-gray-300 hover:bg-gray-100 focus:z-10 focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Save</button>
+                    <div class="flex gap-x-4">
+                        <div class="mb-4 w-full">
+                            <label for="customer_wa" class="ml-1">Nomor WA</label>
+                            <input class="rounded-md w-full animated-input" name="customer_wa" id="customer_wa">
+                        </div>
+                        <div class="mb-4 w-full">
+                            <label for="price" class="ml-1">Address</label>
+                            <input class="rounded-md w-full animated-input" id="address">
+                        </div>
                     </div>
-                </div>
 
-                <div class="mb-4 w-full">
-                    <label for="desc" class="ml-1">Deskripsi</label>
-                    <input type="text" class="rounded-md w-full" id="desc">
-                </div>
+                    <div class="mb-4 w-full">
+                        <label for="price" class="ml-1">Judul pesan</label>
+                        <input class="rounded-md w-full" id="title">
+                    </div>
 
-                <div class="flex gap-x-4">
-                    <div class="mb-4 w-full">
-                        <label for="customer_wa" class="ml-1">Quantity</label>
-                        <input class="rounded-md w-full animated-input" name="quantity" id="quantity">
+                    <div class="w-full mb-2">
+                        <label for="price" class="ml-1">Upload foto request</label>
+                        <div class="relative z-0 mt-0.5 flex w-full -space-x-px">
+                            <input id="photobutton" type="file"
+                                class="block w-full cursor-pointer appearance-none rounded-l-md border border-gray-200 bg-white px-3 py-2 text-sm transition focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75">
+                            <button type="submit"
+                                class="inline-flex w-auto cursor-pointer select-none appearance-none items-center justify-center space-x-1 rounded-r border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 transition hover:border-gray-300 hover:bg-gray-100 focus:z-10 focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Save</button>
+                        </div>
                     </div>
-                    <div class="mb-4 w-full">
-                        <label for="price" class="ml-1">Price</label>
-                        <input class="rounded-md w-full animated-input" id="price">
-                    </div>
-                </div>
 
-                <div class="flex gap-x-4">
                     <div class="mb-4 w-full">
-                        <label for="customer_wa" class="ml-1">Order Date</label>
-                        <input type="date" class="rounded-md w-full animated-input" name="order_date" id="order_date">
+                        <label for="desc" class="ml-1">Deskripsi</label>
+                        <input type="text" class="rounded-md w-full" id="desc">
                     </div>
-                    <div class="mb-4 w-full">
-                        <label for="price" class="ml-1">Done Date</label>
-                        <input type="date" class="rounded-md w-full animated-input" id="done_date
+
+                    <div class="flex gap-x-4">
+                        <div class="mb-4 w-full">
+                            <label for="customer_wa" class="ml-1">Quantity</label>
+                            <input class="rounded-md w-full animated-input" name="quantity" id="quantity">
+                        </div>
+                        <div class="mb-4 w-full">
+                            <label for="price" class="ml-1">Price</label>
+                            <input class="rounded-md w-full animated-input" id="price">
+                        </div>
+                    </div>
+
+                    <div class="flex gap-x-4">
+                        <div class="mb-4 w-full">
+                            <label for="order_date" class="ml-1">Order Date</label>
+                            <input type="date" class="rounded-md w-full animated-input" name="order_date"
+                                id="order_date">
+                        </div>
+                        <div class="mb-4 w-full">
+                            <label for="done_date" class="ml-1">Done Date</label>
+                            <input type="date" class="rounded-md w-full animated-input" id="done_date
                         ">
+                        </div>
                     </div>
-                </div>
+
+                    <div class="flex flex-col">
+                        <label for="price" class="ml-1">Bahan baku yang dipakai</label>
+                        <button id="btn-list"
+                            class="mt-3 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] "
+                            data-te-ripple-init data-te-ripple-color="light" data-te-toggle="modal"
+                            data-te-target="#detailModal">
+                            Tambah barang
+                        </button>
+                    </div>
+
+                    <div id="product-list">
+
+
+                    </div>
 
                 </div>
             </div>
+
+            {{-- Detail Modal --}}
+            <div data-te-modal-init
+                class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                id="detailModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div data-te-modal-dialog-ref
+                    class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
+                    <div
+                        class="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none">
+                        <div
+                            class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4">
+                            <!--Modal title-->
+                            <h5 class="text-xl font-medium leading-normal text-neutral-800" id="editModalLabel">
+                                Bahan baku yang terpakai
+                            </h5>
+                            <!--Close button-->
+                            <button type="button"
+                                class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                data-te-modal-dismiss aria-label="Close">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <!--Modal body-->
+                        <div class="relative flex-auto p-4" data-te-modal-body-ref>
+                            <form id="product-form">
+                                <div class="relative mb-4" data-te-input-wrapper-init>
+                                    <input type="hidden" id="edit-id" name="id" />
+                                    <input type="text"
+                                        class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none"
+                                        id="name" name="name" placeholder="" autocomplete="off" />
+                                    <label for="title"
+                                        class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none">
+                                        Nama produk
+                                    </label>
+                                    <div id="dropdown"
+                                        class="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg hidden">
+                                        <ul id="dropdown-list" class="max-h-60 overflow-y-auto">
+                                            <!-- Options will be dynamically added here -->
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="flex gap-x-4">
+                                    <div class="mb-4 w-full">
+                                        <label for="" class="ml-1">Quantity</label>
+                                        <input type="number" class="rounded-md w-full" name="quantity" id="quantity">
+                                    </div>
+                                    <div class="mb-4 w-full">
+                                        <label for="" class="ml-1">Price</label>
+                                        <input type="number" class="rounded-md w-full" id="price">
+                                    </div>
+                                </div>
+                                <div class="mb-4 w-full">
+                                    <select data-te-select-init id="unit">
+                                        <option value="" selected disabled hidden></option>
+                                        <option value="Kg">Kilogram</option>
+                                        <option value="Klos">Kelosan</option>
+                                    </select>
+                                    <label data-te-select-label-ref>Satuan</label>
+                                </div>
+                            </form>
+                        </div>
+                        <!--Modal footer-->
+                        <div
+                            class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4">
+                            <button type="button"
+                                class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                                data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
+                                Close
+                            </button>
+                            <button type="button" id="submit-detail"
+                                class="ml-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] "
+                                data-te-ripple-init data-te-ripple-color="light">
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <!--Modal footer-->
             <div
                 class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
@@ -291,7 +391,7 @@
                     </div>
                 </div>
                 <h1 class="text-xl font-bold mt-4">Bahan</h1>
-                <div id="inputContainer" class="space-y-2 mt-3 h-[100px] overflow-hidden overflow-y-scroll">
+                <div id="inputContainers" class="space-y-2 mt-3 h-[100px] overflow-hidden overflow-y-scroll">
                     <!-- Tambah Inputform Baru -->
                 </div>
                 <button type="button" id="addMoreButton" class="bg-blue-500 text-white px-2 py-1 rounded-lg mt-3"
@@ -321,7 +421,7 @@
 
     //tambah input barang
     function addInput() {
-        const inputContainer = document.getElementById('inputContainer');
+        const inputContainer = document.getElementById('inputContainers');
 
         const newInput = document.createElement('input');
         newInput.type = 'text';

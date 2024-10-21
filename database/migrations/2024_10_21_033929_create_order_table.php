@@ -17,15 +17,9 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('customer_wa');
             $table->string('address');
-            $table->boolean('status')->default(true); // true = terima, false = tolak
-            $table->boolean('is_done')->default(false);
+            $table->integer('status')->nullable()->comment('0: reject, 1: accept, 2: selesai');
+            $table->integer('tipe')->nullable()->comment('0: Catalog, 1: Request');
             $table->string('title');
-            // $table->string('image')->nullable();
-            // $table->integer('price')->nullable(); // harga yang diberikan oleh penjual
-            // $table->date('order_date');
-            // $table->date('done_date')->nullable();
-            // $table->uuid('products')->nullable();
-            // $table->integer('quantity');
             $table->string('desc')->nullable();
             // $table->foreign('products')->references('id')->on('products')->onDelete('set null');
         });
