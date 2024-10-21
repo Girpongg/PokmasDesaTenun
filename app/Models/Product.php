@@ -20,11 +20,10 @@ class Product extends Model
      */
     protected $fillable = [
         'name',
-        'category_id',
+        'category',
         'quantity',
         'unit',
-        'price'
-
+        'price',
     ];
 
     /**
@@ -64,10 +63,6 @@ class Product extends Model
      * @var string
      */
 
-    public function controller()
-    {
-        return 'App\Http\Controllers\ProductController';
-    }
 
     /**
     * Relations associated with this model

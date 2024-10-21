@@ -11,7 +11,9 @@ class PurchaseDetail extends Model
 
     protected $fillable = [
         'purchase_id',
-        'product_id'
+        'product_id',
+        'quantity',
+        'price'
     ];
 
     public static function validationRules()

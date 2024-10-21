@@ -88,7 +88,7 @@
                 <div class="relative mb-4" data-te-input-wrapper-init>
                     <input type="text"
                         class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                        id="title" name="title" placeholder="Title" />
+                        id="titless" name="title" placeholder="Title" />
                     <label for="title"
                         class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none">
                         Judul Pembelian
@@ -304,10 +304,8 @@
 <script>
     $(document).ready(function () {
         $('#submit').on('click', async function (e) {
-            e.preventDefault();
-
-            // Collect form data
-            var title = $('#title').val();
+            // e.preventDefault();
+            var title = $('#titless').val();
             var order_date = $('#order_date').val();
             var shipped_date = $('#shipped_date').val();
             var supplier_id = $('#supplier_id').val();
@@ -319,12 +317,10 @@
                     name: $(this).find('.product-name').text(),
                     quantity: $(this).find('.product-quantity').text(),
                     price: $(this).find('.product-price').text(),
-                    unit: $(this).find('.product-unit').text()
+                    unit: $(this).find('.product-unit').text(),
                 };
                 products.push(product);
             });
-
-            // Send AJAX request
             await $.ajax({
                 url: "{{ route('purchase.store') }}",  // Route sesuai rute 'store'
                 type: "POST",
@@ -538,56 +534,6 @@
     }
 
     $(document).ready(function () {
-        $('#submit').click(function (e) {
-            e.preventDefault();
-            let name = $('#name').val();
-            let quantity = $('#quantity').val();
-            let unit = $('#unit').val();
-            let price = $('#price').val();
-            let order_date = $('#order_date').val();
-            let supplier_id = $('#supplier_id').val();
-
-
-            $.ajax({
-                url: "{{ route('purchase.store') }}",
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    name: name,
-                    quantity: quantity,
-                    unit: unit,
-                    price: price,
-                    order_date: order_date,
-                    supplier_id: supplier_id
-                },
-                success: function (response) {
-                    if (response.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: response.message,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        console.log(response);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: response.message,
-                        })
-                    }
-                },
-                error: function (response) {
-
-                    alert('Terjadi kesalahan. Cek kembali data input.');
-                    console.log(response.responseJSON.errors);
-                }
-            });
-        });
-
         $('#submit-edit').click(function (e) {
             e.preventDefault();
             var id = $('#edit-id').val();
@@ -659,10 +605,10 @@
 
         // Create a new product element
         var productElement = `<div class="product-item border p-2 mt-2">
-        <span class="product-name"><strong>Name:</strong> ${productName}</span><br>
-        <span class="product-quantity"><strong>Quantity:</strong> ${quantity}</span><br>
-        <span class="product-price"><strong>Price:</strong> ${price}</span><br>
-        <span class="product-unit"><strong>Unit:</strong> ${unit}</span>
+        <span class="product-name">${productName}</span><br>
+        <span class="product-quantity">${quantity}</span><br>
+        <span class="product-price">${price}</span><br>
+        <span class="product-unit">${unit}</span>
     </div>`;
 
         // Append product element to product list

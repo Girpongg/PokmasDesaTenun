@@ -43,14 +43,6 @@ Route::prefix('admin')->group(function () {
         Route::delete('/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
     });
 
-    Route::prefix('purchase')->group(function () {
-        Route::get('/', [PurchaseController::class, 'viewPurchase'])->name('viewPurchase');
-        Route::post('/', [PurchaseController::class, 'store'])->name('purchase.store');
-        Route::put('/{id}', [PurchaseController::class, 'update'])->name('purchase.update');
-        Route::delete('/{id}', [PurchaseController::class, 'destroy'])->name('purchase.destroy');
-        Route::post('/purchase/update-status/{id}', [PurchaseController::class, 'editStatus'])->name('purchase.editStatus');
-    });
-
     Route::get('/order', function () {
         return view('admin.order');
     });

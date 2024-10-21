@@ -60,6 +60,7 @@ class SupplierController extends Controller
         if ($valid->fails()) {
             return $this->error($valid->errors()->first(), HttpResponseCode::HTTP_NOT_ACCEPTABLE);
         }
+        // dd($data);
         $supplier = Supplier::create($data);
         return response()->json(['success' => true, 'message' => 'Create new Supplier', 'data' => $supplier], 201);
     }
