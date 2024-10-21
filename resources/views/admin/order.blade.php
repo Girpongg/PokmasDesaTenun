@@ -210,30 +210,18 @@
 
                     <div class="flex gap-x-4">
                         <div class="mb-4 w-full">
-                            <label for="customer_wa" class="ml-1">Quantity</label>
-                            <input class="rounded-md w-full animated-input" name="quantity" id="quantity">
-                        </div>
-                        <div class="mb-4 w-full">
                             <label for="price" class="ml-1">Price</label>
                             <input class="rounded-md w-full animated-input" id="price">
                         </div>
                     </div>
 
-                    <div class="flex gap-x-4">
-                        <div class="mb-4 w-full">
-                            <label for="order_date" class="ml-1">Order Date</label>
-                            <input type="date" class="rounded-md w-full animated-input" name="order_date"
-                                id="order_date">
-                        </div>
-                        <div class="mb-4 w-full">
-                            <label for="done_date" class="ml-1">Done Date</label>
-                            <input type="date" class="rounded-md w-full animated-input" id="done_date
-                        ">
-                        </div>
+                    <div class="mb-4 w-full">
+                        <label for="order_date" class="ml-1">Order Date</label>
+                        <input type="date" class="rounded-md w-full animated-input" name="order_date" id="order_date">
                     </div>
 
                     <div class="flex flex-col">
-                        <label for="price" class="ml-1">Bahan baku yang dipakai</label>
+                        <label for="price" class="ml-1">Produk yang dibeli</label>
                         <button id="btn-list"
                             class="mt-3 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] "
                             data-te-ripple-init data-te-ripple-color="light" data-te-toggle="modal"
@@ -262,7 +250,7 @@
                             class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4">
                             <!--Modal title-->
                             <h5 class="text-xl font-medium leading-normal text-neutral-800" id="editModalLabel">
-                                Bahan baku yang terpakai
+                                List produk yang dibeli
                             </h5>
                             <!--Close button-->
                             <button type="button"
@@ -277,40 +265,24 @@
                         <!--Modal body-->
                         <div class="relative flex-auto p-4" data-te-modal-body-ref>
                             <form id="product-form">
-                                <div class="relative mb-4" data-te-input-wrapper-init>
-                                    <input type="hidden" id="edit-id" name="id" />
-                                    <input type="text"
-                                        class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none"
-                                        id="name" name="name" placeholder="" autocomplete="off" />
-                                    <label for="title"
-                                        class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none">
-                                        Nama produk
-                                    </label>
-                                    <div id="dropdown"
-                                        class="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg hidden">
-                                        <ul id="dropdown-list" class="max-h-60 overflow-y-auto">
-                                            <!-- Options will be dynamically added here -->
-                                        </ul>
-                                    </div>
 
+                                <div class="mb-4 w-full">
+                                    <select id="name" name="name"
+                                        class="peer block w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        data-te-select-init>
+                                        <option value="" selected disabled hidden></option>
+                                        @foreach ($barang_juals as $barang_jual)
+                                            <option value="{{ $barang_jual->id }}">{{ $barang_jual->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <label data-te-select-label-ref>Nama Barang</label>
                                 </div>
+
                                 <div class="flex gap-x-4">
                                     <div class="mb-4 w-full">
-                                        <label for="" class="ml-1">Quantity</label>
-                                        <input type="number" class="rounded-md w-full" name="quantity" id="quantity">
+                                        <label for="customer_wa" class="ml-1">Quantity</label>
+                                        <input class="rounded-md w-full" type="number" name="quantity" id="quantity">
                                     </div>
-                                    <div class="mb-4 w-full">
-                                        <label for="" class="ml-1">Price</label>
-                                        <input type="number" class="rounded-md w-full" id="price">
-                                    </div>
-                                </div>
-                                <div class="mb-4 w-full">
-                                    <select data-te-select-init id="unit">
-                                        <option value="" selected disabled hidden></option>
-                                        <option value="Kg">Kilogram</option>
-                                        <option value="Klos">Kelosan</option>
-                                    </select>
-                                    <label data-te-select-label-ref>Satuan</label>
                                 </div>
                             </form>
                         </div>
@@ -448,5 +420,79 @@
     }
 
 </script>
+
+<script>
+    // Inisialisasi array produk
+    let productList = [];
+
+    // Fungsi untuk render daftar produk
+    function renderProductList() {
+        const productListElement = document.getElementById('product-list');
+        productListElement.innerHTML = ''; // Kosongkan dulu list sebelum di render
+
+        // Loop melalui productList dan buat elemen HTML untuk setiap produk
+        productList.forEach((barang_juals, index) => {
+            const productItem = document.createElement('div');
+            productItem.classList.add('flex', 'justify-between', 'mb-2');
+            productItem.innerHTML = `
+            <div>
+                <span class="font-bold">${barang_juals.name}</span> - ${barang_juals.quantity}
+            </div>
+            <button class="text-red-500" onclick="removeProduct(${index})">Hapus</button>
+        `;
+            productListElement.appendChild(productItem);
+        });
+    }
+
+    // Fungsi untuk menambahkan produk ke array
+    document.getElementById('submit-detail').addEventListener('click', function () {
+        const name = document.getElementById('name').value;
+        const quantity = document.getElementById('quantity').value;
+
+        // Validasi input
+        if (!name || !quantity) {
+            alert('Barang yang diinput sama, hapus sebelumnya dan input kembali');
+            return;
+        }
+
+        // Konversi quantity ke angka
+        const quantityNumber = parseInt(quantity, 10);
+        if (isNaN(quantityNumber) || quantityNumber <= 0) {
+            alert('Mohon masukkan jumlah yang valid untuk quantity!');
+            return;
+        }
+
+        // Periksa apakah barang sudah ada
+        const existingProduct = productList.find(product => product.name === name);
+        if (existingProduct) {
+            // Jika ada, akumulasi quantity
+            existingProduct.quantity += quantityNumber;
+        } else {
+            // Jika tidak ada, tambahkan produk baru
+            productList.push({
+                name: name,
+                quantity: quantityNumber,
+            });
+        }
+
+        // Reset form input di modal
+        document.getElementById('product-form').reset();
+
+        // Render ulang daftar produk
+        renderProductList();
+
+        // Tutup modal setelah data disimpan
+        const modal = document.querySelector('#detailModal');
+        const modalInstance = window.te.Modal.getInstance(modal); // Menggunakan data-te-modal-dismiss
+        modalInstance.hide();
+    });
+
+    // Fungsi untuk menghapus produk dari array
+    function removeProduct(index) {
+        productList.splice(index, 1); // Hapus produk dari array
+        renderProductList(); // Render ulang daftar produk
+    }
+</script>
+
 
 @endsection

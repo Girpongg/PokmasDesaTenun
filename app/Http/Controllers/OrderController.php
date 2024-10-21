@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\BarangJual;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     public function viewOrder(){
-        $orders = Order::all();
-        return view('order', compact('orders'));
+        $data['orders'] = Order::with('barang_jual')->get();
+        $data['barang_juals'] = BarangJual::all();
+        return view('admin.order', $data);
     }
+
+    
 
     
 }
