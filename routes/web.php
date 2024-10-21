@@ -42,6 +42,9 @@ Route::get('/detail-payment', function () {
     return view('user.detail-payment');
 })->name('detail-payment');
 
+Route::get('/form-katalog', function () {
+    return view('user.form-katalog');
+})->name('form-katalog');
 
 Route::prefix('admin')->group(function () {
 
