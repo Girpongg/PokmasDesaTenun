@@ -38,6 +38,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('inventory')->group(function(){
         Route::get('/', [AdminController::class, 'viewInventory'])->name('viewInventory');
         Route::post('/', [AdminController::class, 'storeInventory'])->name('inventory.store');
+        Route::delete('/{id}', [AdminController::class, 'destroyInventory'])->name('inventory.delete');
+        Route::put('/{id}', [AdminController::class, 'updateInventory'])->name('inventory.update');
     });
     Route::prefix('supplier')->group(function () {
         Route::get('/', [SupplierController::class, 'viewSupplier'])->name('viewSupplier');

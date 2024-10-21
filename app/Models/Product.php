@@ -79,4 +79,8 @@ class Product extends Model
     *
     *
     */
+    public function kategoris()
+    {
+        return $this->belongsTo(Kategori::class,'category','id');
+    }
 }
