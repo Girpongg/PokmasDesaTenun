@@ -178,11 +178,17 @@
                             <input type="hidden" id="edit-id" name="id" />
                             <input type="text"
                                 class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none"
-                                id="name" name="name" placeholder="" />
+                                id="name" name="name" placeholder="" autocomplete="off" />
                             <label for="title"
                                 class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none">
                                 Nama produk
                             </label>
+                            <div id="dropdown" class="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg hidden">
+                                <ul id="dropdown-list" class="max-h-60 overflow-y-auto">
+                                    <!-- Options will be dynamically added here -->
+                                </ul>
+                            </div>
+
                         </div>
                         <div class="flex gap-x-4">
                             <div class="mb-4 w-full">
@@ -350,6 +356,31 @@
 @endsection()
 @section('script')
     <script>
+        // Dynamic team dropdown
+        const input = $('#name');
+        const dropdown = $('#dropdown');
+        const dropdownList = $('#dropdown-list');
+        const product = @json($products);
+        console.log(product);
+        input.on('input', function() {
+            const query = input.val().toUpperCase();
+            dropdownList.empty();
+
+            product.forEach(product => {
+                if (product.name.toUpperCase().includes(query)) {
+                    const listItem = $('<li>').text(product.name.toUpperCase())
+                        .addClass('p-2 text-black cursor-pointer hover:bg-indigo-500')
+                        .on('click', function() {
+                            input.val(product.name.toUpperCase());
+                            $('#score-field').html(product.name);
+                            dropdown.addClass('hidden'); 
+                        });
+                    dropdownList.append(listItem);
+                }
+            })
+            dropdown.removeClass('hidden');
+        });
+
         $(document).ready(function() {
             $('#submit').on('click', async function(e) {
                 // e.preventDefault();
@@ -460,27 +491,26 @@
 
                         }),
                         actions: `
-                    <div class="flex">
-                        <button data-te-ripple-init data-te-ripple-color="light" data-te-toggle="modal" data-te-target="#editModal"
-                            data-id="${purchase.id}" 
-                            data-title="${purchase.title}" 
-                            data-order_date="${purchase.order_date}" 
-                            data-shipped_date="${purchase.shipped_date}" 
-                            data-supplier_id="${purchase.supplier_id}" 
-                            class="edit-button mr-3 btn-detail block rounded bg-warning px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)]">
-                            <i class="fa-solid fa-pencil text-white"></i>
-                        </button>
-                        <button class="mr-3 btn-detail block rounded bg-success px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]" 
-                            onclick='viewDetails(${JSON.stringify(purchase)})'>
-                            View
-                        </button>
+                        <div class="flex">
+                            <button data-te-ripple-init data-te-ripple-color="light" data-te-toggle="modal" data-te-target="#editModal"
+                                data-id="${purchase.id}" 
+                                data-title="${purchase.title}" 
+                                data-order_date="${purchase.order_date}" 
+                                data-shipped_date="${purchase.shipped_date}" 
+                                data-supplier_id="${purchase.supplier_id}" 
+                                class="edit-button mr-3 btn-detail block rounded bg-warning px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)]">
+                                <i class="fa-solid fa-pencil text-white"></i>
+                            </button>
+                            <button class="mr-3 btn-detail block rounded bg-success px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]" 
+                                onclick='viewDetails(${JSON.stringify(purchase)})'>
+                                View
+                            </button>
                         
-                        <button data-te-ripple-init data-te-ripple-color="light" onclick="deletePurchase(${purchase.id})"
-                            class="mr-3 btn-detail block rounded bg-danger px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)]">
-                            <i class="fa-solid fa-trash-can text-white"></i>
-                        </button>
-                    </div>
-                `
+                            <button data-te-ripple-init data-te-ripple-color="light" onclick="deletePurchase(${purchase.id})"
+                                class="mr-3 btn-detail block rounded bg-danger px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)]">
+                                <i class="fa-solid fa-trash-can text-white"></i>
+                            </button>
+                        </div>`
                     };
 
                 }),
@@ -683,12 +713,11 @@
                 var productElement = `
                 <div class="product-item border p-2 mt-2 relative" id="product-${index}">
                 <button class="remove-product bg-red-500 text-white px-2 rounded absolute top-0 right-0 mt-1 mr-1" data-index="${index}">X</button>
-                <p><strong>Name:</strong> <span class="product-name">${product.name}</span></p>
-                <p><strong>Quantity:</strong> <span class="product-quantity">${product.quantity}</span></p>
-                <p><strong>Price:</strong> <span class="product-price">${product.price}</span></p>
-                <p><strong>Unit:</strong> <span class="product-unit">${product.unit}</span></p>
-                </div>
-                `;
+                <p><strong>Name     :</strong> <span class="product-name">${product.name}</span></p>
+                <p><strong>Quantity :</strong> <span class="product-quantity">${product.quantity}</span></p>
+                <p><strong>Price    :</strong> <span class="product-price">${product.price}</span></p>
+                <p><strong>Unit     :</strong> <span class="product-unit">${product.unit}</span></p>
+                </div>`;
                 $('#product-list').append(productElement);
             });
         }
