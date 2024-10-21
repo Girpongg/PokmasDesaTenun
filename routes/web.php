@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +37,7 @@ Route::prefix('admin')->group(function () {
     });
     Route::prefix('inventory')->group(function(){
         Route::get('/', [AdminController::class, 'viewInventory'])->name('viewInventory');
+        Route::post('/', [AdminController::class, 'storeInventory'])->name('inventory.store');
     });
     Route::prefix('supplier')->group(function () {
         Route::get('/', [SupplierController::class, 'viewSupplier'])->name('viewSupplier');

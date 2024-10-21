@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->unsignedBigInteger('category')->nullable();
+            $table->foreignId('category')->constrained('kategoris','id')->nullable();
             $table->integer('quantity');
             $table->string('unit');
             $table->integer('price');

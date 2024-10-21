@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\BaseController;
 use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends BaseController
 {
@@ -12,9 +14,9 @@ class ProductController extends BaseController
         parent::__construct($model);
     }
 
-    /*
-        Add new controllers
-        OR
-        Override existing controller here...
-    */
+    public function index()
+    {
+        $data['product'] = Product::all();
+        return view('admin.product', $data);
+    }
 }

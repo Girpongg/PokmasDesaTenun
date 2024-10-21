@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Models\Kelompok;
 use App\Utils\HttpResponse;
 use App\Utils\HttpResponseCode;
 use Illuminate\Support\Facades\Log;
@@ -107,6 +107,42 @@ class AdminController extends Controller
     private static function units()
     {
         return array_map(fn($unit) => $unit->label(), Unit::cases());
+    }
+
+
+    public function storeInventory(Request $request)
+    {
+        $units = array_map(fn($unit) => $unit->label(), Unit::cases());
+        $data = $request->only('name', 'unit', 'price', 'quantity', 'category');
+        $valid = Validator::make(
+            $data,
+            [
+                'name' => 'required|string|max:255',
+                'unit' => 'required|in:' . implode(',', $units),
+                'price' => 'required|numeric|min:0',
+                'quantity' => 'required|numeric|min:0',
+                'category' => 'nullable|exists:kategoris,id',
+            ],
+            [
+                'name.required' => 'Nama produk harus diisi',
+                'name.string' => 'Nama produk harus berupa string',
+                'name.max' => 'Nama produk maksimal 255 karakter',
+                'unit.required' => 'Satuan produk harus diisi',
+                'unit.in' => 'Satuan produk tidak valid',
+                'price.required' => 'Harga produk harus diisi',
+                'price.numeric' => 'Harga produk harus berupa angka',
+                'price.min' => 'Harga produk minimal 0',
+                'quantity.required' => 'Stok produk harus diisi',
+                'quantity.numeric' => 'Stok produk harus berupa angka',
+                'quantity.min' => 'Stok produk minimal 0',
+
+            ],
+        );
+        if ($valid->fails()) {
+            return $this->error($valid->errors()->first(), HttpResponseCode::HTTP_NOT_ACCEPTABLE);
+        }
+        $product = Product::create($data);
+        return response()->json(['success' => true, 'message' => 'Create new Product', 'data' => $product], 201);
     }
 }
 enum Unit
