@@ -26,6 +26,18 @@ Route::get('admin/login', function () {
     return view('admin.login.login');
 });
 
+Route::get('/barang', function () {
+    return view('user.milih-barang');
+})->name('milih-barang');
+
+Route::get('/detail-barang', function () {
+    return view('user.detail-barang');
+})->name('detail-barang');
+
+Route::get('/detail-payment', function () {
+    return view('user.detail-payment');
+})->name('detail-payment');
+
 
 Route::prefix('admin')->group(function () {
 
