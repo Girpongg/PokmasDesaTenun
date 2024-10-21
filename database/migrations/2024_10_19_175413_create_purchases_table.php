@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('shipped_date');
             $table->foreignId('supplier_id')->nullable()->constrained('suppliers', 'id')->nullOnDelete();
             $table->timestamps();
-        });
+        }); 
     }
 
     /**

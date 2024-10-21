@@ -14,7 +14,7 @@ class PurchaseController extends Controller
 {
     public function index()
     {
-        $data['purchases'] = Purchase::with('supplier')->get();
+        $data['purchases'] = Purchase::with('supplier','purchaseDetails.product')->get();
         $data['products'] = Product::all();
         $data['purchaseDetail'] = PurchaseDetail::all();
         $data['suppliers'] = Supplier::all();
