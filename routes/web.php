@@ -58,4 +58,9 @@ Route::prefix('admin')->group(function () {
         Route::delete('/delete/{purchase:id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
         Route::put('/update/{purchase:id}', [PurchaseController::class, 'update'])->name('purchase.update');
     });
+
+    Route::prefix('catalog')->group(function () {
+        Route::get('/', [ProductController::class, 'catalog'])->name('view.catalog');
+        Route::post('/', [ProductController::class, 'catalogstore'])->name('catalog.store');
+    }); 
 });
