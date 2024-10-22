@@ -167,6 +167,7 @@
             <!--Modal body-->
             <div class="relative flex-auto p-4" data-te-modal-body-ref>
                 <div class="h-[400px] p-2 overflow-hidden overflow-y-scroll" id="inputContainer">
+
                     <div class="relative mb-3" data-te-input-wrapper-init>
                         <input type="text"
                             class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
@@ -189,11 +190,23 @@
                     </div>
 
                     <div class="mb-4 w-full">
+                        <label for="tipe" class="ml-1">Tipe Pesanan</label>
+                        <select id="tipe" name="tipe"
+                            class="peer block w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                            data-te-select-init>
+                            <option value="" selected disabled hidden></option>
+                            <option value="1">From Catalog</option>
+                            <option value="2">By Request</option>
+                        </select>
+
+                    </div>
+
+                    <div class="mb-4 w-full hidden" id="divtitle">
                         <label for="price" class="ml-1">Judul pesan</label>
                         <input class="rounded-md w-full" id="title">
                     </div>
 
-                    <div class="w-full mb-2">
+                    <div class="w-full mb-2 hidden" id="photobutton">
                         <label for="price" class="ml-1">Upload foto request</label>
                         <div class="relative z-0 mt-0.5 flex w-full -space-x-px">
                             <input id="photobutton" type="file"
@@ -203,37 +216,25 @@
                         </div>
                     </div>
 
-                    <div class="mb-4 w-full">
+                    <div class="mb-4 w-full hidden" id="divdesc">
                         <label for="desc" class="ml-1">Deskripsi</label>
                         <input type="text" class="rounded-md w-full" id="desc">
                     </div>
 
                     <div class="flex gap-x-4">
                         <div class="mb-4 w-full">
-                            <label for="customer_wa" class="ml-1">Quantity</label>
-                            <input class="rounded-md w-full animated-input" name="quantity" id="quantity">
-                        </div>
-                        <div class="mb-4 w-full">
-                            <label for="price" class="ml-1">Price</label>
+                            <label for="price" class="ml-1">Total Price</label>
                             <input class="rounded-md w-full animated-input" id="price">
                         </div>
                     </div>
 
-                    <div class="flex gap-x-4">
-                        <div class="mb-4 w-full">
-                            <label for="order_date" class="ml-1">Order Date</label>
-                            <input type="date" class="rounded-md w-full animated-input" name="order_date"
-                                id="order_date">
-                        </div>
-                        <div class="mb-4 w-full">
-                            <label for="done_date" class="ml-1">Done Date</label>
-                            <input type="date" class="rounded-md w-full animated-input" id="done_date
-                        ">
-                        </div>
+                    <div class="mb-4 w-full">
+                        <label for="order_date" class="ml-1">Order Date</label>
+                        <input type="date" class="rounded-md w-full animated-input" name="order_date" id="order_date">
                     </div>
 
-                    <div class="flex flex-col">
-                        <label for="price" class="ml-1">Bahan baku yang dipakai</label>
+                    <div class="flex flex-col hidden" id="divproduct">
+                        <label for="price" class="ml-1">Produk yang dibeli</label>
                         <button id="btn-list"
                             class="mt-3 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] "
                             data-te-ripple-init data-te-ripple-color="light" data-te-toggle="modal"
@@ -242,7 +243,7 @@
                         </button>
                     </div>
 
-                    <div id="product-list">
+                    <div id="product-list" class="hidden">
 
 
                     </div>
@@ -262,7 +263,7 @@
                             class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4">
                             <!--Modal title-->
                             <h5 class="text-xl font-medium leading-normal text-neutral-800" id="editModalLabel">
-                                Bahan baku yang terpakai
+                                List produk yang dibeli
                             </h5>
                             <!--Close button-->
                             <button type="button"
@@ -277,40 +278,25 @@
                         <!--Modal body-->
                         <div class="relative flex-auto p-4" data-te-modal-body-ref>
                             <form id="product-form">
-                                <div class="relative mb-4" data-te-input-wrapper-init>
-                                    <input type="hidden" id="edit-id" name="id" />
-                                    <input type="text"
-                                        class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none"
-                                        id="name" name="name" placeholder="" autocomplete="off" />
-                                    <label for="title"
-                                        class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none">
-                                        Nama produk
-                                    </label>
-                                    <div id="dropdown"
-                                        class="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg hidden">
-                                        <ul id="dropdown-list" class="max-h-60 overflow-y-auto">
-                                            <!-- Options will be dynamically added here -->
-                                        </ul>
-                                    </div>
 
+                                <div class="mb-4 w-full">
+                                    <select id="name" name="name"
+                                        class="peer block w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        data-te-select-init>
+                                        <option value="" selected disabled hidden></option>
+                                        @foreach ($barang_juals as $barang_jual)
+                                            <option value="{{ $barang_jual->name}}" data-id="{{ $barang_jual->id }}"
+                                                data-price="{{ $barang_jual->price }}">{{ $barang_jual->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <label data-te-select-label-ref>Nama Barang</label>
                                 </div>
+
                                 <div class="flex gap-x-4">
                                     <div class="mb-4 w-full">
-                                        <label for="" class="ml-1">Quantity</label>
-                                        <input type="number" class="rounded-md w-full" name="quantity" id="quantity">
+                                        <label for="customer_wa" class="ml-1">Quantity</label>
+                                        <input class="rounded-md w-full" type="number" name="quantity" id="quantity">
                                     </div>
-                                    <div class="mb-4 w-full">
-                                        <label for="" class="ml-1">Price</label>
-                                        <input type="number" class="rounded-md w-full" id="price">
-                                    </div>
-                                </div>
-                                <div class="mb-4 w-full">
-                                    <select data-te-select-init id="unit">
-                                        <option value="" selected disabled hidden></option>
-                                        <option value="Kg">Kilogram</option>
-                                        <option value="Klos">Kelosan</option>
-                                    </select>
-                                    <label data-te-select-label-ref>Satuan</label>
                                 </div>
                             </form>
                         </div>
@@ -335,17 +321,24 @@
 
             <!--Modal footer-->
             <div
-                class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
-                <button type="button"
-                    class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
-                    data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
-                    Close
-                </button>
-                <button type="button" id="submit"
-                    class="ml-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                    data-te-ripple-init data-te-ripple-color="light">
-                    Save changes
-                </button>
+                class="flex justify-between flex-shrink-0 flex-wrap items-center  rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+                <div>
+                    <h1 class="text-lg">
+                        Total: <span class="font-bold">Rp.</span> <span class="font-bold" id="total"></span>
+                    </h1>
+                </div>
+                <div class="flex justify-end">
+                    <button type="button"
+                        class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                        data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
+                        Close
+                    </button>
+                    <button type="button" id="submit"
+                        class="ml-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                        data-te-ripple-init data-te-ripple-color="light">
+                        Save changes
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -405,6 +398,32 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('tipe').addEventListener('change', function () {
+        var value = this.value;
+
+        var divTitle = document.getElementById('divtitle');
+        var photoButton = document.getElementById('photobutton');
+        var divDesc = document.getElementById('divdesc');
+        var divProduct = document.getElementById('divproduct');
+        var divProductList = document.getElementById('product-list');
+
+        if (value === '1') {
+            divTitle.classList.add('hidden');
+            photoButton.classList.add('hidden');
+            divDesc.classList.add('hidden');
+            divProduct.classList.remove('hidden');
+            divProductList.classList.remove('hidden');
+        } else if (value === '2') {
+            divTitle.classList.remove('hidden');
+            photoButton.classList.remove('hidden');
+            divDesc.classList.remove('hidden');
+            divProduct.classList.add('hidden');
+            divProductList.classList.add('hidden');
+        }
+    });
+
+</script>
 
 <script>
 
@@ -447,6 +466,85 @@
         closeModal('chooseBarangModal');
     }
 
+</script>
+
+<script>
+
+    document.getElementById('price').addEventListener('input', function () {
+        var price = parseFloat(this.value) || 0;
+        var quantity = parseFloat(document.getElementById('quantity').value) || 1;
+        var total = price * quantity;
+        document.getElementById('total').textContent = total;
+    });
+
+    document.getElementById('quantity').addEventListener('input', function () {
+        var price = parseFloat(document.getElementById('price').value) || 0;
+        var quantity = parseFloat(this.value) || 1;
+        var total = price * quantity;
+        document.getElementById('total').textContent = total;
+    });
+
+
+    document.getElementById('btn-list').addEventListener('click', function () {
+        $('#detailModal').modal('show');
+    });
+    let products = [];
+
+    $('#submit-detail').on('click', function () {
+        var productName = $('#name').val();
+        var quantity = $('#quantity').val();
+        var selectedOption = document.querySelector('#name option:checked');
+        var unitprice = selectedOption ? selectedOption.getAttribute('data-price') : 0;
+        var totalPrice = unitprice * quantity;
+
+        if (!productName || !quantity) {
+            alert("All fields are required.");
+            return;
+        }
+        products.push({
+            name: productName,
+            quantity: quantity,
+            price: unitprice,
+            totalPrice: totalPrice
+        });
+
+        renderProductList();
+        $('#product-form')[0].reset();
+        $('#detailModal').modal('hide');
+    });
+
+
+    function renderProductList() {
+        $('#product-list').empty();
+        var totalSum = 0;
+
+        products.forEach((product, index) => {
+
+            totalSum += product.totalPrice;
+
+            var productElement = `
+                <div class="product-item border p-2 mt-2 relative" id="product-${index}">
+                <button class="remove-product bg-red-500 text-white px-2 rounded absolute top-0 right-0 mt-1 mr-1" data-index="${index}">X</button>
+                <p><strong>Name     :</strong> <span class="product-name">${product.name}</span></p>
+                <p><strong>Quantity :</strong> <span class="product-quantity">${product.quantity}</span></p>
+                <p><strong>Price    :</strong> <span class="product-price">${product.totalPrice}</span></p>
+                </div>`;
+            $('#product-list').append(productElement);
+        });
+
+        document.getElementById('price').value = totalSum;
+        document.getElementById('total').textContent = totalSum;
+    }
+
+    $(document).on('click', '.remove-product', function () {
+        var index = $(this).data('index');
+        products.splice(index, 1);
+        renderProductList();
+    });
+</script>
+
+<script>
+    function displayPrice() { }
 </script>
 
 @endsection

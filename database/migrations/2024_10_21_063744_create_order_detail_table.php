@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->unsignedBigInteger('barangjual_id');
             $table->foreign('barangjual_id')->references('id')->on('barang_juals');
-            $table->foreignId('order')->nullable()->constrained('order', 'id')->nullOnDelete();
+            $table->foreignId('order')->nullable()->constrained('orders', 'id')->nullOnDelete();
             $table->timestamps();
         });
     }

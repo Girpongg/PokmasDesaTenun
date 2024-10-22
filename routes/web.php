@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\BarangJualController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -48,9 +50,7 @@ Route::prefix('admin')->group(function () {
         Route::delete('/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
     });
 
-    Route::get('/order', function () {
-        return view('admin.order');
-    });
+    Route::get('/order', [OrderController::class, 'viewOrder'])->name('viewOrder');
 
     Route::prefix('purchasing')->group(function () {
         Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');
