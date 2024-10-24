@@ -21,7 +21,7 @@ class BarangJualController extends Controller
         $data = [
             'barang' => $barang,
         ];
-        dd($data);
+        // dd($data);
         return view('user.detail-barang', $data);
     }
 }
