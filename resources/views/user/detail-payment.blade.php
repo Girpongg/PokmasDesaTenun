@@ -10,6 +10,9 @@
 <body>
     @extends('user.layout')
     @include('user.includes.navbar')
+    <div class="flex justify-center">
+        <hr class="h-px w-[1200px] mt-10 mb-5 bg-gray-700 border-0">
+    </div>
     <div class="flex mx-12">
         <div class="grid grid-cols-3 place-items-center ">
             <div class=" bg-gray-200 w-[220px] h-[385px] mx-2 my-2">

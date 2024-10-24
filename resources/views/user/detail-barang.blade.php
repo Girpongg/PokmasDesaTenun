@@ -13,7 +13,7 @@
     <div class="grid lg:grid-cols-2">
         <div>
             <div class="flex justify-center">
-                <img src="{{ asset('assets/baju1.webp') }}" alt="" class="h-[495px] mt-20" />
+                <img src="{{ $barang->image }}" alt="" class="h-[495px] mt-20" />
             </div>
             <div class="flex justify-center space-x-2 w-[90%] mx-auto">
                 <img src="{{ asset('assets/baju1.webp') }}" alt="" class="h-[140px] py-6" />

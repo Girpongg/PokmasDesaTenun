@@ -14,9 +14,9 @@
     <div class="flex justify-center">
         <hr class="h-px w-[1200px] mt-10 mb-5 bg-gray-700 border-0">
     </div>
-    <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 px-20 place-items-center">
+    <div class="grid grid-cols-5 px-20 place-items-center">
         @foreach ($catalog as $item)
-            <div class=" bg-gray-200 w-[220px] h-[385px] mt-5 cursor-pointer" onclick="window.location.href='{{ route('detail-barang') }}'">
+            <div class=" bg-gray-200 w-[220px] h-[385px] my-5 cursor-pointer" onclick="window.location.href='{{ route('detail-barang', $item->id) }}'">
                 <div class="">
                     <img src="{{ $item->image }}" alt="" class="w-full h-[200px]" />
                 </div>
