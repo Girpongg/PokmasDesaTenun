@@ -5,6 +5,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BarangJualController;
+use App\Http\Controllers\ExpenditureController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -63,4 +64,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [ProductController::class, 'catalog'])->name('view.catalog');
         Route::post('/', [ProductController::class, 'catalogstore'])->name('catalog.store');
     }); 
+
+    Route::prefix('expenditure')->group(function () {
+        Route::get('/', [ExpenditureController::class, 'viewExpenditure'])->name('viewExpenditure');
+        Route::post('/', [ExpenditureController::class, 'storeExpenditure'])->name('expenditure.store');
+        Route::delete('/{id}', [ExpenditureController::class, 'destroy'])->name('expenditure.destroy');
+        Route::put('/{id}', [ExpenditureController::class, 'updateExpenditure'])->name('expenditure.update');
+    });
 });
