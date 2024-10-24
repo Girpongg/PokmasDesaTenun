@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BarangJualController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ProductController;
@@ -30,9 +31,7 @@ Route::get('admin/login', function () {
     return view('admin.login.login');
 });
 
-Route::get('/barang', function () {
-    return view('user.milih-barang');
-})->name('milih-barang');
+Route::get('/barang', [BarangJualController::class, 'viewCatalog'])->name('milih-barang');
 
 Route::get('/detail-barang', function () {
     return view('user.detail-barang');

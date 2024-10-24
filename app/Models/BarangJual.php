@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class BarangJual extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'image',
+        'name',
+        'price',
+        'stock',
+        'tipe',
+        'description',
+    ];
 }
