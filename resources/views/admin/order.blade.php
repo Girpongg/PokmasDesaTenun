@@ -2,7 +2,7 @@
 
 @section('content')
     <style>
-        \\\\@keyframes fadeIn {
+        @keyframes fadeIn {
             from {
                 opacity: 0;
             }
@@ -51,16 +51,17 @@
 
     <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
         @foreach ($orders as $item)
-            <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl grid grid-rows-7">
-                <div class="row-span-6 flex flex-col gap-1">
-                    <img src="{{ asset('storage/uploads/catalog/' . $item->barangJual->image) }}" alt="Description of the image"
-                        class="w-full h-[45%] rounded-xl object-cover">
-                    <p class="text-sm font-medium px-2 pt-4">Pembeli : {{$item->order->customer_name}}</p>
-                    <p class="text-sm font-medium px-2">Order_date: <span class="text-sm font-normal">{{$item->order->order_date}}</span> </p>
-                    <p class="text-sm font-medium px-2">Total Price: <span class="text-sm font-normal">{{$item->order->total_price}}</span> </p>
+            <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
+                <div class=" flex flex-col gap-1">
+                    <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                    <p class="text-sm font-medium px-2">Order_date: <span
+                            class="text-sm font-normal">{{ $item->order_date }}</span> </p>
+                    <p class="text-sm font-medium px-2 pb-4">Total Price: <span
+                            class="text-sm font-normal">{{ $item->total_price }}</span> </p>
                 </div>
-                <button class="bg-black text-white w-full rounded-lg py-2"
-                    onclick="openModal('modalCatalog')">Details</button>
+                <a href="{{route('order.detail',$item->id)}}">
+                    <button class="bg-black text-white w-full rounded-lg py-2">Details</button>
+                </a>
             </div>
         @endforeach
 
@@ -116,7 +117,7 @@
     </div>
 
     <!-- Catalog Modal -->
-    <div id="modalCatalog" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+    <div id="modalCatalog" class="hidden fixed inset-0 z-[9999] bg-black bg-opacity-50 flex items-center justify-center">
         <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-[50%] relative">
             <!-- Close Icon Button -->
             <button class="absolute top-2 right-2 text-gray-500" onclick="closeModal('modalCatalog')">
@@ -125,14 +126,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
-
             <h2 class="text-xl font-bold mb-4">Order Details - From Catalog</h2>
-            <p class="mb-2"><strong>Product:</strong> Kain Sarung Ulos</p>
-            <p class="mb-2"><strong>Quantity:</strong> 2</p>
-            <p class="mb-2"><strong>Price:</strong> Rp. 120.000</p>
-            <p class="mb-4"><strong>Buyer:</strong> Agung Salvatoni</p>
+            <div>
+                <h5 class="font-bold">Product : </h5>
+                <div id="modal-anggota"></div>
+            </div>
 
-            <!-- Footer for Accept and Reject -->
             <div class="flex justify-end mt-6 gap-3">
                 <button class="bg-red-500 text-white px-4 py-2 rounded" onclick="rejectOrder()">Reject</button>
                 <button class="bg-green-500 text-white px-4 py-2 rounded" onclick="acceptOrder()">Accept</button>
@@ -403,6 +402,7 @@
             </div>
         </div>
     </div>
+
     <script>
         document.getElementById('tipe').addEventListener('change', function() {
             var value = this.value;
@@ -496,18 +496,12 @@
             });
         });
 
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
-
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
             document.body.classList.remove('overflow-hidden');
         }
 
-        //tambah input barang
         function addInput() {
             const inputContainer = document.getElementById('inputContainers');
 

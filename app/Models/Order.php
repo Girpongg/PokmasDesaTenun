@@ -20,4 +20,9 @@ class Order extends Model
         'desc',
         'total_price',
     ];
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 }

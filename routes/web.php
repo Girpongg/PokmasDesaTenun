@@ -49,8 +49,11 @@ Route::prefix('admin')->group(function () {
         Route::delete('/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
     });
 
-    Route::get('/order', [OrderController::class, 'viewOrder'])->name('viewOrder');
-    Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+    Route::prefix('/order')->group(function () {
+        Route::get('/', [OrderController::class, 'viewOrder'])->name('viewOrder');
+        Route::post('/', [OrderController::class, 'store'])->name('order.store');
+        Route::get('/detail/{order}', [OrderController::class, 'detailOrder'])->name('order.detail');
+    });
 
     Route::prefix('purchasing')->group(function () {
         Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');

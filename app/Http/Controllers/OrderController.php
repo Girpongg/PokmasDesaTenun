@@ -14,12 +14,13 @@ class OrderController extends Controller
 {
     public function viewOrder()
     {
-        $data['orders'] = OrderDetail::with('order', 'barangJual')
-            ->whereHas('barangJual', function ($query) {
-                $query->where('tipe', '=', 1);
-            })
-            ->get();
-        $data['barang_juals'] = BarangJual::all();
+        $order = Order::with('orderDetails.barangJual')->get();
+        $barang = BarangJual::all();
+
+        $data =[
+            'orders' => $order,
+            'barang_juals' => $barang,
+        ];
         return view('admin.order', $data);
     }
     public function store(Request $request)
@@ -90,5 +91,18 @@ class OrderController extends Controller
             DB::rollBack();
             return response()->json(['message' => 'Failed to store data', 'error' => true] . $e->getMessage());
         }
+    }
+
+    public function detailOrder(Order $order)
+    {
+        $detail = OrderDetail::with('barangJual')->where('order_id', $order->id)->get();
+        $barang = BarangJual::all();
+
+        $data = [
+            'nama' => $order,
+            'order' => $detail,
+            'barang_juals' => $barang,
+        ];
+        return view('admin.detail_order', $data);
     }
 }

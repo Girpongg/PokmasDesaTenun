@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('customer_wa');
             $table->string('address');
-            $table->integer('status')->nullable()->comment('0: reject,1: default, 2: accept, 3: selesai');
             $table->string('title')->nullable();    
             $table->integer('total_price');
+            $table->integer('is_done')->default(0)->comment('0: not done, 1: done, 2: sudah diambil ');
             $table->string('desc')->nullable();
             $table->timestamps();
         });
