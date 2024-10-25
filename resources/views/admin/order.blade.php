@@ -463,7 +463,7 @@
                         judul_pesan: judul_pesan,
                         photo: photo,
                         desc: desc,
-                        price: price,
+                        total_price: price,
                         order_date: order_date,
                         products: products,
                         _token: "{{ csrf_token() }}"

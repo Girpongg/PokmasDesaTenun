@@ -18,5 +18,6 @@ class Order extends Model
         'title',
         'order_date',
         'desc',
+        'total_price',
     ];
 }

@@ -31,6 +31,7 @@ class OrderController extends Controller
                 'address' => 'required|string',
                 'judul_pesan' => 'nullable|string',
                 'order_date' => 'required|date',
+                'total_price' => 'required|integer',
                 'desc' => 'nullable|string',
                 'products' => 'required|array',
                 'products.*.name' => 'required|string',
@@ -43,11 +44,13 @@ class OrderController extends Controller
                 'customer_wa.required' => 'Customer WA is required.',
                 'address.required' => 'Customer Address is required.',
                 'judul_pesan.required' => 'Judul Pesan is required.',
+                'total_price.required' => 'Total Price is required.',
                 'desc.required' => 'Description is required.',
                 'products.required' => 'Products are required.',
                 'products.*.name.required' => 'Product name is required.',
                 'products.*.quantity.required' => 'Product quantity is required.',
                 'products.*.price.required' => 'Product price is required.',
+
             ],
         );
 

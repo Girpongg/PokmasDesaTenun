@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('address');
             $table->integer('status')->nullable()->comment('0: reject,1: default, 2: accept, 3: selesai');
             $table->string('title')->nullable();    
+            $table->integer('total_price');
             $table->string('desc')->nullable();
             $table->timestamps();
         });
