@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('order_id')->nullable()->constrained('orders', 'id')->nullOnDelete();
             $table->integer('quantity');
             $table->integer('price');
-            $table->integer('status')->nullable()->comment('0: reject,1: default, 2: accept');
+            $table->integer('status')->default(1)->comment('0: reject,1: default, 2: accept');
             $table->foreign('barangjual_id')->references('id')->on('barang_juals');
             $table->timestamps();
         }); 

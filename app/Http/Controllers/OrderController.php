@@ -14,10 +14,10 @@ class OrderController extends Controller
 {
     public function viewOrder()
     {
-        $order = Order::with('orderDetails.barangJual')->get();
+        $order = Order::get();
         $barang = BarangJual::all();
 
-        $data =[
+        $data = [
             'orders' => $order,
             'barang_juals' => $barang,
         ];
@@ -95,7 +95,9 @@ class OrderController extends Controller
 
     public function detailOrder(Order $order)
     {
-        $detail = OrderDetail::with('barangJual')->where('order_id', $order->id)->get();
+        $detail = OrderDetail::with('barangJual')
+            ->where('order_id', $order->id)
+            ->get();
         $barang = BarangJual::all();
 
         $data = [
@@ -103,6 +105,30 @@ class OrderController extends Controller
             'order' => $detail,
             'barang_juals' => $barang,
         ];
+        // dd('halo');
         return view('admin.detail_order', $data);
+    }
+
+    public function declineOrder(OrderDetail $order)
+    {
+        $order->update([
+            'status' => 0,
+        ]);
+        return response()->json(['message' => 'Order successfully accepted', 'success' => true]);
+    }
+    public function acceptOrder(OrderDetail $order)
+    {
+        $order->update([
+            'status' => 2,
+        ]);
+        return response()->json(['message' => 'Order successfully accepted', 'success' => true]);
+    }
+
+    public function DoneOrder(Order $order)
+    {
+        $order->update([
+            'is_done' => 1,
+        ]);
+        return response()->json(['message' => 'Order successfully accepted', 'success' => true]);
     }
 }

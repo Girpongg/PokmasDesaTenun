@@ -59,9 +59,32 @@
                     <p class="text-sm font-medium px-2 pb-4">Total Price: <span
                             class="text-sm font-normal">{{ $item->total_price }}</span> </p>
                 </div>
-                <a href="{{route('order.detail',$item->id)}}">
+                <a href="{{ route('order.detail', $item->id) }}">
                     <button class="bg-black text-white w-full rounded-lg py-2">Details</button>
                 </a>
+                @php
+                    $count = 0;
+                @endphp
+                @foreach ($item->orderDetails as $items)
+                    @if ($items->status == 1)
+                        @php
+                            $count++;
+                        @endphp
+                    @endif
+                @endforeach
+                @if ($count == 0)
+                    @if ($item->is_done == 0)
+                        <button class=" bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800"
+                            onclick="isdone({{ $item->id }})">Done</button>
+                    @else
+                        <button
+                            class="bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                            disabled>
+                            Already Done
+                        </button>
+                    @endif
+                @endif
+
             </div>
         @endforeach
 
@@ -404,6 +427,50 @@
     </div>
 
     <script>
+        function isdone(id) {
+            console.log(id);
+            var url_update = "{{ route('DoneOrder', ':id') }}".replace(':id', id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to mark this order as done?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url_update,
+                        type: 'PUT',
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: async function(response) {
+                            if (response.success) {
+                                await Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: response.message,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                })
+                                window.location.reload();
+
+                            } else {
+                                await Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: response.message,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                })
+                            }
+                        }
+                    });
+                }
+            })
+        }
         document.getElementById('tipe').addEventListener('change', function() {
             var value = this.value;
 
