@@ -28,16 +28,14 @@ Route::get('admin/login', function () {
     return view('admin.login.login');
 });
 
-
 Route::prefix('admin')->group(function () {
-
     Route::prefix('kategori')->group(function () {
         Route::get('/', [AdminController::class, 'viewKategori'])->name('viewKategori');
         Route::post('/', [AdminController::class, 'store'])->name('kategori.store');
         Route::put('/{id}', [AdminController::class, 'updatenama'])->name('kategori.update');
         Route::delete('/{id}', [AdminController::class, 'destroy'])->name('kategori.destroy');
     });
-    Route::prefix('inventory')->group(function(){
+    Route::prefix('inventory')->group(function () {
         Route::get('/', [AdminController::class, 'viewInventory'])->name('viewInventory');
         Route::post('/', [AdminController::class, 'storeInventory'])->name('inventory.store');
         Route::delete('/{id}', [AdminController::class, 'destroyInventory'])->name('inventory.delete');
@@ -51,6 +49,7 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::get('/order', [OrderController::class, 'viewOrder'])->name('viewOrder');
+    Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
     Route::prefix('purchasing')->group(function () {
         Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');
@@ -62,5 +61,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('catalog')->group(function () {
         Route::get('/', [ProductController::class, 'catalog'])->name('view.catalog');
         Route::post('/', [ProductController::class, 'catalogstore'])->name('catalog.store');
-    }); 
+        Route::get('/{id}/edit', [ProductController::class, 'edits'])->name('catalog.edit');
+        Route::put('/{id}', [ProductController::class, 'Catalogupdate'])->name('catalog.update');
+        Route::delete('/{id}', [ProductController::class, 'deletecatalog'])->name('catalog.delete');
+    });
 });

@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->date('order_date');
             $table->string('customer_name');
             $table->string('customer_wa');
             $table->string('address');
-            $table->integer('status')->nullable()->comment('0: reject, 1: accept, 2: selesai');
-            $table->string('title');
+            $table->integer('status')->nullable()->comment('0: reject,1: default, 2: accept, 3: selesai');
+            $table->string('title')->nullable();    
             $table->string('desc')->nullable();
+            $table->timestamps();
         });
     }
 

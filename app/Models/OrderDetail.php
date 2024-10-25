@@ -9,14 +9,13 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
+    protected $table = 'order_detail';
+
     protected $fillable = [
-        'image',
-        'order',
-        'product',
+        'order_id',
+        'barangjual_id',
         'quantity',
         'price',
-        'order_date',
-        'done_date',
     ];
 
     public function order()

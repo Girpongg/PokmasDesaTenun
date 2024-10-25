@@ -281,7 +281,7 @@
         </div>
     </div>
     {{-- Edit Modal --}}
-    <div data-te-modal-init
+    <div data-te-modal-init 
         class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
         id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div data-te-modal-dialog-ref
@@ -373,7 +373,7 @@
                         .on('click', function() {
                             input.val(product.name.toUpperCase());
                             $('#score-field').html(product.name);
-                            dropdown.addClass('hidden'); 
+                            dropdown.addClass('hidden');
                         });
                     dropdownList.append(listItem);
                 }
@@ -416,7 +416,7 @@
                                 icon: 'success',
                                 title: 'Success',
                                 text: data.message,
-                            });     
+                            });
                             window.location.reload(); // Refresh halaman setelah sukses
                         } else {
                             await Swal.fire({
@@ -676,6 +676,54 @@
 
             modal.modal('show');
         }
+        document.getElementById('btn-list').addEventListener('click', function() {
+            $('#detailModal').modal('show');
+        });
+        let products = [];
+
+        $('#submit-detail').on('click', function() {
+            var productName = $('#name').val();
+            var quantity = $('#quantity').val();
+            var price = $('#price').val();
+            var unit = $('#unit').val();
+
+            if (!productName || !quantity || !price || !unit) {
+                alert("All fields are required.");
+                return;
+            }
+            products.push({
+                name: productName,
+                quantity: quantity,
+                price: price,
+                unit: unit
+            });
+
+            renderProductList();
+            $('#product-form')[0].reset();
+            $('#detailModal').modal('hide');
+        });
+
+
+        function renderProductList() {
+            $('#product-list').empty();
+
+            products.forEach((product, index) => {
+                var productElement = `
+                <div class="product-item border p-2 mt-2 relative" id="product-${index}">
+                <button class="remove-product bg-red-500 text-white px-2 rounded absolute top-0 right-0 mt-1 mr-1" data-index="${index}">X</button>
+                <p><strong>Name     :</strong> <span class="product-name">${product.name}</span></p>
+                <p><strong>Quantity :</strong> <span class="product-quantity">${product.quantity}</span></p>
+                <p><strong>Price    :</strong> <span class="product-price">${product.price}</span></p>
+                <p><strong>Unit     :</strong> <span class="product-unit">${product.unit}</span></p>
+                </div>`;
+                $('#product-list').append(productElement);
+            });
+        }
+
+        $(document).on('click', '.remove-product', function() {
+            var index = $(this).data('index');
+            products.splice(index, 1);
+            renderProductList();
+        });
     </script>
-    
 @endsection

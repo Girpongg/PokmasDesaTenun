@@ -16,6 +16,7 @@ class Order extends Model
         'status',
         'is_done',
         'title',
+        'order_date',
         'desc',
     ];
 }
