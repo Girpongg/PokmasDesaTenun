@@ -50,18 +50,20 @@
     </div>
 
     <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
-        <!-- Cards -->
-        <div class="p-2 w-[250px] h-[300px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl grid grid-rows-7">
-            <div class="row-span-6 flex flex-col gap-1">
-                <img src="{{ asset('img/ulos.jpg') }}" alt="Description of the image"
-                    class="w-full h-[45%] rounded-xl object-cover">
-                <h1 class="text-lg font-medium">Kain Sarung Ulos</h1>
-                <p class="text-sm font-medium">Kuantitas: <span class="text-sm font-normal">2</span> </p>
-                <p class="text-sm font-medium">Harga: <span class="text-sm font-normal">Rp. 120.000</span> </p>
-                <p class="text-sm font-medium">Pembeli: <span class="text-sm font-normal">Agung Salvatoni</span> </p>
+        @foreach ($orders as $item)
+            <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl grid grid-rows-7">
+                <div class="row-span-6 flex flex-col gap-1">
+                    <img src="{{ asset('storage/uploads/catalog/' . $item->barangJual->image) }}" alt="Description of the image"
+                        class="w-full h-[45%] rounded-xl object-cover">
+                    <p class="text-sm font-medium px-2 pt-4">Pembeli : {{$item->order->customer_name}}</p>
+                    <p class="text-sm font-medium px-2">Order_date: <span class="text-sm font-normal">{{$item->order->order_date}}</span> </p>
+                    <p class="text-sm font-medium px-2">Total Price: <span class="text-sm font-normal">{{$item->order->total_price}}</span> </p>
+                </div>
+                <button class="bg-black text-white w-full rounded-lg py-2"
+                    onclick="openModal('modalCatalog')">Details</button>
             </div>
-            <button class="bg-black text-white w-full rounded-lg py-2" onclick="openModal('modalCatalog')">Details</button>
-        </div>
+        @endforeach
+
     </div>
 
     <div class="text-left lg:mt-[20px]">
@@ -318,8 +320,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <!--Modal footer-->
                 <div
                     class="flex justify-between flex-shrink-0 flex-wrap items-center  rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
@@ -439,11 +439,11 @@
                 var customer_wa = $('#customer_wa').val();
                 var customer_address = $('#customer_address').val();
                 var judul_pesan = $('#judul_pesan').val();
-                var photo = $('#photobutton').val();  
+                var photo = $('#photobutton').val();
                 var desc = $('#desc').val();
                 var price = $('#price').val();
                 var order_date = $('#order_date').val();
-                
+
                 var products = [];
                 $('#product-list .product-item').each(function() {
                     var product = {
@@ -476,7 +476,7 @@
                                 title: 'Success',
                                 text: data.message,
                             });
-                            window.location.reload(); 
+                            window.location.reload();
                         } else {
                             await Swal.fire({
                                 icon: 'error',

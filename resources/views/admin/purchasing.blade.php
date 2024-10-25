@@ -57,7 +57,6 @@
         <div id="datatable" class="w-full px-5 py-5" data-te-fixed-header="true"></div>
     </div>
 
-
     {{-- Create Modal --}}
     <div data-te-modal-init
         class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
@@ -185,7 +184,6 @@
                             </label>
                             <div id="dropdown" class="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg hidden">
                                 <ul id="dropdown-list" class="max-h-60 overflow-y-auto">
-                                    <!-- Options will be dynamically added here -->
                                 </ul>
                             </div>
 
@@ -779,4 +777,3 @@
     </script>
 @endsection
 
-@endsection

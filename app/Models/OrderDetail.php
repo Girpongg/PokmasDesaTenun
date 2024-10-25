@@ -27,5 +27,10 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function barangJual()
+    {
+        return $this->belongsTo(BarangJual::class, 'barangjual_id', 'id');
+    }
 }
 

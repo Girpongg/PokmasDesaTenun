@@ -14,7 +14,11 @@ class OrderController extends Controller
 {
     public function viewOrder()
     {
-        $data['orders'] = OrderDetail::with('order', 'product')->get();
+        $data['orders'] = OrderDetail::with('order', 'barangJual')
+            ->whereHas('barangJual', function ($query) {
+                $query->where('tipe', '=', 1);
+            })
+            ->get();
         $data['barang_juals'] = BarangJual::all();
         return view('admin.order', $data);
     }
@@ -50,7 +54,6 @@ class OrderController extends Controller
                 'products.*.name.required' => 'Product name is required.',
                 'products.*.quantity.required' => 'Product quantity is required.',
                 'products.*.price.required' => 'Product price is required.',
-
             ],
         );
 
@@ -64,8 +67,8 @@ class OrderController extends Controller
                 // dd($productData);
                 $product = BarangJual::where('name', $productData['name'])->first();
                 // dd($product);
-                if ($product ) {
-                    if($product->stock < $productData['quantity']){
+                if ($product) {
+                    if ($product->stock < $productData['quantity']) {
                         return response()->json(['message' => 'Stock is not enough', 'error' => true]);
                     }
                     OrderDetail::create([
