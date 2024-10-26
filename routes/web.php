@@ -4,6 +4,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ExpenditureController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\BarangJualController;
+use App\Http\Controllers\ExpenditureController;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,17 +30,18 @@ Route::get('admin/login', function () {
     return view('admin.login.login');
 });
 
-
 Route::prefix('admin')->group(function () {
-
     Route::prefix('kategori')->group(function () {
         Route::get('/', [AdminController::class, 'viewKategori'])->name('viewKategori');
         Route::post('/', [AdminController::class, 'store'])->name('kategori.store');
         Route::put('/{id}', [AdminController::class, 'updatenama'])->name('kategori.update');
         Route::delete('/{id}', [AdminController::class, 'destroy'])->name('kategori.destroy');
     });
-    Route::prefix('inventory')->group(function(){
+    Route::prefix('inventory')->group(function () {
         Route::get('/', [AdminController::class, 'viewInventory'])->name('viewInventory');
+        Route::post('/', [AdminController::class, 'storeInventory'])->name('inventory.store');
+        Route::delete('/{id}', [AdminController::class, 'destroyInventory'])->name('inventory.delete');
+        Route::put('/{id}', [AdminController::class, 'updateInventory'])->name('inventory.update');
     });
     Route::prefix('supplier')->group(function () {
         Route::get('/', [SupplierController::class, 'viewSupplier'])->name('viewSupplier');
@@ -44,16 +50,13 @@ Route::prefix('admin')->group(function () {
         Route::delete('/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
     });
 
-    Route::prefix('purchase')->group(function () {
-        Route::get('/', [PurchaseController::class, 'viewPurchase'])->name('viewPurchase');
-        Route::post('/', [PurchaseController::class, 'store'])->name('purchase.store');
-        Route::put('/{id}', [PurchaseController::class, 'update'])->name('purchase.update');
-        Route::delete('/{id}', [PurchaseController::class, 'destroy'])->name('purchase.destroy');
-        Route::post('/purchase/update-status/{id}', [PurchaseController::class, 'editStatus'])->name('purchase.editStatus');
-    });
-
-    Route::get('/order', function () {
-        return view('admin.order');
+    Route::prefix('/order')->group(function () {
+        Route::get('/', [OrderController::class, 'viewOrder'])->name('viewOrder');
+        Route::post('/', [OrderController::class, 'store'])->name('order.store');
+        Route::get('/detail/{order}', [OrderController::class, 'detailOrder'])->name('order.detail');
+        Route::put('/acceptOrder/{order}', [OrderController::class, 'acceptOrder'])->name('acceptOrder');
+        Route::put('/declineOrder/{order}', [OrderController::class, 'declineOrder'])->name('declineOrder');
+        Route::put('/doneOrder/{order}', [OrderController::class, 'DoneOrder'])->name('DoneOrder');
     });
 
     Route::prefix('purchasing')->group(function () {
@@ -67,5 +70,20 @@ Route::prefix('admin')->group(function () {
         Route::post('/store', [ExpenditureController::class, 'store'])->name('expenditure.store');
         Route::delete('/delete/{expenditure:id}', [ExpenditureController::class, 'delete'])->name('expenditure.delete');
         Route::put('/update/{expenditure:id}', [ExpenditureController::class, 'update'])->name('expenditure.update');
+    });
+
+    Route::prefix('catalog')->group(function () {
+        Route::get('/', [ProductController::class, 'catalog'])->name('view.catalog');
+        Route::post('/', [ProductController::class, 'catalogstore'])->name('catalog.store');
+        Route::get('/{id}/edit', [ProductController::class, 'edits'])->name('catalog.edit');
+        Route::put('/{id}', [ProductController::class, 'Catalogupdate'])->name('catalog.update');
+        Route::delete('/{id}', [ProductController::class, 'deletecatalog'])->name('catalog.delete');
+    }); 
+
+    Route::prefix('expenditure')->group(function () {
+        Route::get('/', [ExpenditureController::class, 'viewExpenditure'])->name('viewExpenditure');
+        Route::post('/', [ExpenditureController::class, 'storeExpenditure'])->name('expenditure.store');
+        Route::delete('/{id}', [ExpenditureController::class, 'destroy'])->name('expenditure.destroy');
+        Route::put('/{id}', [ExpenditureController::class, 'updateExpenditure'])->name('expenditure.update');
     });
 });

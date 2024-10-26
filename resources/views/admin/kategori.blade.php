@@ -251,6 +251,7 @@
                 }
             })
         }
+        
         function deleteKategori(id) {
             // console.log(id);
             var url_delete = "{{ route('kategori.destroy', ':id') }}".replace(':id', id);

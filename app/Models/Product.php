@@ -18,7 +18,13 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable; 
+    protected $fillable = [
+        'name',
+        'category',
+        'quantity',
+        'unit',
+        'price',
+    ];
 
     /**
      * Rules that applied in this model
@@ -57,10 +63,6 @@ class Product extends Model
      * @var string
      */
 
-    public function controller()
-    {
-        return 'App\Http\Controllers\ProductController';
-    }
 
     /**
     * Relations associated with this model
@@ -77,4 +79,8 @@ class Product extends Model
     *
     *
     */
+    public function kategoris()
+    {
+        return $this->belongsTo(Kategori::class,'category','id');
+    }
 }

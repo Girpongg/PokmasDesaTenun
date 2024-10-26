@@ -9,16 +9,19 @@ class Purchase extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
-        'quantity',
-        'unit',
-        'price',
+        'title',
         'order_date',
+        'shipped_date',
         'supplier_id'
     ];
 
     public function supplier()
     {
         return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
+    }
+
+    public function purchaseDetails()
+    {
+        return $this->hasMany(PurchaseDetail::class, 'purchase_id', 'id');
     }
 }
