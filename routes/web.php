@@ -25,7 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function() {
+Route::get('/home', function () {
     return view('user.home');
 });
 
@@ -92,7 +92,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/{id}/edit', [ProductController::class, 'edits'])->name('catalog.edit');
         Route::put('/{id}', [ProductController::class, 'Catalogupdate'])->name('catalog.update');
         Route::delete('/{id}', [ProductController::class, 'deletecatalog'])->name('catalog.delete');
-    }); 
+    });
 
     Route::prefix('expenditure')->group(function () {
         Route::get('/', [ExpenditureController::class, 'viewExpenditure'])->name('viewExpenditure');
