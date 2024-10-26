@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Expenditures;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -8,7 +9,7 @@ use App\Utils\HttpResponseCode;
 
 class ExpenditureController extends Controller
 {
-    
+
     public function viewExpenditure()
     {
         $data['expenditures'] = Expenditures::all();
@@ -85,5 +86,4 @@ class ExpenditureController extends Controller
         $expenditures->update($data);
         return response()->json(['success' => true, 'message' => 'Update Expenditure Success', 'data' => $expenditures], 200);
     }
-    
 }
