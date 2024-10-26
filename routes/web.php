@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ExpenditureController;
+use App\Http\Controllers\BarangJualController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\OrderController;
@@ -25,9 +26,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function() {
+    return view('user.home');
+});
+
 Route::get('admin/login', function () {
     return view('admin.login.login');
 });
+
+Route::get('/barang', [BarangJualController::class, 'viewCatalog'])->name('milih-barang');
+Route::get('/detail-barang/{barang}', [BarangJualController::class, 'viewDetail'])->name('detail-barang');
+
+Route::get('/detail-payment', function () {
+    return view('user.detail-payment');
+})->name('detail-payment');
+
+Route::get('/form-katalog', function () {
+    return view('user.form-katalog');
+})->name('form-katalog');
 
 Route::prefix('admin')->group(function () {
     Route::prefix('kategori')->group(function () {
