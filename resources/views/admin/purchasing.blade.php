@@ -1,9 +1,22 @@
 @extends('admin.layout')
 
 @section('content')
-    <div class="flex flex-col w-full py-8 rounded-lg shadow-xl items-center justify-center mb-10">
-        <h1 class="text-center text-4xl uppercase font-bold mb-2">PURCHASE ORDERS</h1>
-    </div>
+
+<style>
+    .status-pending {
+        font-weight: bold;
+        color: red;
+    }
+
+    .status-done {
+        font-weight: bold;
+        color: green;
+    }
+</style>
+
+<div class="flex flex-col w-full py-8 rounded-lg shadow-xl items-center justify-center mb-10">
+    <h1 class="text-center text-4xl uppercase font-bold mb-2">PURCHASE ORDERS</h1>
+</div>
 
     <div class="flex flex-col w-full  rounded-lg shadow-xl items-center justify-center mb-2">
         <div class="w-full flex flex-col items-end mb-3 px-8 pt-5">

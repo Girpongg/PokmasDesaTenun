@@ -50,6 +50,23 @@
 @php
     $header = '';
 @endphp
+ <style>
+    .swal2-confirm {
+            text-shadow: 0 0 12px var(--glow);
+            background: none !important;
+            color: black !important;
+            font-weight: 600 !important;
+            border: grey var(--glow) 1px !important;
+            width: 100px !important;
+            box-shadow: 0 0 9px black !important;
+            -webkit-box-shadow: 0 0 9px var(--glow) !important;
+        }
+
+        .swal2-confirm:hover {
+            box-shadow: 0 0 0 0.2rem var(--glow) !important;
+            -webkit-box-shadow: 0 0 14px var(--glow) !important;
+        }
+ </style>
 
 <body>
     <nav id="sidenav-8"
@@ -127,7 +144,7 @@
             </li>
             <li class="relative">
                 <a class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
-                    data-te-sidenav-link-ref href="">
+                    data-te-sidenav-link-ref href="{{route('viewInventory')}}">
                     <span class="mr-4 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-300">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
