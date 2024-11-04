@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('barang_juals', function (Blueprint $table) {
             $table->id(); 
             $table->string('image')->nullable();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->integer('price');
             $table->integer('stock');
             $table->integer('tipe')->comment('1: katalog 2: custom');

@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->date('order_date');
             $table->string('customer_name');
             $table->string('customer_wa');
             $table->string('address');
-            $table->integer('status')->nullable()->comment('0: reject, 1: accept, 2: selesai');
-            $table->string('title');
+            $table->string('title')->nullable();    
+            $table->integer('total_price');
+            $table->integer('is_done')->default(0)->comment('0: not done, 1: done, 2: sudah diambil ');
             $table->string('desc')->nullable();
+            $table->timestamps();
         });
     }
 

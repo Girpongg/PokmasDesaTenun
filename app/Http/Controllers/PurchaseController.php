@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
+use App\Models\Expenditures;
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\PurchaseDetail;
@@ -65,13 +66,16 @@ class PurchaseController extends Controller
         try {
             // Create Purchase
             $purchase = Purchase::create($data);
-
+            $totalOrderPrice = 0;
             // Process Products and update their quantities
             foreach ($products as $productData) {
+                $totalPrice = 0;
                 $product = Product::where('name', $productData['name'])->first();
                 if ($product) {
                     $product->quantity += $productData['quantity'];
                     $product->unit = $productData['unit'];
+                    $product->price = $productData['price']; //update price yo gir
+                    $totalPrice = $productData['price'] * $productData['quantity'];
                     $product->save();
                 } else {
                     $product = Product::create([
@@ -80,15 +84,24 @@ class PurchaseController extends Controller
                         'unit' => $productData['unit'],
                         'price' => $productData['price'],
                     ]);
-                    // dd('halo');
-                }
+                    $totalPrice += $productData['price'] * $productData['quantity'];
+                } 
+                
+                $totalOrderPrice += $totalPrice;
+
                 PurchaseDetail::create([
                     'purchase_id' => $purchase->id,
                     'product_id' => $product->id,
                     'quantity' => $productData['quantity'],
                     'price' => $productData['price'],
                 ]);
+                
             }
+            Expenditures::create([
+                'title' => $data['title'],
+                'total_price' => $totalOrderPrice,
+                'exp_date' => $data['order_date'],
+            ]);
 
             DB::commit();
             return response()->json(['message' => 'Data successfully stored', 'success' => true]);

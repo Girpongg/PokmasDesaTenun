@@ -9,14 +9,14 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
+    protected $table = 'order_detail';
+
     protected $fillable = [
-        'image',
-        'order',
-        'product',
+        'order_id',
+        'barangjual_id',
         'quantity',
         'price',
-        'order_date',
-        'done_date',
+        'status',
     ];
 
     public function order()
@@ -27,6 +27,11 @@ class OrderDetail extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function barangJual()
+    {
+        return $this->belongsTo(BarangJual::class, 'barangjual_id', 'id');
     }
 }
 
