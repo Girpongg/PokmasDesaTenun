@@ -5,7 +5,6 @@ use App\Http\Controllers\BarangJualController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\BarangJualController;
 use App\Http\Controllers\ExpenditureController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
