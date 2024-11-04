@@ -63,6 +63,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/store', [PurchaseController::class, 'store'])->name('purchase.store');
         Route::delete('/delete/{purchase:id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
         Route::put('/update/{purchase:id}', [PurchaseController::class, 'update'])->name('purchase.update');
+        Route::put('/accept/{purchase:id}', [PurchaseController::class, 'accept'])->name('purchase.accept');
     });
 
     Route::prefix('catalog')->group(function () {

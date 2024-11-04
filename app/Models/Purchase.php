@@ -12,16 +12,17 @@ class Purchase extends Model
         'title',
         'order_date',
         'shipped_date',
-        'supplier_id'
+        'supplier_id',
+        'status',
     ];
 
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
+        return $this->belongsTo(Supplier::class);
     }
 
     public function purchaseDetails()
     {
-        return $this->hasMany(PurchaseDetail::class, 'purchase_id', 'id');
+        return $this->hasMany(PurchaseDetail::class);
     }
 }
