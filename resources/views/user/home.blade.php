@@ -61,300 +61,210 @@
         }
     </style>
 @section('content')
-<div class="relative w-full h-[400px]">
-    <img class="w-full h-full object-cover" src="{{ asset('assets/wayang2.jpg') }}" alt="">
-    <div class="absolute inset-0 bg-black opacity-50"></div> 
-    <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
-        <div class="text-2xl font-bold"><u>SELAMAT DATANG DI DESA TENUN</u></div>
-        <div class="text-lg">Selamat menikmati keindahan budaya kami!</div> 
-    </div>
-</div>
 
-<div>
-    
-</div>
-<div class=" w-[70%] h-auto mx-auto my-[70px]">
-    <h1 class=" text-[80px] custom-span text-[#5C4033]">Desa Tenun</h1>
-    <p class=" custom-span text-[#5C4033]">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique eveniet aperiam ut animi expedita reprehenderit, deserunt dolor odio, commodi sunt molestias. Quam eligendi eum dicta asperiores nobis exercitationem eos odio.</p>
-</div>
-
-<div class="">
-    <div class=" w-[70%] h-auto mx-auto my-[70px] flex flex-row max-lg:flex-col max-lg:justify-center maxlg items-center max-lg:w-[100%]">
-        <div class=" flex flex-col w-[50%] items-center justify-center max-lg:mb-5">
-            <div class="flex justify-center">
-                <img class=" w-[300px] h-[200px] max-sm:w-full" src="{{asset('assets/batik.jpg')}}" alt="">
-            </div>
-            <div class=" flex text-center justify-center bg-[#5C4033] w-[300px] max-sm:w-full ">
-                <button class=" w-[300px] custom-span text-[#F5E9D3] shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"> Kain Impor</button>
-            </div>
-        </div>
-
-        <div class=" flex flex-col w-[50%] items-center justify-center">
-            <div class="flex justify-center">
-                <img class=" w-[300px] h-[200px] max-sm:w-full" src="{{asset('assets/batik2.jpg')}}" alt="">
-            </div>
-            <div class=" flex text-center justify-center bg-[#5C4033] w-[300px] max-sm:w-full">
-                <button class=" w-[300px] custom-span text-[#F5E9D3] shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"> Kain Lokal</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class=" w-[70%] h-auto mx-auto my-[70px]">
-    <h1 class=" text-[50px] custom-span text-[#5C4033]">Apa bedanya benang lokal dan impor?</h1>
-    <p class=" custom-span text-[#5C4033]">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique eveniet aperiam ut animi expedita reprehenderit, deserunt dolor odio, commodi sunt molestias. Quam eligendi eum dicta asperiores nobis exercitationem eos odio.</p>
-</div>
-<div class=" flex justify-center">
-    <div class=" h-auto w-[70%] flex justify-center">
-    <img src="{{ asset('assets/dummyimporlokal.jpeg') }}" alt="">
-    </div>
-</div>
-
-
-
-<div class=" w-[70%] h-auto mx-auto mb-[30px] mt-[100px] flex justify-center">
-    <h1 class=" text-[50px] custom-span text-[#5C4033]"><b>PROMO SPESIAL RAMADHAN</b></h1>
-</div>
-<div class="relative z-1 w-full">
-    <div class="swiper2 !w-full !h-[500px] mySwiper2 relative overflow-x-hidden">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img class="relative z-0 filter brightness-75 h-[500px] w-full" src="{{ asset('assets/promo1.jpeg') }}" alt="">
-            </div>
-            <div class="swiper-slide">
-                <img class="relative z-0 filter brightness-75 h-[500px] w-full" src="{{ asset('assets/promo1.jpeg') }}" alt="">
-            </div>
-            <div class="swiper-slide">
-                <img class="relative z-0 filter brightness-75 h-[500px] w-full" src="{{ asset('assets/promo1.jpeg') }}" alt="">
-            </div>
-            <div class="swiper-slide">
-                <img class="relative z-0 filter brightness-75 h-[500px] w-full" src="{{ asset('assets/promo1.jpeg') }}" alt="">
-            </div>
-            <div class="swiper-slide">
-                <img class="relative z-0 filter brightness-75 h-[500px] w-full" src="{{ asset('assets/promo1.jpeg') }}" alt="">
-            </div>
-        </div>
-        <div class="swiper-pagination max-sm:hidden"></div>
-    </div>
-    <div class="custom-shape-divider-bottom-1725791922 max-sm:hidden ">
-        <img src="https://www.cashlez.com/img/wave.png" alt="image">
-    </div>
-</div>
-
-<div class="mt-20 mb-20 py-20">
-    <div class=" w-[80%] h-auto flex justify-end mx-auto mb-20">
-        <h1 class=" text-[50px] custom-span text-[#5C4033]"><b>BEST SELLER</b></h1>
-    </div>
-    <div class="swiper-container-wrapper mb-10">
-        <div class="swiper-button-prev mx-auto"></div>
-        <div class="w-[80%] sm:w-[80%] sm:h-[90%] swiper mySwiper4">
+<div class="bg-[#e9ded7]">
+    <div class="relative z-1 w-full">
+        <div class="swiper2 !w-full !h-[500px] mySwiper2 relative overflow-x-hidden">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class=" bg-gray-200 w-[222px] h-[386px] mt-5 border border-[#5C4033]">
-                        <div class="">
-                            <img src="{{ asset('assets/sarung.jpeg') }}" alt="" class=" w-full h-[200px]" />
-                        </div>
-                        
-                        <div class="bg-[#5C4033] w-[220px] h-[185px]">
-                            <div class="p-4">
-                                <h1 class=" custom-span text-[#F5E9D3] font-semibold text-[20px]">Sarung Tenun Biru</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] font-bold text-[20px] leading-4">Rp. 120.000</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] leading-5 mt-2 text-[16px]">Stok Tersisa 20 buah</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] leading-4 text-[16px]" >10 Terjual</h1>
-                            </div>
-                            <div class="flex justify-center">
-                                <button
-                                type="button"
-                                class="w-4/5 inline-block bg-[#dfdfdf] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                                Masukkan ke Tas
-                                </button>
-                            </div>
-                        </div>
-                    </div>                
+                <div class="swiper-slide relative">
+                    <img class="relative z-0 filter brightness-75 h-[500px] w-full" src="{{ asset('assets/promobatik.jpg') }}" alt="">
+                    <a href="#" class="absolute bottom-10 left-1/4 transform -translate-x-1/2 bg-transparent text-[#7B4B3A] px-4 py-2 border border-[#7B4B3A] rounded-lg text-lg font-bold z-10">BELI SEKARANG</a>
                 </div>
-                <div class="swiper-slide">
-                    <div class=" w-[222px] h-[386px] mt-5 border border-[#5C4033]">
-                        <div class="">
-                            <img src="{{ asset('assets/sarung.jpeg') }}" alt="" class=" w-full h-[200px]" />
-                        </div>
-                        
-                        <div class="bg-[#5C4033] w-[220px] h-[185px]">
-                            <div class="p-4">
-                                <h1 class=" custom-span text-[#F5E9D3] font-semibold text-[20px]">Sarung Tenun Biru</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] font-bold text-[20px] leading-4">Rp. 120.000</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] leading-5 mt-2 text-[16px]">Stok Tersisa 20 buah</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] leading-4 text-[16px]" >10 Terjual</h1>
-                            </div>
-                            <div class="flex justify-center">
-                                <button
-                                type="button"
-                                class="w-4/5 inline-block bg-[#dfdfdf] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                                Masukkan ke Tas
-                                </button>
-                            </div>
-                        </div>
-                    </div>                
+                <div class="swiper-slide relative">
+                    <img class="relative z-0 filter brightness-75 h-[500px] w-full" src="{{ asset('assets/promobatik.jpg') }}" alt="">
+                    <a href="#" class="absolute bottom-10 left-1/4 transform -translate-x-1/2 bg-transparent text-[#A76B54] px-4 py-2 border border-[#A76B54] rounded-lg text-lg font-bold z-10">BELI SEKARANG</a>
                 </div>
-                <div class="swiper-slide">
-                    <div class=" w-[222px] h-[386px] mt-5 border border-[#5C4033]">
-                        <div class="">
-                            <img src="{{ asset('assets/sarung.jpeg') }}" alt="" class=" w-full h-[200px]" />
-                        </div>
-                        
-                        <div class="bg-[#5C4033] w-[222px] h-[185px]">
-                            <div class="p-4">
-                                <h1 class=" custom-span text-[#F5E9D3] font-semibold text-[20px]">Sarung Tenun Biru</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] font-bold text-[20px] leading-4">Rp. 120.000</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] leading-5 mt-2 text-[16px]">Stok Tersisa 20 buah</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] leading-4 text-[16px]" >10 Terjual</h1>
-                            </div>
-                            <div class="flex justify-center">
-                                <button
-                                type="button"
-                                class="w-4/5 inline-block bg-[#dfdfdf] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                                Masukkan ke Tas
-                                </button>
-                            </div>
-                        </div>
-                    </div>                
+                <div class="swiper-slide relative">
+                    <img class="relative z-0 filter brightness-75 h-[500px] w-full" src="{{ asset('assets/promobatik.jpg') }}" alt="">
+                    <a href="#" class="absolute bottom-10 left-1/4 transform -translate-x-1/2 bg-transparent text-[#7B4B3A] px-4 py-2 border border-[#7B4B3A] rounded-lg text-lg font-bold z-10">BELI SEKARANG</a>
                 </div>
-                <div class="swiper-slide">
-                    <div class=" bg-gray-200 w-[222px] h-[386px] mt-5 border border-[#5C4033]">
-                        <div class="">
-                            <img src="{{ asset('assets/sarung.jpeg') }}" alt="" class=" w-full h-[200px]" />
-                        </div>
-                        
-                        <div class="bg-[#5C4033] w-[220px] h-[185px]">
-                            <div class="p-4">
-                                <h1 class=" custom-span text-[#F5E9D3] font-semibold text-[20px]">Sarung Tenun Biru</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] font-bold text-[20px] leading-4">Rp. 120.000</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] leading-5 mt-2 text-[16px]">Stok Tersisa 20 buah</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] leading-4 text-[16px]" >10 Terjual</h1>
-                            </div>
-                            <div class="flex justify-center">
-                                <button
-                                type="button"
-                                class="w-4/5 inline-block bg-[#dfdfdf] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                                Masukkan ke Tas
-                                </button>
-                            </div>
-                        </div>
-                    </div>                
+                <div class="swiper-slide relative">
+                    <img class="relative z-0 filter brightness-75 h-[500px] w-full" src="{{ asset('assets/promobatik.jpg') }}" alt="">
+                    <a href="#" class="absolute bottom-10 left-1/4 transform -translate-x-1/2 bg-transparent text-[#A76B54] px-4 py-2 border border-[#A76B54] rounded-lg text-lg font-bold z-10">BELI SEKARANG</a>
                 </div>
-                                
-                <div class="swiper-slide">
-                    <div class=" bg-gray-200 w-[222px] h-[386px] mt-5 border border-[#5C4033]">
-                        <div class="">
-                            <img src="{{ asset('assets/sarung.jpeg') }}" alt="" class=" w-full h-[200px]" />
-                        </div>
-                        
-                        <div class="bg-[#5C4033] w-[222px] h-[185px]">
-                            <div class="p-4">
-                                <h1 class=" custom-span text-[#F5E9D3] font-semibold text-[20px]">Sarung Tenun Biru</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] font-bold text-[20px] leading-4">Rp. 120.000</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] leading-5 mt-2 text-[16px]">Stok Tersisa 20 buah</h1>
-                                <h1 class=" custom-span text-[#F5E9D3] leading-4 text-[16px]" >10 Terjual</h1>
-                            </div>
-                            <div class="flex justify-center">
-                                <button
-                                type="button"
-                                class="w-4/5 inline-block bg-[#dfdfdf] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                                Masukkan ke Tas
-                                </button>
-                            </div>
-                        </div>
-                    </div>                
+                <div class="swiper-slide relative">
+                    <img class="relative z-0 filter brightness-75 h-[500px] w-full" src="{{ asset('assets/promobatik.jpg') }}" alt="">
+                    <a href="#" class="absolute bottom-10 left-1/4 transform -translate-x-1/2 bg-transparent text-[#7B4B3A] px-4 py-2 border border-[#7B4B3A] rounded-lg text-lg font-bold z-10">BELI SEKARANG</a>
                 </div>
+            </div>
+            <div class="swiper-pagination max-sm:hidden"></div>
+        </div>
+    </div>
+</div>
 
+
+    {{-- <div class="relative w-full h-[400px]">
+        <img class="w-full h-full object-cover" src="{{ asset('assets/wayang2.jpg') }}" alt="">
+        <div class="absolute inset-0 bg-black opacity-50"></div> 
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
+            <div class="text-2xl font-bold"><u>SELAMAT DATANG DI DESA TENUN</u></div>
+            <div class="text-lg">Selamat menikmati keindahan budaya kami!</div> 
+        </div>
+    </div>
+    
+    <div> --}}
+        
+    {{-- </div> --}}
+    <div class=" w-[70%] h-auto mx-auto my-[70px] ">
+        <h1 class=" text-[80px] custom-span text-[#5C4033]">Desa Tenun</h1>
+        <p class=" custom-span text-[#5C4033]">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique eveniet aperiam ut animi expedita reprehenderit, deserunt dolor odio, commodi sunt molestias. Quam eligendi eum dicta asperiores nobis exercitationem eos odio.</p>
+    </div>
+    
+    <div class="">
+        <div class=" w-[70%] h-auto mx-auto my-[70px] flex flex-row max-lg:flex-col max-lg:justify-center maxlg items-center max-lg:w-[100%]">
+            <div class=" flex flex-col w-[50%] items-center justify-center max-lg:mb-5">
+                <div class="flex justify-center">
+                    <img class=" w-[300px] h-[200px] max-sm:w-full" src="{{asset('assets/batik.jpg')}}" alt="">
+                </div>
+                <div class=" flex text-center justify-center bg-[#5C4033] w-[300px] max-sm:w-full ">
+                    <button class=" w-[300px] custom-span text-[#F5E9D3] shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"> Kain Impor</button>
+                </div>
+            </div>
+    
+            <div class=" flex flex-col w-[50%] items-center justify-center">
+                <div class="flex justify-center">
+                    <img class=" w-[300px] h-[200px] max-sm:w-full" src="{{asset('assets/batik2.jpg')}}" alt="">
+                </div>
+                <div class=" flex text-center justify-center bg-[#5C4033] w-[300px] max-sm:w-full">
+                    <button class=" w-[300px] custom-span text-[#F5E9D3] shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"> Kain Lokal</button>
+                </div>
             </div>
         </div>
-
-        <div class="swiper-button-next mx-auto"></div>
+    </div>
+    
+    <div class=" w-[70%] h-auto mx-auto my-[70px]">
+        <h1 class=" text-[50px] custom-span text-[#5C4033]">Apa bedanya benang lokal dan impor?</h1>
+        <p class=" custom-span text-[#5C4033]">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique eveniet aperiam ut animi expedita reprehenderit, deserunt dolor odio, commodi sunt molestias. Quam eligendi eum dicta asperiores nobis exercitationem eos odio.</p>
+    </div>
+    <div class=" flex justify-center">
+        <div class=" h-auto w-[70%] flex justify-center">
+        <img src="{{ asset('assets/dummyimporlokal.jpeg') }}" alt="">
+        </div>
     </div>
 
-<div class="mt-20 mb-20 py-20">
+    <div class="mt-20 mb-20 py-20">
         <div class=" w-[80%] h-auto flex justify-end mx-auto mb-20">
-            <h1 class=" text-[50px] custom-span text-[#5C4033]"><b>TESTIMONI</b></h1>
+            <h1 class=" text-[50px] custom-span text-[#5C4033]"><b>BEST SELLER</b></h1>
         </div>
         <div class="swiper-container-wrapper mb-10">
             <div class="swiper-button-prev mx-auto"></div>
-            <div class="w-[80%] sm:w-[80%] sm:h-[90%] swiper mySwiper3">
+            <div class="w-[80%] sm:w-[80%] sm:h-[90%] swiper mySwiper4">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <div class="max-w-sm mx-auto bg-white rounded-xl hover:shadow-md overflow-hidden md:max-w-2xl">
-                            <div class="flex">
-                                <div class="shrink-0 h-20 md:h-48">
-                                    <img class="" src="{{ asset('assets/merch1.png') }}" alt="Chery Dunia Palmerah">
+                        <div class=" bg-gray-200 w-[222px] h-[386px] mt-5 border border-[#5C4033]">
+                            <div class="">
+                                <img src="{{ asset('assets/sarung.jpeg') }}" alt="" class=" w-full h-[200px]" />
+                            </div>
+                            
+                            <div class="bg-[#5C4033] w-[220px] h-[185px]">
+                                <div class="p-4">
+                                    <h1 class=" custom-span text-[#F5E9D3] font-semibold text-[20px]">Sarung Tenun Biru</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] font-bold text-[20px] leading-4">Rp. 120.000</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] leading-5 mt-2 text-[16px]">Stok Tersisa 20 buah</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] leading-4 text-[16px]" >10 Terjual</h1>
                                 </div>
-                                <div class="p-8 w-full">
-                                    <div class="w-[77px] mb-2 h-[57px]">
-                                        <img src="{{ asset('assets/petik.png') }}" alt="">
-                                    </div>
-                                    <p class="max-md:text-sm text-sm text-justify leading-tight font-medium text-black">
-                                        Toko kain ini benar-benar luar biasa! Pilihan sarungnya sangat beragam dengan kualitas bahan yang lembut dan nyaman digunakan. Desainnya pun elegan, cocok untuk segala kesempatan.
-                                    </p>
-                                    <p class="mt-4 text-black text-start text-xs"><i>— Ivan Gunawan (Owner of Kedjora Coffee)</i>
-                                    </p>
+                                <div class="flex justify-center">
+                                    <button
+                                    type="button"
+                                    class="w-4/5 inline-block bg-[#dfdfdf] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                                    Masukkan ke Tas
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                        </div>                
                     </div>
                     <div class="swiper-slide">
-                        <div class="max-w-sm mx-auto bg-white rounded-xl hover:shadow-md overflow-hidden md:max-w-2xl">
-                            <div class="flex">
-                                <div class="shrink-0 h-20 md:h-48">
-                                    <img class="" src="{{ asset('assets/merch2.jpeg') }}" alt="Chery Dunia Palmerah">
+                        <div class=" w-[222px] h-[386px] mt-5 border border-[#5C4033]">
+                            <div class="">
+                                <img src="{{ asset('assets/sarung.jpeg') }}" alt="" class=" w-full h-[200px]" />
+                            </div>
+                            
+                            <div class="bg-[#5C4033] w-[220px] h-[185px]">
+                                <div class="p-4">
+                                    <h1 class=" custom-span text-[#F5E9D3] font-semibold text-[20px]">Sarung Tenun Biru</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] font-bold text-[20px] leading-4">Rp. 120.000</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] leading-5 mt-2 text-[16px]">Stok Tersisa 20 buah</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] leading-4 text-[16px]" >10 Terjual</h1>
                                 </div>
-                                <div class="p-8 w-full">
-                                    <div class="w-[77px] mb-2 h-[57px]">
-                                        <img src="{{ asset('assets/petik.png') }}" alt="">
-                                    </div>
-                                    <p class="max-md:text-sm text-sm text-justify leading-tight font-medium text-black">
-                                        Pelayanan dari toko ini juga sangat ramah dan membantu, membuat pengalaman berbelanja menjadi menyenangkan. Harga yang ditawarkan sepadan dengan kualitas produknya. Sangat direkomendasikan bagi siapa saja yang mencari kain atau sarung berkualitas tinggi!
-                                    </p>
-                                    <p class="mt-4 text-black text-start text-xs"><i>— Michimomo (Owner of Bamsae)</i>
-                                    </p>
+                                <div class="flex justify-center">
+                                    <button
+                                    type="button"
+                                    class="w-4/5 inline-block bg-[#dfdfdf] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                                    Masukkan ke Tas
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                        </div>                
                     </div>
                     <div class="swiper-slide">
-                        <div class="max-w-sm mx-auto bg-white rounded-xl hover:shadow-md overflow-hidden md:max-w-2xl">
-                            <div class="flex">
-                                <div class="shrink-0 h-20 md:h-48">
-                                    <img class="" src="{{ asset('assets/merch3.jpeg') }}" alt="Chery Dunia Palmerah">
+                        <div class=" w-[222px] h-[386px] mt-5 border border-[#5C4033]">
+                            <div class="">
+                                <img src="{{ asset('assets/sarung.jpeg') }}" alt="" class=" w-full h-[200px]" />
+                            </div>
+                            
+                            <div class="bg-[#5C4033] w-[222px] h-[185px]">
+                                <div class="p-4">
+                                    <h1 class=" custom-span text-[#F5E9D3] font-semibold text-[20px]">Sarung Tenun Biru</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] font-bold text-[20px] leading-4">Rp. 120.000</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] leading-5 mt-2 text-[16px]">Stok Tersisa 20 buah</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] leading-4 text-[16px]" >10 Terjual</h1>
                                 </div>
-                                <div class="p-8 w-full">
-                                    <div class="w-[77px] mb-2 h-[57px]">
-                                        <img src="{{ asset('assets/petik.png') }}" alt="">
-                                    </div>
-                                    <p class="max-md:text-sm text-sm text-justify leading-tight font-medium text-black">
-                                        Luar biasa! Toko ini menyediakan sarung dengan berbagai pilihan motif yang menarik dan bahan yang berkualitas tinggi. Selain itu, pelayanannya sangat profesional dan cepat tanggap.
-                                    </p>
-                                    <p class="mt-4 text-black text-start text-xs"><i>— Ayam Goreng Ny Suharti</i>
-                                    </p>
+                                <div class="flex justify-center">
+                                    <button
+                                    type="button"
+                                    class="w-4/5 inline-block bg-[#dfdfdf] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                                    Masukkan ke Tas
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                        </div>                
                     </div>
                     <div class="swiper-slide">
-                        <div class="max-w-sm mx-auto bg-white rounded-xl hover:shadow-md overflow-hidden md:max-w-2xl">
-                            <div class="flex">
-                                <div class="shrink-0 h-20 md:h-48">
-                                    <img class="" src="{{ asset('assets/merch4.jpeg') }}" alt="Chery Dunia Palmerah">
+                        <div class=" bg-gray-200 w-[222px] h-[386px] mt-5 border border-[#5C4033]">
+                            <div class="">
+                                <img src="{{ asset('assets/sarung.jpeg') }}" alt="" class=" w-full h-[200px]" />
+                            </div>
+                            
+                            <div class="bg-[#5C4033] w-[220px] h-[185px]">
+                                <div class="p-4">
+                                    <h1 class=" custom-span text-[#F5E9D3] font-semibold text-[20px]">Sarung Tenun Biru</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] font-bold text-[20px] leading-4">Rp. 120.000</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] leading-5 mt-2 text-[16px]">Stok Tersisa 20 buah</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] leading-4 text-[16px]" >10 Terjual</h1>
                                 </div>
-                                <div class="p-8 w-full">
-                                    <div class=" w-[77px] mb-2 h-[57px]">
-                                        <img src="{{ asset('assets/petik.png') }}" alt="">
-                                    </div>
-                                    <p class="max-md:text-sm text-sm text-justify leading-tight font-medium text-black">
-                                        Pengalaman berbelanja di toko kain ini sangat memuaskan. Sarung-sarung yang mereka tawarkan memiliki motif yang unik dan kainnya terasa sangat halus. Saya terkesan dengan kualitas produk yang ditawarkan dengan harga yang cukup terjangkau.
-                                    </p>
-                                    <p class="mt-4 text-black text-start text-xs"><i>— Enno Lerian (Owner of Luma Scarf)</i>
-                                    </p>
+                                <div class="flex justify-center">
+                                    <button
+                                    type="button"
+                                    class="w-4/5 inline-block bg-[#dfdfdf] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                                    Masukkan ke Tas
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                        </div>                
+                    </div>
+                                    
+                    <div class="swiper-slide">
+                        <div class=" bg-gray-200 w-[222px] h-[386px] mt-5 border border-[#5C4033]">
+                            <div class="">
+                                <img src="{{ asset('assets/sarung.jpeg') }}" alt="" class=" w-full h-[200px]" />
+                            </div>
+                            
+                            <div class="bg-[#5C4033] w-[222px] h-[185px]">
+                                <div class="p-4">
+                                    <h1 class=" custom-span text-[#F5E9D3] font-semibold text-[20px]">Sarung Tenun Biru</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] font-bold text-[20px] leading-4">Rp. 120.000</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] leading-5 mt-2 text-[16px]">Stok Tersisa 20 buah</h1>
+                                    <h1 class=" custom-span text-[#F5E9D3] leading-4 text-[16px]" >10 Terjual</h1>
+                                </div>
+                                <div class="flex justify-center">
+                                    <button
+                                    type="button"
+                                    class="w-4/5 inline-block bg-[#dfdfdf] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out hover:bg-[#C29545] hover:shadow-md focus:bg-[#d8d8d8] focus:shadow-md focus:outline-none focus:ring-0 active:bg-[#bfbfbf] active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                                    Masukkan ke Tas
+                                    </button>
+                                </div>
+                            </div>
+                        </div>                
                     </div>
     
                 </div>
@@ -363,6 +273,99 @@
             <div class="swiper-button-next mx-auto"></div>
         </div>
     
+    <div class="mt-20 mb-20 py-20">
+            <div class=" w-[80%] h-auto flex justify-end mx-auto mb-20">
+                <h1 class=" text-[50px] custom-span text-[#5C4033]"><b>TESTIMONI</b></h1>
+            </div>
+            <div class="swiper-container-wrapper mb-10">
+                <div class="swiper-button-prev mx-auto"></div>
+                <div class="w-[80%] sm:w-[80%] sm:h-[90%] swiper mySwiper3">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="max-w-sm mx-auto bg-white rounded-xl hover:shadow-md overflow-hidden md:max-w-2xl">
+                                <div class="flex">
+                                    <div class="shrink-0 h-20 md:h-48">
+                                        <img class="" src="{{ asset('assets/merch1.png') }}" alt="Chery Dunia Palmerah">
+                                    </div>
+                                    <div class="p-8 w-full">
+                                        <div class="w-[77px] mb-2 h-[57px]">
+                                            <img src="{{ asset('assets/petik.png') }}" alt="">
+                                        </div>
+                                        <p class="max-md:text-sm text-sm text-justify leading-tight font-medium text-black">
+                                            Toko kain ini benar-benar luar biasa! Pilihan sarungnya sangat beragam dengan kualitas bahan yang lembut dan nyaman digunakan. Desainnya pun elegan, cocok untuk segala kesempatan.
+                                        </p>
+                                        <p class="mt-4 text-black text-start text-xs"><i>— Ivan Gunawan (Owner of Kedjora Coffee)</i>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="max-w-sm mx-auto bg-white rounded-xl hover:shadow-md overflow-hidden md:max-w-2xl">
+                                <div class="flex">
+                                    <div class="shrink-0 h-20 md:h-48">
+                                        <img class="" src="{{ asset('assets/merch2.jpeg') }}" alt="Chery Dunia Palmerah">
+                                    </div>
+                                    <div class="p-8 w-full">
+                                        <div class="w-[77px] mb-2 h-[57px]">
+                                            <img src="{{ asset('assets/petik.png') }}" alt="">
+                                        </div>
+                                        <p class="max-md:text-sm text-sm text-justify leading-tight font-medium text-black">
+                                            Pelayanan dari toko ini juga sangat ramah dan membantu, membuat pengalaman berbelanja menjadi menyenangkan. Harga yang ditawarkan sepadan dengan kualitas produknya. Sangat direkomendasikan bagi siapa saja yang mencari kain atau sarung berkualitas tinggi!
+                                        </p>
+                                        <p class="mt-4 text-black text-start text-xs"><i>— Michimomo (Owner of Bamsae)</i>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="max-w-sm mx-auto bg-white rounded-xl hover:shadow-md overflow-hidden md:max-w-2xl">
+                                <div class="flex">
+                                    <div class="shrink-0 h-20 md:h-48">
+                                        <img class="" src="{{ asset('assets/merch3.jpeg') }}" alt="Chery Dunia Palmerah">
+                                    </div>
+                                    <div class="p-8 w-full">
+                                        <div class="w-[77px] mb-2 h-[57px]">
+                                            <img src="{{ asset('assets/petik.png') }}" alt="">
+                                        </div>
+                                        <p class="max-md:text-sm text-sm text-justify leading-tight font-medium text-black">
+                                            Luar biasa! Toko ini menyediakan sarung dengan berbagai pilihan motif yang menarik dan bahan yang berkualitas tinggi. Selain itu, pelayanannya sangat profesional dan cepat tanggap.
+                                        </p>
+                                        <p class="mt-4 text-black text-start text-xs"><i>— Ayam Goreng Ny Suharti</i>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="max-w-sm mx-auto bg-white rounded-xl hover:shadow-md overflow-hidden md:max-w-2xl">
+                                <div class="flex">
+                                    <div class="shrink-0 h-20 md:h-48">
+                                        <img class="" src="{{ asset('assets/merch4.jpeg') }}" alt="Chery Dunia Palmerah">
+                                    </div>
+                                    <div class="p-8 w-full">
+                                        <div class=" w-[77px] mb-2 h-[57px]">
+                                            <img src="{{ asset('assets/petik.png') }}" alt="">
+                                        </div>
+                                        <p class="max-md:text-sm text-sm text-justify leading-tight font-medium text-black">
+                                            Pengalaman berbelanja di toko kain ini sangat memuaskan. Sarung-sarung yang mereka tawarkan memiliki motif yang unik dan kainnya terasa sangat halus. Saya terkesan dengan kualitas produk yang ditawarkan dengan harga yang cukup terjangkau.
+                                        </p>
+                                        <p class="mt-4 text-black text-start text-xs"><i>— Enno Lerian (Owner of Luma Scarf)</i>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+        
+                <div class="swiper-button-next mx-auto"></div>
+            </div>
+        
+</div>
+
 
 @endsection
 
