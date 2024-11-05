@@ -34,8 +34,9 @@ class BarangJualController extends Controller
             $cart = [];
         } else {
             $cart = session()->get('cart');
+            $cart[] = $request->id;
         }
-        
+
         $request->session()->put('cart', $cart);
         return response()->json(['message' => 'Item added to cart', 'cart' => $cart]);
     }
@@ -63,10 +64,5 @@ class BarangJualController extends Controller
             'barang_juals' => json_encode($data),
         ];
         return view('admin.katalog', $sharedData);
-        
     }
-
-
-
 }
-

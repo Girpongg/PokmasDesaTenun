@@ -44,7 +44,7 @@ Route::get('/form-katalog', function () {
     return view('user.form-katalog');
 })->name('form-katalog');
 
-Route::post('/add-to-cart', [BarangJualController::class, 'addToCart'])->name('add-to-cart');
+Route::post('/add-to-cart', [BarangJualController::class, 'addToCart'])->name('cart.store');
 
 Route::prefix('admin')->group(function () {
     Route::prefix('kategori')->group(function () {
