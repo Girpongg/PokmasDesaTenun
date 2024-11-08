@@ -88,6 +88,11 @@ class BarangJualController extends Controller
         return view('admin.katalog', $sharedData);
     }
 
-
-
+    public function viewCart(){
+        $cart = session()->get('cart');
+        $data = [
+            'cart' => $cart,
+        ];
+        return view('user.cart', $data);
+    }
 }

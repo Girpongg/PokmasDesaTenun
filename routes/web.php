@@ -47,7 +47,7 @@ Route::get('/form-katalog', function () {
 Route::get('/add-to-cart/{id}', [BarangJualController::class, 'addToCart'])->name('add-cart');
 Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');
 
-Route::get('/add-to-cart/{id}', [BarangJualController::class, 'deleteFromCart'])->name('delete-from-cart');
+Route::get('/delete-from-cart/{id}', [BarangJualController::class, 'deleteFromCart'])->name('delete-from-cart');
 
 Route::prefix('admin')->group(function () {
     Route::prefix('kategori')->group(function () {
