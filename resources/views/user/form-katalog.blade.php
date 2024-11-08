@@ -1,5 +1,4 @@
 @extends('user.layout')
-@include('user.includes.navbar')
 @section('content')
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
     <div class="block max-w-md rounded-lg bg-white p-6 shadow-4 w-1/2">
@@ -62,6 +61,6 @@
       </form>
     </div>
   </div>
-  </div>
+</div>
   
 @endsection
