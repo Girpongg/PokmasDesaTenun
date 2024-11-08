@@ -86,17 +86,8 @@ class BarangJualController extends Controller
             'barang_juals' => json_encode($data),
         ];
         return view('admin.katalog', $sharedData);
-        
     }
-    
-    public function viewCart()
-    {
-        $cart = session()->get('cart');
-        $data = [
-            'cart' => $cart,
-        ];
-        // dd($data);
-        return view('user.cart', $data);
-    }
-}
 
+
+
+}

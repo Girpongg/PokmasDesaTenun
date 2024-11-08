@@ -1,19 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Milih Barang</title>
-    @vite('resources/css/app')
-    <link
-  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
-  rel="stylesheet" />
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css" />
-</head>
-<body>
     @extends('user.layout')
     @include('user.includes.navbar')
     <div class="flex justify-center">
@@ -56,7 +40,7 @@
 </body>
 </html>
 
-{{-- <script>
+        {{-- <script>
     const array = [];
     function addInput() {
         const inputContainer = document.getElementById('inputContainers');
@@ -80,4 +64,35 @@
         console.log(array);
     }
 </script> --}}
-<script src="https://cdn.jsdelivr.net/npm/tw-elements/js/tw-elements.umd.min.js"></script>
+
+        <script>
+            function addToCart(id) {
+                $.ajax({
+                    url: "{{ route('cart.store') }}",
+                    type: "POST",
+                    data: {
+                        id: id,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: xhr.responseJSON ? xhr.responseJSON.message : 'Something went wrong!',
+                            showConfirmButton: true
+                        });
+                    }
+                });
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/tw-elements/js/tw-elements.umd.min.js"></script>
+    @endsection
