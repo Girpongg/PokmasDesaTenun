@@ -28,16 +28,39 @@ class BarangJualController extends Controller
     }
 
 
-    public function addToCart(Request $request)
-    {
-        if (!session()->has('cart')) {
-            $cart = [];
-        } else {
-            $cart = session()->get('cart');
+    public function addToCart($id)
+    {   
+        // dd($id);
+        $barang = BarangJual::find($id);
+        $cart = session()->get('cart', []);
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        }else {
+            $cart[$id] = [
+                'image' => $barang->image,
+                'id' => $barang->id,
+                'name' => $barang->name,
+                'price' => $barang->price,
+                'description' => $barang->description,
+                'quantity' => 1,
+            ];
         }
-        
-        $request->session()->put('cart', $cart);
-        return response()->json(['message' => 'Item added to cart', 'cart' => $cart]);
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Item added to cart successfully!');
+    }
+
+    public function deleteFromCart($id)
+    {
+        $cart = session()->get('cart');
+        if (isset($cart[$id])) {
+            if ($cart[$id]['quantity'] > 1) {
+                $cart[$id]['quantity']--;
+            }else {
+                unset($cart[$id]);
+            }
+            session()->put('cart', $cart);
+        }
+        return redirect()->back()->with('success', 'Item removed from cart successfully!');
     }
 
     public function viewBarangJual()
@@ -65,8 +88,15 @@ class BarangJualController extends Controller
         return view('admin.katalog', $sharedData);
         
     }
-
-
-
+    
+    public function viewCart()
+    {
+        $cart = session()->get('cart');
+        $data = [
+            'cart' => $cart,
+        ];
+        // dd($data);
+        return view('user.cart', $data);
+    }
 }
 
