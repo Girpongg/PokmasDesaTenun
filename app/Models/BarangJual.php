@@ -9,6 +9,8 @@ class BarangJual extends Model
 {
     use HasFactory;
 
+    protected $table = 'barang_juals';
+
     protected $fillable = [
         'image',
         'name',
@@ -17,4 +19,9 @@ class BarangJual extends Model
         'tipe',
         'description',
     ];
+    
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
