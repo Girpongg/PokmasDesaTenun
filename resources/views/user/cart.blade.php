@@ -1,5 +1,8 @@
 @extends('user.layout')
 @section('content')
+<h1 class="text-4xl my-4 text-center font-bold">
+    Cart
+</h1>
 <div class="grid grid-cols-5 px-20 place-items-center">
     @foreach ($cart as $value)
         <div class="relative bg-gray-200 w-[220px] h-[385px] my-5 cursor-pointer">
