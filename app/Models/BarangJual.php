@@ -9,8 +9,11 @@ class BarangJual extends Model
 {
     use HasFactory;
 
+<<<<<<<<< Temporary merge branch 1
+=========
     protected $table = 'barang_juals';
 
+>>>>>>>>> Temporary merge branch 2
     protected $fillable = [
         'image',
         'name',
