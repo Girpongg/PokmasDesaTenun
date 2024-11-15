@@ -82,6 +82,7 @@ class PurchaseController extends Controller
                     $product->unit = $productData['unit'];
                     $product->price = $productData['price']; //update price yo gir
                     $totalPrice = $productData['price'] * $productData['quantity'];
+                    $product->supplier_id = $data['supplier_id'];
                     $product->save();
                 } else {
                     $product = ForecastProduct::create([
@@ -89,7 +90,7 @@ class PurchaseController extends Controller
                         'quantity' => $productData['quantity'],
                         'unit' => $productData['unit'],
                         'price' => $productData['price'],
-                        
+                        'supplier_id' => $data['supplier_id'],
                     ]);
                     $totalPrice += $productData['price'] * $productData['quantity'];
                 }
@@ -179,6 +180,7 @@ class PurchaseController extends Controller
                         'quantity' => $forecastDetail->quantity,
                         'unit' => $forecastProduct->unit,
                         'price' => $forecastProduct->price,
+                        'supplier_id' => $forecastProduct->supplier_id,
                     ]);
                 } else {
                     $product->quantity += $forecastDetail->quantity;

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('order_date');
             $table->date('shipped_date');
             $table->integer('status')->default(0)->comment('0: pending, 1: sampai');
-            $table->foreignId('supplier_id')->nullable()->constrained('suppliers', 'id')->nullOnDelete();
+            $table->foreignId('supplier_id')->nullable()->constrained('suppliers', 'id')->cascadeOnDelete();
             $table->timestamps();
         }); 
     }

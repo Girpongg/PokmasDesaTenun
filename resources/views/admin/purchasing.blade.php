@@ -51,7 +51,7 @@
                 <div id="collapseTwo5" class="!visible hidden" data-twe-collapse-item aria-labelledby="headingTwo5">
                     <div class="px-5 py-4">
                         @foreach ($kurang as $item)
-                            <li class="text-sm">{{ $item->name }} ( {{ $item->quantity }} ) - {{ $item->supplier->name }}
+                            <li class="text-sm">{{ $item->name }} {{ $item->quantity }} - {{ $item->supplier->name }}
                             </li>
                         @endforeach
                     </div>

@@ -17,13 +17,13 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('unit');
             $table->integer('price');
-            $table->foreignId('supplier_id')->nullable()->constrained('suppliers', 'id')->nullOnDelete();
+            $table->foreignId('supplier_id')->nullable()->constrained('suppliers', 'id')->cascadeOnDelete();
             $table->timestamps();
         });
 
         Schema::create('forecast_purchase_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('purchase_id')->constrained('purchases');
+            $table->foreignId('purchase_id')->constrained('purchases')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('forecast_products');
             $table->integer('quantity');
             $table->integer('price');
