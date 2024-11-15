@@ -60,6 +60,7 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('purchasing')->group(function () {
         Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');
+        Route::get('/products-by-supplier/{supplier_id}', [PurchaseController::class, 'getProductsBySupplier']);
         Route::post('/store', [PurchaseController::class, 'store'])->name('purchase.store');
         Route::delete('/delete/{purchase:id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
         Route::put('/update/{purchase:id}', [PurchaseController::class, 'update'])->name('purchase.update');

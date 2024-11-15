@@ -18,11 +18,19 @@ class PurchaseController extends Controller
 {
     public function index()
     {
-        $data['purchases'] = Purchase::with('supplier','purchaseDetails.product')->get();
+        $data['purchases'] = Purchase::with('supplier', 'purchaseDetails.product')->get();
         $data['products'] = Product::get();
         $data['purchaseDetail'] = PurchaseDetail::all();
         $data['suppliers'] = Supplier::all();
+        $data['kurang'] = Product::where('quantity', '<', 60)->get();
         return view('admin.purchasing', $data);
+    }
+    // Method di ProductController
+    public function getProductsBySupplier($supplier_id)
+    {
+        $products = Product::where('supplier_id', $supplier_id)->orderBy('quantity', 'asc')->get();
+
+        return response()->json($products);
     }
 
     public function store(Request $request)
@@ -81,10 +89,11 @@ class PurchaseController extends Controller
                         'quantity' => $productData['quantity'],
                         'unit' => $productData['unit'],
                         'price' => $productData['price'],
+                        
                     ]);
                     $totalPrice += $productData['price'] * $productData['quantity'];
-                } 
-                
+                }
+
                 $totalOrderPrice += $totalPrice;
 
                 ForecastPurchaseDetail::create([
@@ -93,7 +102,6 @@ class PurchaseController extends Controller
                     'quantity' => $productData['quantity'],
                     'price' => $productData['price'],
                 ]);
-                
             }
             ForecastExpenditures::create([
                 'title' => $data['title'],
@@ -105,7 +113,7 @@ class PurchaseController extends Controller
             return response()->json(['message' => 'Data successfully stored', 'success' => true]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => 'Failed to store data', 'error' => true].$e->getMessage());
+            return response()->json(['message' => 'Failed to store data', 'error' => true] . $e->getMessage());
         }
     }
 
@@ -140,7 +148,6 @@ class PurchaseController extends Controller
         DB::beginTransaction();
 
         try {
-
             $purchase->update($request->only(['title', 'order_date', 'shipped_date', 'supplier_id']));
 
             DB::commit();
@@ -161,7 +168,6 @@ class PurchaseController extends Controller
         try {
             $forecastPurchaseDetails = ForecastPurchaseDetail::where('purchase_id', $purchase->id)->get();
             $forecastExpenditure = ForecastExpenditures::where('title', $purchase->title)->first();
-    
 
             foreach ($forecastPurchaseDetails as $forecastDetail) {
                 $forecastProduct = ForecastProduct::find($forecastDetail->product_id);
@@ -178,7 +184,7 @@ class PurchaseController extends Controller
                     $product->quantity += $forecastDetail->quantity;
                     $product->save();
                 }
-    
+
                 // Create purchase detail
                 PurchaseDetail::create([
                     'purchase_id' => $purchase->id,
@@ -187,16 +193,16 @@ class PurchaseController extends Controller
                     'price' => $forecastDetail->price,
                 ]);
             }
-    
+
             Expenditures::create([
                 'title' => $forecastExpenditure->title,
                 'total_price' => $forecastExpenditure->total_price,
                 'exp_date' => $forecastExpenditure->exp_date,
             ]);
-    
+
             ForecastPurchaseDetail::where('purchase_id', $purchase->id)->delete();
             $forecastExpenditure->delete();
-    
+
             DB::commit();
             return response()->json(['message' => 'Data successfully accepted', 'success' => true]);
         } catch (\Exception $e) {

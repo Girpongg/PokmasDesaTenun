@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('unit');
             $table->integer('price');
+            $table->foreignId('supplier_id')->nullable()->constrained('suppliers', 'id')->nullOnDelete();
             $table->foreign('category')->references('id')->on('kategoris')->onDelete('set null');
             $table->timestamps();
         });
