@@ -16,13 +16,73 @@ class OrderController extends Controller
     {
         $order = Order::get();
         $barang = BarangJual::all();
+        $bahan = Product::all();
 
         $data = [
             'orders' => $order,
             'barang_juals' => $barang,
+            'products' => $bahan,
         ];
         return view('admin.order', $data);
     }
+
+    public function storeRequest(Request $request){
+        $data = $request->all();
+        $products = $request->get('products');
+        $validator = Validator::make( 
+            $data, 
+            [
+                'customer_name' => 'required|string',
+                'customer_wa' => 'required|string',
+                'address' => 'required|string',
+                'judul_pesan' => 'nullable|string',
+                'order_date' => 'required|date',
+                'total_price' => 'required|integer',
+                'desc' => 'nullable|string',
+                'products' => 'required|array',
+                'products.*.name' => 'required|string',
+                'products.*.quantity' => 'required|integer',
+                
+            ],
+            [
+                'customer_name.required' => 'Name is required.',
+                'order_date.required' => 'Order date is required.',
+                'customer_wa.required' => 'Customer WA is required.',
+                'address.required' => 'Customer Address is required.',
+                'judul_pesan.required' => 'Judul Pesan is required.',
+                'total_price.required' => 'Total Price is required.',
+                'desc.required' => 'Description is required.',
+                'products.required' => 'Products are required.',
+                'products.*.name.required' => 'Product name is required.',
+                'products.*.quantity.required' => 'Product quantity is required.',
+                
+            ],
+        );
+        
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
+        }
+
+        DB::beginTransaction();
+
+        try{
+            $order = Order::create($data);
+            $barangjual = BarangJual::create
+            foreach ($products as $productData){
+                $bahan = Product::where('name', $productData['name'])->first();
+                if($bahan){
+                    if ($bahan->quantity < $productData['quantity']){
+                        return response()->json(['message' => 'Stock is not enough', 'error' => true]);
+                    }
+
+
+
+
+                }
+            }
+        }
+    }
+
     public function store(Request $request)
     {
         // dd($request->all());
