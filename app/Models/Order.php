@@ -13,12 +13,13 @@ class Order extends Model
         'customer_name',
         'customer_wa',
         'address',
-        'status',
-        'is_done',
-        'title',
+        'size',
+        'color',
         'order_date',
-        'desc',
+        'title',
         'total_price',
+        'desc',
+        'is_done',
     ];
 
     public function orderDetails()

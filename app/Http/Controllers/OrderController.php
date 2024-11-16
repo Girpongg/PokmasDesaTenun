@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\BarangJual;
@@ -26,61 +27,76 @@ class OrderController extends Controller
         return view('admin.order', $data);
     }
 
-    public function storeRequest(Request $request){
+    public function storeRequest(Request $request)
+    {
         $data = $request->all();
-        $products = $request->get('products');
-        $validator = Validator::make( 
-            $data, 
+        // $products = $request->get('products');
+        $validator = Validator::make(
+            $data,
             [
                 'customer_name' => 'required|string',
                 'customer_wa' => 'required|string',
                 'address' => 'required|string',
-                'judul_pesan' => 'nullable|string',
+                'image' => 'nullable|string',
                 'order_date' => 'required|date',
-                'total_price' => 'required|integer',
+                'title' => 'nullable|string',
+                'color' => 'nullable|string',
+                'total_price' => 'nullable|integer',
                 'desc' => 'nullable|string',
-                'products' => 'required|array',
-                'products.*.name' => 'required|string',
-                'products.*.quantity' => 'required|integer',
-                
+                'size' => 'nullable|string',
+
             ],
             [
                 'customer_name.required' => 'Name is required.',
                 'order_date.required' => 'Order date is required.',
                 'customer_wa.required' => 'Customer WA is required.',
                 'address.required' => 'Customer Address is required.',
-                'judul_pesan.required' => 'Judul Pesan is required.',
+                'image.required' => 'Image is required.',
+                'title.required' => 'Judul Pesan is required.',
+                'color.required' => 'Color is required.',
                 'total_price.required' => 'Total Price is required.',
                 'desc.required' => 'Description is required.',
-                'products.required' => 'Products are required.',
-                'products.*.name.required' => 'Product name is required.',
-                'products.*.quantity.required' => 'Product quantity is required.',
-                
+                'size.required' => 'Size is required.',
             ],
         );
-        
+
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
         }
 
         DB::beginTransaction();
 
-        try{
-            $order = Order::create($data);
-            $barangjual = BarangJual::create
-            foreach ($products as $productData){
-                $bahan = Product::where('name', $productData['name'])->first();
-                if($bahan){
-                    if ($bahan->quantity < $productData['quantity']){
-                        return response()->json(['message' => 'Stock is not enough', 'error' => true]);
-                    }
+        try {
+            Order::create($data);
 
+            // Ini kalau kn submit pasti msg e berhasil, tapi gk masuk ke Barang Jual di db
+            // soale gak kebaca ada file gir, akire dee mek create order
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $path = 'public/uploads/catalog';
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $fileNameToStore = $originalName . '_' . time() . '_' . uniqid() . '.' . $extension;
+                $file->storePubliclyAs($path, $fileNameToStore);
 
+                $finalData = [
+                    'name' => $data['title'],
+                    'price' => $data['price'],
+                    'stock' => 1,
+                    'description' => $data['desc'],
+                    'tipe' => 1,
+                    'image' => $fileNameToStore,
+                ];
 
-
-                }
+                BarangJual::create($finalData);
             }
+            DB::commit();
+            return response()->json(['message' => 'Data successfully stored', 'success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Failed to store data', 'error' => true] . $e->getMessage());
         }
+
     }
 
     public function store(Request $request)
@@ -94,7 +110,7 @@ class OrderController extends Controller
                 'customer_name' => 'required|string',
                 'customer_wa' => 'required|string',
                 'address' => 'required|string',
-                'judul_pesan' => 'nullable|string',
+                'title' => 'nullable|string',
                 'order_date' => 'required|date',
                 'total_price' => 'required|integer',
                 'desc' => 'nullable|string',
@@ -108,7 +124,7 @@ class OrderController extends Controller
                 'order_date.required' => 'Order date is required.',
                 'customer_wa.required' => 'Customer WA is required.',
                 'address.required' => 'Customer Address is required.',
-                'judul_pesan.required' => 'Judul Pesan is required.',
+                'title.required' => 'Judul Pesan is required.',
                 'total_price.required' => 'Total Price is required.',
                 'desc.required' => 'Description is required.',
                 'products.required' => 'Products are required.',

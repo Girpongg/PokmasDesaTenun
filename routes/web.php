@@ -56,6 +56,7 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('/order')->group(function () {
         Route::get('/', [OrderController::class, 'viewOrder'])->name('viewOrder');
+        Route::post('/req', [OrderController::class, 'storeRequest'])->name('order.request');
         Route::post('/', [OrderController::class, 'store'])->name('order.store');
         Route::get('/detail/{order}', [OrderController::class, 'detailOrder'])->name('order.detail');
         Route::put('/acceptOrder/{order}', [OrderController::class, 'acceptOrder'])->name('acceptOrder');

@@ -224,16 +224,15 @@
                     </div>
                     <div class="mb-4 w-full hidden" id="divtitle">
                         <label for="price" class="ml-1">Judul pesan</label>
-                        <input class="rounded-md w-full" id="judul_pesan">
+                        <input class="rounded-md w-full" id="title">
                     </div>
 
                     <div class="w-full mb-2 hidden" id="photobutton">
                         <label for="price" class="ml-1">Upload foto request</label>
-                        <div class="relative z-0 mt-0.5 flex w-full -space-x-px">
-                            <input id="photobutton" type="file"
-                                class="block w-full cursor-pointer appearance-none rounded-l-md border border-gray-200 bg-white px-3 py-2 text-sm transition focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75">
-                            <button type="submit"
-                                class="inline-flex w-auto cursor-pointer select-none appearance-none items-center justify-center space-x-1 rounded-r border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 transition hover:border-gray-300 hover:bg-gray-100 focus:z-10 focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Save</button>
+                        <div class="relative w-full mb-3" data-te-validate="input" data-te-input-wrapper-init>
+                            <input
+                                class="relative m-0 block sm:col-span-4 col-span-2 w-full rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary disabled:opacity-60"
+                                type="file" name="image" accept=".png,.jpg,.jpeg" id="image">
                         </div>
                     </div>
 
@@ -246,6 +245,12 @@
                         <label for="desc" class="ml-1">Warna yang dipakai</label>
                         <input type="text" class="rounded-md w-full" id="color" name="color"
                             placeholder="Contoh: Biru, Merah">
+                    </div>
+
+                    <div class="mb-4 w-full" id="divsize">
+                        <label for="desc" class="ml-1">Ukuran yang dipakai</label>
+                        <input type="text" class="rounded-md w-full" id="size" name="size"
+                            placeholder="Contoh: S, M, L">
                     </div>
 
                     <div class="flex gap-x-4">
@@ -319,7 +324,7 @@
                         </div>
                         <!--Modal body-->
                         <div class="relative flex-auto p-4" data-te-modal-body-ref>
-                            <form id="product-form">
+                            <form id="product-form" enctype="multipart/form-data">
 
                                 <div class="mb-4 w-full">
                                     <select id="name" name="name"
@@ -411,7 +416,8 @@
                                 <div class="flex gap-x-4">
                                     <div class="mb-4 w-full">
                                         <label for="customer_wa" class="ml-1">Quantity</label>
-                                        <input class="rounded-md w-full" type="number" name="quantity" id="quantity-req">
+                                        <input class="rounded-md w-full" type="number" name="quantity"
+                                            id="quantity-req">
                                     </div>
                                 </div>
                             </form>
@@ -467,8 +473,7 @@
 <div id="modalRequest" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
     <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-[50%] relative">
         <button class="absolute top-2 right-2 text-gray-500" onclick="closeModal('modalRequest')">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
@@ -609,12 +614,72 @@
 
 <script>
     $(document).ready(function () {
+        $('#submit-request').on('click', async function (e) {
+            var name = $('#customer_name').val();
+            var customer_wa = $('#customer_wa').val();
+            var customer_address = $('#customer_address').val();
+            var title = $('#title').val();
+            var photo = $('#image').val();
+            var color = $('#color').val();
+            var desc = $('#desc').val();
+            var size = $('#size').val();
+            var order_date = $('#order_date').val();
+
+            await $.ajax({
+                url: "{{ route('order.request') }}",
+                type: "POST",
+                data: {
+                    customer_name: name,
+                    customer_wa: customer_wa,
+                    address: customer_address,
+                    title: title,
+                    color: color,
+                    size: size,
+                    photo: photo,
+                    desc: desc,
+                    order_date: order_date,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: async function (data) {
+                    console.log("Masuk sukses");
+                    if (data.success) {
+                        await $('#createModal').modal('hide');
+                        await Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: data.message,
+                        });
+                        window.location.reload();
+                    } else {
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.message,
+                        });
+                    }
+                },
+                error: async function (err) {
+                    console.log("Masuk error");
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: err.responseJSON.message,
+                    });
+                }
+            });
+        })
+    }
+
+    )
+</script>
+
+<script>
+    $(document).ready(function () {
         $('#submits').on('click', async function (e) {
             var name = $('#customer_name').val();
             var customer_wa = $('#customer_wa').val();
             var customer_address = $('#customer_address').val();
-            var judul_pesan = $('#judul_pesan').val();
-            var photo = $('#photobutton').val();
+            var title = $('#title').val();
             var desc = $('#desc').val();
             var price = $('#price').val();
             var order_date = $('#order_date').val();
@@ -635,8 +700,7 @@
                     customer_name: name,
                     customer_wa: customer_wa,
                     address: customer_address,
-                    judul_pesan: judul_pesan,
-                    photo: photo,
+                    title: title,
                     desc: desc,
                     total_price: price,
                     order_date: order_date,
@@ -732,7 +796,7 @@
             totalPrice: totalPrice
         });
 
-        
+
 
         renderProductList();
         $('#product-form')[0].reset();
