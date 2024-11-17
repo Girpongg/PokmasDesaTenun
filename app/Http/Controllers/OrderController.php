@@ -30,43 +30,30 @@ class OrderController extends Controller
 
     public function storeRequest(Request $request)
     {
-        dd($request->all());
         $data = $request->all();
-        $products = $request->get('products');
-        $validator = Validator::make(
-            $data,
-            [
-                'customer_name' => 'required|string',
-                'customer_wa' => 'required|string',
-                'address' => 'required|string',
-                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'order_date' => 'required|date',
-                'title' => 'nullable|string',
-                'color' => 'nullable|string',
-                'total_price' => 'nullable|integer',
-                'desc' => 'nullable|string',
-                'size' => 'nullable|string',
-                'products' => 'required|array',
-                'products.*.name' => 'required|string',
-                'products.*.quantity' => 'required|integer',
-            ],
-            [
-                'customer_name.required' => 'Name is required.',
-                'order_date.required' => 'Order date is required.',
-                'customer_wa.required' => 'Customer WA is required.',
-                'address.required' => 'Customer Address is required.',
-                'image.required' => 'Image is required.',
-                'title.required' => 'Judul Pesan is required.',
-                'color.required' => 'Color is required.',
-                'total_price.required' => 'Total Price is required.',
-                'desc.required' => 'Description is required.',
-                'size.required' => 'Size is required.',
-                'products.required' => 'Products are required.',
-                'products.*.name.required' => 'Product name is required.',
-                'products.*.quantity.required' => 'Product quantity is required.',
 
-            ],
-        );
+        // Decode the JSON string back into an array
+        if (isset($data['products'])) {
+            $data['products'] = json_decode($data['products'], true);
+        }
+
+        // Validate the request
+        $validator = Validator::make($data, [
+            'title' => 'required|string|max:255',
+            'total_price' => 'required|numeric',
+            'desc' => 'required|string',
+            'products' => 'required|array',
+            'products.*.name' => 'required|string|max:255',
+            'products.*.quantity' => 'required|integer|min:1',
+            // Add other validation rules as needed
+        ], [
+            'title.required' => 'Title is required.',
+            'total_price.required' => 'Total price is required.',
+            'desc.required' => 'Description is required.',
+            'products.required' => 'Products are required.',
+            'products.*.name.required' => 'Product name is required.',
+            'products.*.quantity.required' => 'Product quantity is required.',
+        ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
@@ -75,8 +62,7 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             $order = Order::create($data);
-            // Ini kalau kn submit pasti msg e berhasil, tapi gk masuk ke Barang Jual di db
-            // soale gak kebaca ada file gir, akire dee mek create order
+
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $path = 'public/uploads/request';
@@ -90,10 +76,10 @@ class OrderController extends Controller
                     'price' => $data['total_price'] ?? 0,
                     'stock' => 1,
                     'description' => $data['desc'],
-                    'tipe' => 2,
+                    'tipe' => 1,
                     'image' => $fileNameToStore,
                 ];
-                // dd($finalData);
+
                 $barangterjual = BarangJual::create($finalData);
                 OrderDetail::create([
                     'order_id' => $order->id,
@@ -102,7 +88,8 @@ class OrderController extends Controller
                     'price' => $order->total_price,
                 ]);
 
-                foreach ($products as $productsData){
+                // Process products
+                foreach ($data['products'] as $productsData) {
                     $bahan = Product::where('name', $productsData['name'])->first();
                     if ($bahan) {
                         BarangJualDetail::create([
@@ -113,15 +100,13 @@ class OrderController extends Controller
                         return response()->json(['message' => 'Product not found', 'error' => true]);
                     }
                 }
-
-            } else {
-                return response()->json(['message' => 'Image is required.', 'error' => true]);
             }
+
             DB::commit();
             return response()->json(['message' => 'Data successfully stored', 'success' => true]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => 'Failed to store data', 'error' => true] . $e->getMessage());
+            return response()->json(['message' => 'Failed to store data', 'error' => true, 'details' => $e->getMessage()]);
         }
     }
 

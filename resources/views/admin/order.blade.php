@@ -638,7 +638,7 @@
 
                 var productsReq = [];
 
-                $('#invent-list','.bahan-item').each(function() {
+                $('#invent-list .bahan-item').each(function() {
                     var bahan = {
                         name: $(this).find('.bahan-name').text(),
                         quantity: $(this).find('.bahan-quantity').text(),
@@ -646,7 +646,7 @@
                     productsReq.push(bahan);
                 });
 
-                formData.append('products',JSON.stringify(productsReq));
+                formData.append('products', JSON.stringify(productsReq));
 
                 await $.ajax({
                     url: "{{ route('order.request') }}",
