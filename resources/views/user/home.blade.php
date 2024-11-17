@@ -67,14 +67,14 @@
             <div class="swiper2 !w-full !h-full mySwiper2 relative overflow-x-hidden">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide relative">
-                        <img class="relative z-0 filter brightness-75 h-full w-full" src="{{ asset('img/duas.png') }}"
+                        <img class="relative z-0 filter brightness-75 h-full w-full max-xl:object-cover" src="{{ asset('img/duas.png') }}"
                             alt="">
                         <a href="#"
                             class="font3 absolute bottom-28 transform right-[480px] bg-[#7B4B3A] text-[#e9ded7] hover:text-[#C29545] px-4 py-2 border border-[#7B4B3A] rounded-lg text-lg font-extrabold z-10">BELI
                             SEKARANG</a>
                     </div>
                     <div class="swiper-slide relative">
-                        <img class="relative z-0 filter brightness-75 h-full w-full" src="{{ asset('img/satus.png') }}"
+                        <img class="relative z-0 filter brightness-75 h-full w-full max-xl:object-cover" src="{{ asset('img/satus.png') }}"
                             alt="">
                     </div>
 

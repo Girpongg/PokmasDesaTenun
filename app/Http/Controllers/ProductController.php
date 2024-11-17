@@ -33,7 +33,7 @@ class ProductController extends BaseController
     public function catalogstore(Request $request)
     {
         $data = $request->only(['name', 'price', 'quantity', 'description', 'image']);
-        dd($data);
+        // dd($data);
         $validator = Validator::make(
             $data,
             [
