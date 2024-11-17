@@ -67,13 +67,15 @@ class PurchaseController extends Controller
         );
 
         foreach ($products as $product) {
-            $products = Product::where('name', $product['name'])->first();
-            if ($products) {
-                if ($products->supplier_id != $data['supplier_id']) {
-                    return response()->json(['message' => 'Product supplier must be the same as the purchase supplier', 'error' => true]);
-                }
+            $existingProduct = Product::where('name', $product['name'])->first();
+            if (!$existingProduct) {
+                return response()->json(['message' => 'Product not found', 'error' => true]);
+            }
+            if ($existingProduct->supplier_id != $data['supplier_id']) {
+                return response()->json(['message' => 'Product supplier must be the same as the purchase supplier', 'error' => true]);
             }
         }
+        
 
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
@@ -101,8 +103,7 @@ class PurchaseController extends Controller
                         'price' => $productData['price'],
                         'supplier_id' => $data['supplier_id'],
                     ]);
-                    $totalPrice += $productData['price'] * $productData['quantity'];
-                }
+                    $totalPrice += $productData['price'] * $productData['quantity'];                }
 
                 $totalOrderPrice += $totalPrice;
 

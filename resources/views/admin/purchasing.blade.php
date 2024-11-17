@@ -439,6 +439,7 @@
                         quantity: $(this).find('.product-quantity').text(),
                         price: $(this).find('.product-price').text(),
                         unit: $(this).find('.product-unit').text(),
+                        supplier_id: supplier_id
                     };
                     products.push(product);
                 });

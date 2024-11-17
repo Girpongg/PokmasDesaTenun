@@ -623,7 +623,7 @@
             $('#submit-request').on('click', async function(e) {
                 e.preventDefault();
 
-                var formData = new FormData(); 
+                var formData = new FormData();
                 formData.append('customer_name', $('#customer_name').val());
                 formData.append('customer_wa', $('#customer_wa').val());
                 formData.append('address', $('#customer_address').val());
