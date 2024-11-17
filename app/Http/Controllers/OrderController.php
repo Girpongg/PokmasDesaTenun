@@ -37,14 +37,13 @@ class OrderController extends Controller
                 'customer_name' => 'required|string',
                 'customer_wa' => 'required|string',
                 'address' => 'required|string',
-                'image' => 'nullable|string',
+                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'order_date' => 'required|date',
                 'title' => 'nullable|string',
                 'color' => 'nullable|string',
                 'total_price' => 'nullable|integer',
                 'desc' => 'nullable|string',
                 'size' => 'nullable|string',
-
             ],
             [
                 'customer_name.required' => 'Name is required.',
@@ -65,7 +64,6 @@ class OrderController extends Controller
         }
 
         DB::beginTransaction();
-
         try {
             Order::create($data);
 
@@ -73,7 +71,7 @@ class OrderController extends Controller
             // soale gak kebaca ada file gir, akire dee mek create order
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $path = 'public/uploads/catalog';
+                $path = 'public/uploads/request';
                 $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $extension = $file->getClientOriginalExtension();
                 $fileNameToStore = $originalName . '_' . time() . '_' . uniqid() . '.' . $extension;
@@ -81,14 +79,16 @@ class OrderController extends Controller
 
                 $finalData = [
                     'name' => $data['title'],
-                    'price' => $data['price'],
+                    'price' => $data['total_price'] ?? 0,
                     'stock' => 1,
                     'description' => $data['desc'],
                     'tipe' => 1,
                     'image' => $fileNameToStore,
                 ];
-
+                // dd($finalData);
                 BarangJual::create($finalData);
+            } else {
+                return response()->json(['message' => 'Image is required.', 'error' => true]);
             }
             DB::commit();
             return response()->json(['message' => 'Data successfully stored', 'success' => true]);
@@ -96,7 +96,6 @@ class OrderController extends Controller
             DB::rollBack();
             return response()->json(['message' => 'Failed to store data', 'error' => true] . $e->getMessage());
         }
-
     }
 
     public function store(Request $request)
