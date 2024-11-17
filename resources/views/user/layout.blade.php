@@ -57,7 +57,6 @@
     </script>
     @include('user.includes.navbar')
     @yield('style')
-    <div class=" min-h-20"></div>
         @yield('content')
     @yield('script')
     @include('user.includes.footer')

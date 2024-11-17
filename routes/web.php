@@ -26,7 +26,7 @@ Route::get('/', function () {
 });
 Route::get('/home', function() {
     return view('user.home');
-});
+})->name('user.home');
 
 Route::get('/add-to-cart/{id}', [BarangJualController::class, 'addToCart'])->name('add-cart');
 Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');

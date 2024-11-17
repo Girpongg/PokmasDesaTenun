@@ -475,11 +475,11 @@
     </div>
     <div class="nav-collapse">
         <ul class="nav-menu">
-            <a href="" class="nav-link ">
+            <a href="{{route('user.home')}}" class="nav-link ">
                 <li>HOME</li>
             </a>
-            <a href="" class="nav-link ">
-                <li>TIMELINE</li>
+            <a href="{{route('milih-barang')}}" class="nav-link ">
+                <li>CATALOG</li>
             </a>
             <a href="" class="nav-link ">
                 <li>EVENTS</li>
