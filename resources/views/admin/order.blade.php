@@ -636,6 +636,18 @@
                 formData.append('image', $('#image')[0].files[0]);
                 formData.append('_token', "{{ csrf_token() }}");
 
+                var productsReq = [];
+
+                $('#invent-list','.bahan-item').each(function() {
+                    var bahan = {
+                        name: $(this).find('.bahan-name').text(),
+                        quantity: $(this).find('.bahan-quantity').text(),
+                    };
+                    productsReq.push(bahan);
+                });
+
+                formData.append('products',JSON.stringify(productsReq));
+
                 await $.ajax({
                     url: "{{ route('order.request') }}",
                     type: "POST",
@@ -857,13 +869,11 @@
             $('#invent-list').empty();
 
             productsReq.forEach((bahan, index) => {
-
-
                 var bahanElement = `
                 <div class="bahan-item border p-2 mt-2 relative" id="bahan-${index}">
                 <button class="remove-bahan bg-red-500 text-white px-2 rounded absolute top-0 right-0 mt-1 mr-1" data-index="${index}">X</button>
-                <p><strong>Name     :</strong> <span class="product-name">${bahan.name}</span></p>
-                <p><strong>Quantity :</strong> <span class="product-quantity">${bahan.quantity}</span></p>
+                <p><strong>Name     :</strong> <span class="bahan-name">${bahan.name}</span></p>
+                <p><strong>Quantity :</strong> <span class="bahan-quantity">${bahan.quantity}</span></p>
                 </div>`;
                 $('#invent-list').append(bahanElement);
             });

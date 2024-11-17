@@ -24,8 +24,10 @@ class ProductController extends BaseController
     public function catalog()
     {
         $catalog = BarangJual::all();
+        $catalogtipe1 = BarangJual::where('tipe', 1)->get();
         $data = [
             'catalog' => $catalog,
+            'catalogtipe1' => $catalogtipe1,
         ];
         return view('admin.catalog', $data);
     }

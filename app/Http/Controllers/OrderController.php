@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
+use App\Models\BarangJualDetail;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\BarangJual;
@@ -29,8 +30,9 @@ class OrderController extends Controller
 
     public function storeRequest(Request $request)
     {
+        dd($request->all());
         $data = $request->all();
-        // $products = $request->get('products');
+        $products = $request->get('products');
         $validator = Validator::make(
             $data,
             [
@@ -44,6 +46,9 @@ class OrderController extends Controller
                 'total_price' => 'nullable|integer',
                 'desc' => 'nullable|string',
                 'size' => 'nullable|string',
+                'products' => 'required|array',
+                'products.*.name' => 'required|string',
+                'products.*.quantity' => 'required|integer',
             ],
             [
                 'customer_name.required' => 'Name is required.',
@@ -56,6 +61,10 @@ class OrderController extends Controller
                 'total_price.required' => 'Total Price is required.',
                 'desc.required' => 'Description is required.',
                 'size.required' => 'Size is required.',
+                'products.required' => 'Products are required.',
+                'products.*.name.required' => 'Product name is required.',
+                'products.*.quantity.required' => 'Product quantity is required.',
+
             ],
         );
 
@@ -65,8 +74,7 @@ class OrderController extends Controller
 
         DB::beginTransaction();
         try {
-            Order::create($data);
-
+            $order = Order::create($data);
             // Ini kalau kn submit pasti msg e berhasil, tapi gk masuk ke Barang Jual di db
             // soale gak kebaca ada file gir, akire dee mek create order
             if ($request->hasFile('image')) {
@@ -82,11 +90,30 @@ class OrderController extends Controller
                     'price' => $data['total_price'] ?? 0,
                     'stock' => 1,
                     'description' => $data['desc'],
-                    'tipe' => 1,
+                    'tipe' => 2,
                     'image' => $fileNameToStore,
                 ];
                 // dd($finalData);
-                BarangJual::create($finalData);
+                $barangterjual = BarangJual::create($finalData);
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'barangjual_id' => $barangterjual->id,
+                    'quantity' => 1,
+                    'price' => $order->total_price,
+                ]);
+
+                foreach ($products as $productsData){
+                    $bahan = Product::where('name', $productsData['name'])->first();
+                    if ($bahan) {
+                        BarangJualDetail::create([
+                            'barang_jual_id' => $barangterjual->id,
+                            'product_id' => $bahan->id,
+                        ]);
+                    } else {
+                        return response()->json(['message' => 'Product not found', 'error' => true]);
+                    }
+                }
+
             } else {
                 return response()->json(['message' => 'Image is required.', 'error' => true]);
             }
