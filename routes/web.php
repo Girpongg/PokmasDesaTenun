@@ -26,10 +26,13 @@ Route::get('/', function () {
 });
 Route::get('/home', function() {
     return view('user.home');
-});
+})->name('user.home');
 
-
-
+Route::get('/add-to-cart/{id}', [BarangJualController::class, 'addToCart'])->name('add-cart');
+Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');
+Route::get('/delete-from-cart/{id}', [BarangJualController::class, 'deleteFromCart'])->name('delete-from-cart');
+Route::get('/barang', [BarangJualController::class, 'viewCatalog'])->name('milih-barang');
+Route::get('/detail-barang/{barang}', [BarangJualController::class, 'viewDetail'])->name('detail-barang');
 Route::get('admin/login', function () {
     return view('admin.login.login');
 });

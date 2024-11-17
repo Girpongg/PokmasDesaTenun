@@ -299,5 +299,6 @@
         document.getElementById('datatable-search-input').addEventListener('input', (e) => {
             table.search(e.target.value);
         });
+        
     </script>
 @endsection

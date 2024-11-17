@@ -13,7 +13,6 @@
 
     footer {
         position: relative;
-
         overflow: hidden;
     }
 
@@ -88,7 +87,6 @@
                 <div
                     class="max-lg:w-9/12 max-lg:flex max-lg:justify-center max-lg:items-center max-sm:flex-col max-lg:max-w-[515.4px] max-lg:min-w-[515.4px] max-sm:min-w-0 ">
                     <div class="max-lg:flex max-lg:flex-col max-lg:justify-between max-lg:h-[99.2px] max-sm:h-[95px]">
-
                     </div>
                 </div>
             </div>

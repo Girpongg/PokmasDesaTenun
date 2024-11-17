@@ -57,7 +57,7 @@
     </script>
     @include('user.includes.navbar')
     @yield('style')
-    @yield('content')
+        @yield('content')
     @yield('script')
     @include('user.includes.footer')
 </body>
@@ -84,6 +84,7 @@
         font-weight: 400;
         font-style: normal;
     }
+
     .font4 {
         font-family: "Ubuntu", sans-serif;
         font-weight: bold;
