@@ -207,13 +207,16 @@ class OrderController extends Controller
     {
         $order->update(['status' => 0]);
     
-        // $parentOrder = $order->order; 
-        // dd($parentOrder);
-        // if ($parentOrder->details->every(fn($detail) => $detail->status == 0)) {
-        //     $parentOrder->delete();
-        // }
+        $parentOrder = $order->order; 
+        if ($parentOrder->orderDetails->every(fn($detail) => $detail->status == 0)) {
+            $parentOrder->delete();
+            return response()->json(['redirect' => url('/admin/order')]);
+        }
+        else{
+            return response()->json(['message' => 'Order successfully declined', 'success' => true]);
+        }
     
-        return response()->json(['message' => 'Order successfully declined', 'success' => true]);
+        
     }
     
     public function acceptOrder(OrderDetail $order)

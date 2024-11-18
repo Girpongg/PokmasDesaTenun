@@ -100,48 +100,66 @@
         }
 
         function updateDecline(id) {
-            console.log("data yang dihapus :", id);
-            var url_update = "{{ route('declineOrder', ':id') }}".replace(':id', id);
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Remove it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: url_update,
-                        type: 'PUT',
-                        data: {
-                            _token: "{{ csrf_token() }}"
-                        },
-                        success: async function(response) {
-                            if (response.success) {
-                                await Swal.fire({
-                                    icon: 'success',
-                                    title: 'Success',
-                                    text: response.message,
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                })
-                                window.location.reload();
-                               
-                            } else {
-                                await Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: response.message,
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                })
-                            }
-                        }
+    console.log("data yang dihapus :", id);
+    var url_update = "{{ route('declineOrder', ':id') }}".replace(':id', id);
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Remove it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: url_update,
+                type: 'PUT',
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: async function(response) {
+                    if (response.redirect) {
+                        await Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Redirecting...',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        window.location.href = response.redirect; 
+                    } else if (response.success) {
+                        await Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        window.location.reload(); 
+                    } else {
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Something went wrong!',
+                        timer: 2000,
+                        showConfirmButton: false
                     });
                 }
-            })
+            });
         }
+    });
+}
+
     </script>
 @endsection
