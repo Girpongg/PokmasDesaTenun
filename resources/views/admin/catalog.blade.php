@@ -1,5 +1,4 @@
 @extends('admin.layout')
-
 @section('content')
     <div class="flex flex-col w-full py-8 rounded-lg shadow-xl items-center justify-center mb-10">
         <h1 class="text-center text-4xl uppercase font-bold mb-2">Catalog</h1>

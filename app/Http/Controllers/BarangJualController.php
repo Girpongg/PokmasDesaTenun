@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BarangJual;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BarangJualController extends Controller
 {
@@ -46,6 +47,7 @@ class BarangJualController extends Controller
             ];
         }
         session()->put('cart', $cart);
+        // session()->flush();
         return redirect()->back()->with('success', 'Item added to cart successfully!');
     }
 

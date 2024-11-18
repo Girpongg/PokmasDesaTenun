@@ -14,6 +14,7 @@ class BarangJual extends Model
         'image',
         'name',
         'price',
+        
         'stock',
         'tipe',
         'description',

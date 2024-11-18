@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('total_price');
             $table->integer('is_done')->default(0)->comment('0: not done, 1: done, 2: sudah diambil ');
             $table->string('desc')->nullable();
+            $table->string('bukti_bayar');
             $table->timestamps();
         });
     }

@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 Route::get('/home', function() {
     return view('user.home');
-});
+})->name('home');
 
 Route::get('admin/login', function () {
     return view('admin.login.login');
@@ -43,6 +43,7 @@ Route::get('/detail-payment', function () {
 Route::get('/form-katalog', function () {
     return view('user.form-katalog');
 })->name('form-katalog');
+Route::post('/', [OrderController::class, 'store'])->name('katalog.store');
 
 Route::get('/add-to-cart/{id}', [BarangJualController::class, 'addToCart'])->name('add-cart');
 Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');

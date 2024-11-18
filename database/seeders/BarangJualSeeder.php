@@ -15,58 +15,50 @@ class BarangJualSeeder extends Seeder
     {
         $katalogs = [
             [
-                "image" => "assets/baju1.webp",
-                "name" => "Sarung Tenun Biru",
-                "price" => 120000,
-                "stock" => 10,
-                "tipe" => 1,
-                "description" => "Sarung tenun biru dengan motif khas Indonesia",
-            ],
-            
-            [
-                "image" => "assets/batik.jpg",
-                "name" => "Sarung Tenun Kuning",
-                "price" => 100000,
-                "stock" => 10,
-                "tipe" => 1,
-                "description" => "Sarung tenun kuning dengan motif khas Indonesia",
-            ],
-
-            [
-                "image" => "assets/batik2.jpg",
+                "image" => "assets/sarung2.webp",
                 "name" => "Sarung Tenun Hijau",
-                "price" => 10000,
+                "price" => 120000,
                 "stock" => 10,
                 "tipe" => 1,
                 "description" => "Sarung tenun hijau dengan motif khas Indonesia",
             ],
+            
+            [
+                "image" => "assets/sarung3.webp",
+                "name" => "Sarung Tenun Merah",
+                "price" => 100000,
+                "stock" => 10,
+                "tipe" => 1,
+                "description" => "Sarung tenun merah dengan motif khas Indonesia",
+            ],
 
             [
-                "image" => "assets/baju1.webp",
+                "image" => "assets/sarung4.webp",
                 "name" => "Sarung Tenun Biru",
-                "price" => 120000,
+                "price" => 10000,
                 "stock" => 10,
                 "tipe" => 1,
                 "description" => "Sarung tenun biru dengan motif khas Indonesia",
             ],
-            
-            [
-                "image" => "assets/batik.jpg",
-                "name" => "Sarung Tenun Kuning",
-                "price" => 100000,
-                "stock" => 10,
-                "tipe" => 1,
-                "description" => "Sarung tenun kuning dengan motif khas Indonesia",
-            ],
 
             [
-                "image" => "assets/batik2.jpg",
-                "name" => "Sarung Tenun Hijau",
-                "price" => 10000,
+                "image" => "assets/sarung5.webp",
+                "name" => "Sarung Tenun Hitam",
+                "price" => 120000,
                 "stock" => 10,
                 "tipe" => 1,
-                "description" => "Sarung tenun hijau dengan motif khas Indonesia",
+                "description" => "Sarung tenun hitam dengan motif khas Indonesia",
             ],
+            
+            [
+                "image" => "assets/sarung1.jpg",
+                "name" => "Paket Sarung",
+                "price" => 300000,
+                "stock" => 10,
+                "tipe" => 1,
+                "description" => "Kumpulan Sarung tenun dengan motif khas Indonesia",
+            ],
+
         ];
         foreach ($katalogs as $katalog) {
             BarangJual::create($katalog);
