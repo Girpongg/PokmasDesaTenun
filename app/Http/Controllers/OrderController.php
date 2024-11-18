@@ -76,7 +76,7 @@ class OrderController extends Controller
                     'price' => $data['total_price'] ?? 0,
                     'stock' => 1,
                     'description' => $data['desc'],
-                    'tipe' => 1,
+                    'tipe' => 2,
                     'image' => $fileNameToStore,
                 ];
 
@@ -186,23 +186,36 @@ class OrderController extends Controller
             ->where('order_id', $order->id)
             ->get();
         $barang = BarangJual::all();
-
         $data = [
             'nama' => $order,
             'order' => $detail,
             'barang_juals' => $barang,
-        ];
-        // dd('halo');
+        ];        
+        // $notEqualToOneCount = 0;
+        // foreach ($detail as $value) {
+        //     if ($value->status != 1) {
+        //         $notEqualToOneCount++;
+        //     }
+        // }
+        // if ($notEqualToOneCount === count($detail)) {
+        //     return view('admin.order');
+        // }
         return view('admin.detail_order', $data);
     }
 
     public function declineOrder(OrderDetail $order)
     {
-        $order->update([
-            'status' => 0,
-        ]);
-        return response()->json(['message' => 'Order successfully accepted', 'success' => true]);
+        $order->update(['status' => 0]);
+    
+        // $parentOrder = $order->order; 
+        // dd($parentOrder);
+        // if ($parentOrder->details->every(fn($detail) => $detail->status == 0)) {
+        //     $parentOrder->delete();
+        // }
+    
+        return response()->json(['message' => 'Order successfully declined', 'success' => true]);
     }
+    
     public function acceptOrder(OrderDetail $order)
     {
         $order->update([
