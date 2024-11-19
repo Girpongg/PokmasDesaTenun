@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kategori;
-use App\Models\Product;
-use Illuminate\Http\Request;
-use App\Utils\HttpResponse;
-use App\Utils\HttpResponseCode;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Models\Product;
+use App\Models\Kategori;
+use App\Models\Supplier;
+use App\Utils\HttpResponse;
+use Illuminate\Http\Request;
+use App\Utils\HttpResponseCode;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+
 class AdminController extends Controller
 {
     //
@@ -97,6 +99,7 @@ class AdminController extends Controller
     {
         $kategori = Kategori::get();
         $products = Product::with('kategoris')->get();
+        $supplier = Supplier::get();
         $data = [];
 
         foreach ($products as $product) {
@@ -107,12 +110,14 @@ class AdminController extends Controller
             $temp['price'] = $product->price;
             $temp['quantity'] = $product->quantity;
             $temp['category'] = $product->kategoris->name??'Belum ada';
+            $temp['supplier'] = $product->supplier->name;
             $data[] = $temp;
         }
 
         $sharedData = [
             'title' => 'Kategori',
             'kategori' => $kategori,
+            'supplier' => $supplier,
             'unit' => self::units(),
             'products' => json_encode($data),
         ];
@@ -130,7 +135,7 @@ class AdminController extends Controller
     public function storeInventory(Request $request)
     {
         $units = array_map(fn($unit) => $unit->label(), Unit::cases());
-        $data = $request->only('name', 'unit', 'price', 'quantity', 'category');
+        $data = $request->only('name', 'unit', 'price', 'quantity', 'category', 'supplier_id');
         $valid = Validator::make(
             $data,
             [
@@ -139,6 +144,7 @@ class AdminController extends Controller
                 'price' => 'required|numeric|min:0',
                 'quantity' => 'required|numeric|min:0',
                 'category' => 'nullable|exists:kategoris,id',
+                'supplier_id' => 'nullable|exists:suppliers,id',
             ],
             [
                 'name.required' => 'Nama produk harus diisi',
@@ -152,6 +158,9 @@ class AdminController extends Controller
                 'quantity.required' => 'Stok produk harus diisi',
                 'quantity.numeric' => 'Stok produk harus berupa angka',
                 'quantity.min' => 'Stok produk minimal 0',
+                'category.exists' => 'Kategori tidak valid',
+                'supplier_id.exists' => 'Supplier tidak valid',
+
 
             ],
         );
@@ -174,7 +183,7 @@ class AdminController extends Controller
 
 
     public function updateInventory(Request $request, $id){
-        $data = $request->only('name', 'unit', 'price', 'quantity', 'category');
+        $data = $request->only('name', 'unit', 'price', 'quantity', 'category','supplier_id');
         $units = array_map(fn($unit) => $unit->label(), Unit::cases());
 
         $valid = Validator::make(
@@ -185,6 +194,7 @@ class AdminController extends Controller
                 'price' => 'required|numeric|min:0',
                 'quantity' => 'required|numeric|min:0',
                 'category' => 'nullable|exists:kategoris,id',
+                'supplier_id' => 'nullable|exists:suppliers,id',
             ],
             [
                 'name.required' => 'Nama produk harus diisi',
@@ -198,6 +208,8 @@ class AdminController extends Controller
                 'quantity.required' => 'Stok produk harus diisi',
                 'quantity.numeric' => 'Stok produk harus berupa angka',
                 'quantity.min' => 'Stok produk minimal 0',
+                'category.exists' => 'Kategori tidak valid',
+                'supplier_id.exists' => 'Supplier tidak valid',
 
             ],
         );

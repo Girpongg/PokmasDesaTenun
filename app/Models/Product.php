@@ -24,6 +24,7 @@ class Product extends Model
         'quantity',
         'unit',
         'price',
+        'supplier_id',
     ];
 
     /**
@@ -82,5 +83,9 @@ class Product extends Model
     public function kategoris()
     {
         return $this->belongsTo(Kategori::class,'category','id');
+    }
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
     }
 }

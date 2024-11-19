@@ -224,22 +224,33 @@
                         </div>
                         <div class="mb-4 w-full hidden" id="divtitle">
                             <label for="price" class="ml-1">Judul pesan</label>
-                            <input class="rounded-md w-full" id="judul_pesan">
+                            <input class="rounded-md w-full" id="title">
                         </div>
 
                         <div class="w-full mb-2 hidden" id="photobutton">
                             <label for="price" class="ml-1">Upload foto request</label>
-                            <div class="relative z-0 mt-0.5 flex w-full -space-x-px">
-                                <input id="photobutton" type="file"
-                                    class="block w-full cursor-pointer appearance-none rounded-l-md border border-gray-200 bg-white px-3 py-2 text-sm transition focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75">
-                                <button type="submit"
-                                    class="inline-flex w-auto cursor-pointer select-none appearance-none items-center justify-center space-x-1 rounded-r border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 transition hover:border-gray-300 hover:bg-gray-100 focus:z-10 focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Save</button>
+                            <div class="relative w-full mb-3" data-te-validate="input" data-te-input-wrapper-init>
+                                <input
+                                    class="relative m-0 block sm:col-span-4 col-span-2 w-full rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary disabled:opacity-60"
+                                    type="file" name="image" accept=".png,.jpg,.jpeg" id="image">
                             </div>
                         </div>
 
                         <div class="mb-4 w-full hidden" id="divdesc">
                             <label for="desc" class="ml-1">Deskripsi</label>
                             <input type="text" class="rounded-md w-full" id="desc" name="desc">
+                        </div>
+
+                        <div class="mb-4 w-full hidden" id="divcolor">
+                            <label for="desc" class="ml-1">Warna yang dipakai</label>
+                            <input type="text" class="rounded-md w-full" id="color" name="color"
+                                placeholder="Contoh: Biru, Merah">
+                        </div>
+
+                        <div class="mb-4 w-full" id="divsize">
+                            <label for="desc" class="ml-1">Ukuran yang dipakai</label>
+                            <input type="text" class="rounded-md w-full" id="size" name="size"
+                                placeholder="Contoh: S, M, L">
                         </div>
 
                         <div class="flex gap-x-4">
@@ -270,10 +281,25 @@
 
                         </div>
 
+                        <div class="flex flex-col" id="divinventory">
+                            <label for="price" class="ml-1">Bahan-bahan yang dipakai</label>
+                            <button id="btn-list-req"
+                                class="mt-3 inline-block rounded bg-success px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] "
+                                data-te-ripple-init data-te-ripple-color="light" data-te-toggle="modal"
+                                data-te-target="#reqModal">
+                                Tambah Bahan
+                            </button>
+                        </div>
+
+                        <div id="invent-list" class="hidden">
+
+
+                        </div>
+
                     </div>
                 </div>
 
-                {{-- Detail Modal --}}
+                <!-- Add bahan -->
                 <div data-te-modal-init
                     class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
                     id="detailModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -299,7 +325,7 @@
                             </div>
                             <!--Modal body-->
                             <div class="relative flex-auto p-4" data-te-modal-body-ref>
-                                <form id="product-form">
+                                <form id="product-form" enctype="multipart/form-data">
 
                                     <div class="mb-4 w-full">
                                         <select id="name" name="name"
@@ -342,6 +368,79 @@
                         </div>
                     </div>
                 </div>
+
+
+
+
+                {{-- Detail Modal --}}
+                <div data-te-modal-init
+                    class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                    id="reqModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div data-te-modal-dialog-ref
+                        class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
+                        <div
+                            class="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none">
+                            <div
+                                class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4">
+                                <!--Modal title-->
+                                <h5 class="text-xl font-medium leading-normal text-neutral-800" id="editModalLabel">
+                                    List bahan yang dipakai
+                                </h5>
+                                <!--Close button-->
+                                <button type="button"
+                                    class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                    data-te-modal-dismiss aria-label="Close">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <!--Modal body-->
+                            <div class="relative flex-auto p-4" data-te-modal-body-ref>
+                                <form id="bahan-form">
+
+                                    <div class="mb-4 w-full">
+                                        <select id="name-req" name="name"
+                                            class="peer block w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                            data-te-select-init>
+                                            <option value="" selected disabled hidden></option>
+                                            @foreach ($products as $bahan)
+                                                <option value="{{ $bahan->name }}" data-id="{{ $bahan->id }}"
+                                                    data-price="{{ $bahan->price }}">{{ $bahan->name }}
+                                                    ({{ $bahan->quantity }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label data-te-select-label-ref>Nama Bahan</label>
+                                    </div>
+
+                                    <div class="flex gap-x-4">
+                                        <div class="mb-4 w-full">
+                                            <label for="customer_wa" class="ml-1">Quantity</label>
+                                            <input class="rounded-md w-full" type="number" name="quantity"
+                                                id="quantity-req">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--Modal footer-->
+                            <div
+                                class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4">
+                                <button type="button"
+                                    class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                                    data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
+                                    Close
+                                </button>
+                                <button type="button" id="submit-req-detail"
+                                    class="ml-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] "
+                                    data-te-ripple-init data-te-ripple-color="light">
+                                    Save changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--Modal footer-->
                 <div
                     class="flex justify-between flex-shrink-0 flex-wrap items-center  rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
@@ -361,6 +460,11 @@
                             data-te-ripple-init data-te-ripple-color="light">
                             Save changes
                         </button>
+                        <button type="button" id="submit-request"
+                            class="ml-1 hidden rounded bg-success px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                            data-te-ripple-init data-te-ripple-color="light">
+                            Save changes
+                        </button>
                     </div>
                 </div>
             </div>
@@ -371,7 +475,7 @@
     <div id="modalRequest" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
         <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-[50%] relative">
             <button class="absolute top-2 right-2 text-gray-500" onclick="closeModal('modalRequest')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -478,24 +582,106 @@
             var photoButton = document.getElementById('photobutton');
             var divDesc = document.getElementById('divdesc');
             var divProduct = document.getElementById('divproduct');
+            var divInvent = document.getElementById('divinventory');
             var divprice = document.getElementById('divprice');
             var divProductList = document.getElementById('product-list');
+            var divInventList = document.getElementById('invent-list');
+            var divColor = document.getElementById('divcolor');
+            var subKatalog = document.getElementById('submits');
+            var subRequest = document.getElementById('submit-request');
 
             if (value === '1') {
                 divTitle.classList.add('hidden');
                 photoButton.classList.add('hidden');
+                divColor.classList.add('hidden');
+                subKatalog.classList.remove('hidden');
+                subRequest.classList.add('hidden');
                 divDesc.classList.add('hidden');
                 divProduct.classList.remove('hidden');
+                divInvent.classList.add('hidden');
                 divProductList.classList.remove('hidden');
+                divInventList.classList.add('hidden');
                 divprice.classList.add('hidden');
             } else if (value === '2') {
                 divTitle.classList.remove('hidden');
+                divColor.classList.remove('hidden');
+                subKatalog.classList.add('hidden');
+                subRequest.classList.remove('hidden');
                 photoButton.classList.remove('hidden');
                 divDesc.classList.remove('hidden');
                 divProduct.classList.add('hidden');
+                divInvent.classList.remove('hidden');
                 divProductList.classList.add('hidden');
+                divInventList.classList.remove('hidden');
                 divprice.classList.remove('hidden');
             }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#submit-request').on('click', async function(e) {
+                e.preventDefault();
+
+                var formData = new FormData();
+                formData.append('customer_name', $('#customer_name').val());
+                formData.append('customer_wa', $('#customer_wa').val());
+                formData.append('address', $('#customer_address').val());
+                formData.append('title', $('#title').val());
+                formData.append('color', $('#color').val());
+                formData.append('size', $('#size').val());
+                formData.append('desc', $('#desc').val());
+                formData.append('order_date', $('#order_date').val());
+                formData.append('total_price', $('#price').val());
+                formData.append('image', $('#image')[0].files[0]);
+                formData.append('_token', "{{ csrf_token() }}");
+
+                var productsReq = [];
+
+                $('#invent-list .bahan-item').each(function() {
+                    var bahan = {
+                        name: $(this).find('.bahan-name').text(),
+                        quantity: $(this).find('.bahan-quantity').text(),
+                    };
+                    productsReq.push(bahan);
+                });
+
+                formData.append('products', JSON.stringify(productsReq));
+
+                await $.ajax({
+                    url: "{{ route('order.request') }}",
+                    type: "POST",
+                    data: formData,
+                    processData: false, // Wajib false untuk FormData
+                    contentType: false, // Wajib false untuk FormData
+                    success: async function(data) {
+                        console.log("Masuk sukses");
+                        if (data.success) {
+                            await $('#createModal').modal('hide');
+                            await Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: data.message,
+                            });
+                            window.location.reload();
+                        } else {
+                            await Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.message,
+                            });
+                        }
+                    },
+                    error: async function(err) {
+                        console.log("Masuk error");
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: err.responseJSON.message,
+                        });
+                    }
+                });
+            });
         });
     </script>
 
@@ -505,8 +691,7 @@
                 var name = $('#customer_name').val();
                 var customer_wa = $('#customer_wa').val();
                 var customer_address = $('#customer_address').val();
-                var judul_pesan = $('#judul_pesan').val();
-                var photo = $('#photobutton').val();
+                var title = $('#title').val();
                 var desc = $('#desc').val();
                 var price = $('#price').val();
                 var order_date = $('#order_date').val();
@@ -527,8 +712,7 @@
                         customer_name: name,
                         customer_wa: customer_wa,
                         address: customer_address,
-                        judul_pesan: judul_pesan,
-                        photo: photo,
+                        title: title,
                         desc: desc,
                         total_price: price,
                         order_date: order_date,
@@ -569,21 +753,6 @@
             document.body.classList.remove('overflow-hidden');
         }
 
-        function addInput() {
-            const inputContainer = document.getElementById('inputContainers');
-
-            const newInput = document.createElement('input');
-            newInput.type = 'text';
-            newInput.classList.add('border', 'rounded-lg', 'p-1', 'max-w-xs', 'w-full', 'cursor-pointer');
-            newInput.placeholder = 'Choose Barang';
-            newInput.onclick = function() {
-                document.querySelectorAll('.active-input').forEach(el => el.classList.remove('active-input'));
-                newInput.classList.add('active-input');
-                openModal('chooseBarangModal');
-            };
-
-            inputContainer.appendChild(newInput);
-        }
 
         function selectBarang(barangName) {
             const activeInput = document.querySelector('.active-input');
@@ -616,6 +785,11 @@
         });
         let products = [];
 
+        document.getElementById('btn-list-req').addEventListener('click', function() {
+            $('#reqModal').modal('show');
+        });
+        let productsReq = [];
+
         $('#submit-detail').on('click', function() {
             var productName = $('#name').val();
             var quantity = $('#quantity').val();
@@ -634,9 +808,30 @@
                 totalPrice: totalPrice
             });
 
+
+
             renderProductList();
             $('#product-form')[0].reset();
             $('#detailModal').modal('hide');
+        });
+
+        $('#submit-req-detail').on('click', function() {
+            var productName = $('#name-req').val();
+            var quantity = $('#quantity-req').val();
+            var selectedOption = document.querySelector('#name-req option:checked');
+
+            if (!productName || !quantity) {
+                alert("All fields are required.");
+                return;
+            }
+            productsReq.push({
+                name: productName,
+                quantity: quantity
+            });
+
+            renderInventList();
+            $('#bahan-form')[0].reset();
+            $('#reqModal').modal('hide');
         });
 
 
@@ -667,9 +862,27 @@
             products.splice(index, 1);
             renderProductList();
         });
-    </script>
 
-    <script>
-        function displayPrice() {}
+        // Inventory List
+
+        function renderInventList() {
+            $('#invent-list').empty();
+
+            productsReq.forEach((bahan, index) => {
+                var bahanElement = `
+                <div class="bahan-item border p-2 mt-2 relative" id="bahan-${index}">
+                <button class="remove-bahan bg-red-500 text-white px-2 rounded absolute top-0 right-0 mt-1 mr-1" data-index="${index}">X</button>
+                <p><strong>Name     :</strong> <span class="bahan-name">${bahan.name}</span></p>
+                <p><strong>Quantity :</strong> <span class="bahan-quantity">${bahan.quantity}</span></p>
+                </div>`;
+                $('#invent-list').append(bahanElement);
+            });
+        }
+
+        $(document).on('click', '.remove-bahan', function() {
+            var index = $(this).data('index');
+            productsReq.splice(index, 1);
+            renderInventList();
+        });
     </script>
 @endsection

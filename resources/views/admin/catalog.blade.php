@@ -57,7 +57,7 @@
     </form>
     <div class="container  mx-auto mt-4 pb-12 w-full font-dm">
         <div class=" grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-10">
-            @foreach ($catalog as $item)
+            @foreach ($catalogtipe1 as $item)
                 <div
                     class="relative p-2 w-[250px] h-[250px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-sm grid grid-rows-7">
                     <button
@@ -212,7 +212,7 @@
         @endif
 
         function deleteCatalog(id) {
-            // console.log("data yang dihapus :", id);
+            console.log("data yang dihapus :", id);
             var url_delete = "{{ route('catalog.delete', ':id') }}".replace(':id', id);
             Swal.fire({
                 title: 'Are you sure?',

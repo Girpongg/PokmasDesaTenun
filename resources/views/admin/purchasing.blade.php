@@ -29,6 +29,36 @@
     <div class="flex flex-col w-full py-8 rounded-lg shadow-xl items-center justify-center mb-10">
         <h1 class="text-center text-4xl uppercase font-bold mb-2">PURCHASE ORDERS</h1>
     </div>
+    @if ($kurang->count() != 0)
+        <div id="accordionExample5" class="w-full mb-2">
+            <div
+                class="rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 bg-white dark:border-neutral-600 dark:bg-body-dark">
+                <h2 class="mb-0" id="headingTwo5">
+                    <button
+                        class="group relative flex w-full items-center rounded-none border-0 bg-neutral-100 px-5 py-4 text-left text-base text-red-700 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white [&:not([data-twe-collapse-collapsed])]:bg-neutral-100 [&:not([data-twe-collapse-collapsed])]:text-red-600 [&:not([data-twe-collapse-collapsed])]:shadow-border-b dark:[&:not([data-twe-collapse-collapsed])]:bg-surface-dark dark:[&:not([data-twe-collapse-collapsed])]:text-primary dark:[&:not([data-twe-collapse-collapsed])]:shadow-white/10 "
+                        type="button" data-twe-collapse-init data-twe-collapse-collapsed data-twe-target="#collapseTwo5"
+                        aria-expanded="false" aria-controls="collapseTwo5">
+                        Warning! terdapat product yang stoknya kurang dari 60
+                        <span
+                            class="-me-1 ms-auto h-5 w-5 shrink-0 rotate-[-180deg] transition-transform duration-200 ease-in-out group-data-[twe-collapse-collapsed]:me-0 group-data-[twe-collapse-collapsed]:rotate-0 motion-reduce:transition-none [&>svg]:h-6 [&>svg]:w-6 ">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </span>
+                    </button>
+                </h2>
+                <div id="collapseTwo5" class="!visible hidden" data-twe-collapse-item aria-labelledby="headingTwo5">
+                    <div class="px-5 py-4">
+                        @foreach ($kurang as $item)
+                            <li class="text-sm">{{ $item->name }} {{ $item->quantity }} - {{ $item->supplier->name }}
+                            </li>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="flex flex-col w-full  rounded-lg shadow-xl items-center justify-center mb-2">
         <div class="w-full flex flex-col items-end mb-3 px-8 pt-5">
@@ -354,30 +384,46 @@
 @endsection()
 @section('script')
     <script>
-        // Dynamic team dropdown
-        const input = $('#name');
-        const dropdown = $('#dropdown');
-        const dropdownList = $('#dropdown-list');
-        const product = @json($products);
-        console.log(product);
-        input.on('input', function() {
-            const query = input.val().toUpperCase();
-            dropdownList.empty();
+        document.getElementById('supplier_id').addEventListener('change', function() {
+            const supplierId = this.value;
+            const input = $('#name');
+            const dropdown = $('#dropdown');
+            const dropdownList = $('#dropdown-list');
 
-            product.forEach(product => {
-                if (product.name.toUpperCase().includes(query)) {
-                    const listItem = $('<li>').text(product.name.toUpperCase())
-                        .addClass('p-2 text-black cursor-pointer hover:bg-indigo-500')
-                        .on('click', function() {
-                            input.val(product.name.toUpperCase());
-                            $('#score-field').html(product.name);
-                            dropdown.addClass('hidden');
+            dropdownList.empty();
+            fetch(`purchasing/products-by-supplier/${supplierId}`)
+                .then(response => response.json())
+                .then(products => {
+                    input.off('click').on('click', function() {
+                        const query = input.val().toUpperCase();
+                        dropdownList.empty();
+                        products.forEach(product => {
+                            if (product.name.toUpperCase().includes(query)) {
+                                const listItem = $('<li>').text(product.name.toUpperCase())
+                                    .addClass(
+                                        'p-2 text-black cursor-pointer hover:bg-indigo-500')
+                                    .on('click', function() {
+                                        input.val(product.name.toUpperCase());
+                                        $('#score-field').html(product.name);
+                                        dropdown.addClass('hidden');
+                                    });
+
+                                if (product.quantity < 60) {
+                                    listItem.addClass('bg-red-500 text-white');
+                                    listItem.append(' (Stok Rendah)');
+                                }
+
+                                dropdownList.append(listItem);
+                            }
                         });
-                    dropdownList.append(listItem);
-                }
-            })
-            dropdown.removeClass('hidden');
+                        dropdown.removeClass('hidden');
+                    });
+                })
+                .catch(error => console.error('Error:', error));
         });
+
+
+
 
         $(document).ready(function() {
             $('#submit').on('click', async function(e) {
@@ -393,6 +439,7 @@
                         quantity: $(this).find('.product-quantity').text(),
                         price: $(this).find('.product-price').text(),
                         unit: $(this).find('.product-unit').text(),
+                        supplier_id: supplier_id
                     };
                     products.push(product);
                 });
@@ -489,6 +536,7 @@
 
                         }),
                         actions: `
+                        
                         <div class="flex">
                             <button data-te-ripple-init data-te-ripple-color="light" data-te-toggle="modal" data-te-target="#editModal"
                                 data-id="${purchase.id}" 
@@ -499,10 +547,19 @@
                                 class="edit-button mr-3 btn-detail block rounded bg-warning px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)]">
                                 <i class="fa-solid fa-pencil text-white"></i>
                             </button>
-                            <button class="mr-3 btn-detail block rounded bg-success px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]" 
-                                onclick='viewDetails(${JSON.stringify(purchase)})'>
-                                View
-                            </button>
+
+                            ${!purchase.status ?
+                        `<button onclick="validatePurchase(${purchase.id})" 
+                                                    class="mr-3 btn-detail block rounded bg-primary px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700">
+                                                    Validate
+                                                </button>`
+                                    :
+                                    `<button class="mr-3 btn-detail block rounded bg-success px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0" 
+                                                    onclick='viewDetails(${JSON.stringify(purchase)})'>
+                                                    View
+                                                </button>`
+                                }
+
                         
                             <button data-te-ripple-init data-te-ripple-color="light" onclick="deletePurchase(${purchase.id})"
                                 class="mr-3 btn-detail block rounded bg-danger px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)]">
@@ -676,9 +733,7 @@
         }
         document.getElementById('btn-list').addEventListener('click', function() {
             $('#detailModal').modal('show');
-        });
-        let products = [];
-
+        })
         $('#submit-detail').on('click', function() {
             var productName = $('#name').val();
             var quantity = $('#quantity').val();
@@ -775,5 +830,52 @@
             renderProductList();
         });
     </script>
-@endsection
 
+    <script>
+        function validatePurchase($purchase_id) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak dapat mengembalikan data yang sudah divalidasi!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Validasi!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `{{ route('purchase.accept', '') }}/${$purchase_id}`,
+                        method: 'PUT',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: async function(res) {
+                            if (res.success) {
+                                await Swal.fire({
+                                    title: 'SUCCESS',
+                                    text: res.message,
+                                    icon: "success"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                        return;
+                                    }
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 500);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error',
+                                text: xhr.responseText,
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+@endsection
