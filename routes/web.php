@@ -65,6 +65,7 @@ Route::prefix('admin')->group(function () {
         Route::put('/acceptOrder/{order}', [OrderController::class, 'acceptOrder'])->name('acceptOrder');
         Route::put('/declineOrder/{order}', [OrderController::class, 'declineOrder'])->name('declineOrder');
         Route::put('/doneOrder/{order}', [OrderController::class, 'DoneOrder'])->name('DoneOrder');
+        Route::put('/validateOrder/{order}', [OrderController::class, 'validateOrder'])->name('validateOrder');
     });
 
     Route::prefix('purchasing')->group(function () {

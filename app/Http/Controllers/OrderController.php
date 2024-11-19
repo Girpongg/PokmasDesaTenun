@@ -191,10 +191,12 @@ class OrderController extends Controller
         $detail = OrderDetail::with('barangJual')
             ->where('order_id', $order->id)
             ->get();
+        $detail_uang = $order->is_validated;
         $barang = BarangJual::all();
         $data = [
             'nama' => $order,
             'order' => $detail,
+            'detail_uang' => $detail_uang,
             'barang_juals' => $barang,
         ];        
         // $notEqualToOneCount = 0;
@@ -240,6 +242,14 @@ class OrderController extends Controller
     {
         $order->update([
             'is_done' => 1,
+        ]);
+        return response()->json(['message' => 'Order successfully accepted', 'success' => true]);
+    }
+
+    public function validateOrder(Order $order)
+    {
+        $order->update([
+            'is_validated' => 1,
         ]);
         return response()->json(['message' => 'Order successfully accepted', 'success' => true]);
     }
