@@ -20,6 +20,9 @@ class Order extends Model
         'total_price',
         'desc',
         'is_done',
+        'link_bukti_tf',    
+        'is_validated',
+        'tipe',
     ];
 
     public function orderDetails()

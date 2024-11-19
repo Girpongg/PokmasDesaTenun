@@ -16,12 +16,17 @@ class OrderController extends Controller
 {
     public function viewOrder()
     {
+        $order_catalog_validate = Order::where('is_validated', 1)->where('tipe', 1)->get();
+        $order_request_validate = Order::where('is_validated', 1)->where('tipe', 2)->get();
+        $order_catalog_notvalidate = Order::where('is_validated', 0)->where('tipe', 1)->get();
         $order = Order::get();
         $barang = BarangJual::all();
         $bahan = Product::all();
 
         $data = [
-            'orders' => $order,
+            'order_catalog_validate' => $order_catalog_validate,
+            'order_request_validate' => $order_request_validate,
+            'order_catalog_notvalidate' => $order_catalog_notvalidate,
             'barang_juals' => $barang,
             'products' => $bahan,
         ];
@@ -61,6 +66,8 @@ class OrderController extends Controller
 
         DB::beginTransaction();
         try {
+            $data['is_validated'] = 1;
+            $data['tipe'] = 2;
             $order = Order::create($data);
 
             if ($request->hasFile('image')) {
@@ -150,6 +157,8 @@ class OrderController extends Controller
         }
         DB::beginTransaction();
         try {
+            $data['is_validated'] = 1;
+            $data['tipe'] = 1;
             $order = Order::create($data);
             foreach ($products as $productData) {
                 // dd($productData);
@@ -168,9 +177,6 @@ class OrderController extends Controller
                 } else {
                     return response()->json(['message' => 'Product not found', 'error' => true]);
                 }
-                $product->update([
-                    'stock' => $product->stock - $productData['quantity'],
-                ]);
             }
             DB::commit();
             return response()->json(['message' => 'Data successfully stored', 'success' => true]);
@@ -224,6 +230,9 @@ class OrderController extends Controller
         $order->update([
             'status' => 2,
         ]);
+        $kurang = BarangJual::find($order->barangjual_id);
+        $kurang->stock = $kurang->stock - $order->quantity;
+        $kurang->save();
         return response()->json(['message' => 'Order successfully accepted', 'success' => true]);
     }
 

@@ -44,72 +44,163 @@
             data-te-toggle="modal" data-te-target="#Modal">Add Order Manually</button>
     </div>
 
-    <!-- From Catalog -->
-    <div class="text-left lg:mt-[40px]">
-        <h1 class="text-xl font-medium">From Catalog</h1>
-    </div>
-
-    <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
-        @foreach ($orders as $item)
-            <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
-                <div class=" flex flex-col gap-1">
-                    <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
-                    <p class="text-sm font-medium px-2">Order_date: <span
-                            class="text-sm font-normal">{{ $item->order_date }}</span> </p>
-                    <p class="text-sm font-medium px-2 pb-4">Total Price: <span
-                            class="text-sm font-normal">{{ $item->total_price }}</span> </p>
-                </div>
-                <a href="{{ route('order.detail', $item->id) }}">
-                    <button class="bg-black text-white w-full rounded-lg py-2">Details</button>
-                </a>
-                @php
-                    $count = 0;
-                @endphp
-                @foreach ($item->orderDetails as $items)
-                    @if ($items->status == 1)
+    <div class="flex flex-col w-full py-8 rounded-lg shadow-xl items-center justify-center mb-10">
+        <div class="w-full border-b-2 pt-3 shadow-lg">
+            <div class="w-full grid grid-cols-2">
+                <h5 class="table-layout-button @if (!request()->has('tab') || request()->get('tab') == 'table') {{ 'bg-gray-100 shadow-inner' }} @endif text-center md:text-2xl max-md:text-xl font-bold py-2 border-l-[1px] border-slate-300
+                hover:cursor-pointer select-none transition-all ease-in"
+                    data-tab-state="table">
+                    Sudah Bayar</h5>
+                <h5 class="cards-layout-button @if (request()->get('tab') == 'cards') {{ 'bg-gray-100 shadow-inner' }} @endif text-center md:text-2xl max-md:text-xl font-bold py-2 border-r-[1px] border-slate-300
+                hover:cursor-pointer select-none transition-all ease-in"
+                    data-tab-state="cards">
+                    Belum Bayar</h5>
+            </div>
+        </div>
+        <div
+        class="data-table-container  px-8 w-full mb-1 @if (!request()->has('tab') || request()->get('tab') == 'table') {{ 'opacity-100' }} @else {{ 'hidden opacity-0' }} @endif">
+            <div class="text-left lg:mt-[40px]">
+                <h1 class="text-xl font-medium">From Catalog Sudah Bayar</h1>
+            </div>
+            <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
+                @foreach ($order_catalog_validate as $item)
+                    <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2">Order_date: <span
+                                    class="text-sm font-normal">{{ $item->order_date }}</span> </p>
+                            <p class="text-sm font-medium px-2 pb-4">Total Price: <span
+                                    class="text-sm font-normal">{{ $item->total_price }}</span> </p>
+                        </div>
+                        <a href="{{ route('order.detail', $item->id) }}">
+                            <button class="bg-black text-white w-full rounded-lg py-2">Details</button>
+                        </a>
                         @php
-                            $count++;
+                            $count = 0;
                         @endphp
-                    @endif
+                        @foreach ($item->orderDetails as $items)
+                            @if ($items->status == 1)
+                                @php
+                                    $count++;
+                                @endphp
+                            @endif
+                        @endforeach
+                        @if ($count == 0)
+                            @if ($item->is_done == 0)
+                                <button class=" bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800"
+                                    onclick="isdone({{ $item->id }})">Done</button>
+                            @else
+                                <button
+                                    class="bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    disabled>
+                                    Already Done
+                                </button>
+                            @endif
+                        @endif
+
+                    </div>
                 @endforeach
-                @if ($count == 0)
-                    @if ($item->is_done == 0)
-                        <button class=" bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800"
-                            onclick="isdone({{ $item->id }})">Done</button>
-                    @else
-                        <button
-                            class="bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                            disabled>
-                            Already Done
-                        </button>
-                    @endif
-                @endif
 
             </div>
-        @endforeach
-
-    </div>
-
-    <div class="text-left lg:mt-[20px]">
-        <h1 class="text-xl font-medium">By Request</h1>
-    </div>
-
-    <div class="flex flex-row flex-wrap lg:mt-[20px]">
-        <!-- Cards -->
-        <div class="p-2 w-[250px] h-[300px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl grid grid-rows-7">
-            <div class="row-span-6 flex flex-col gap-1">
-                <img src="{{ asset('img/ntt.jpg') }}" alt="Description of the image"
-                    class="w-full h-[45%] rounded-xl object-cover">
-                <h1 class="text-lg font-medium">Kain Sarung Motif Kelelawar</h1>
-                <p class="text-sm font-medium">Kuantitas: <span class="text-sm font-normal">2</span> </p>
-                <p class="text-sm font-medium">Harga: <span class="text-sm font-normal">Menunggu konfirmasi</span> </p>
-                <p class="text-sm font-medium">Pembeli: <span class="text-sm font-normal">Agung Salvatoni</span> </p>
+            <div class="text-left lg:mt-[20px]">
+                <h1 class="text-xl font-medium">From Request Sudah Bayar</h1>
             </div>
-            <button class="bg-black text-white w-full rounded-lg py-2" onclick="openModal('modalRequest')">Details</button>
+            <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
+                @foreach ($order_request_validate as $item)
+                    <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2">Order_date: <span
+                                    class="text-sm font-normal">{{ $item->order_date }}</span> </p>
+                            <p class="text-sm font-medium px-2 pb-4">Total Price: <span
+                                    class="text-sm font-normal">{{ $item->total_price }}</span> </p>
+                        </div>
+                        <a href="{{ route('order.detail', $item->id) }}">
+                            <button class="bg-black text-white w-full rounded-lg py-2">Details</button>
+                        </a>
+                        @php
+                            $count = 0;
+                        @endphp
+                        @foreach ($item->orderDetails as $items)
+                            @if ($items->status == 1)
+                                @php
+                                    $count++;
+                                @endphp
+                            @endif
+                        @endforeach
+                        @if ($count == 0)
+                            @if ($item->is_done == 0)
+                                <button class=" bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800"
+                                    onclick="isdone({{ $item->id }})">Done</button>
+                            @else
+                                <button
+                                    class="bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    disabled>
+                                    Already Done
+                                </button>
+                            @endif
+                        @endif
+
+                    </div>
+                @endforeach
+
+            </div>
+        </div>
+        <div
+        class="data-cards-container  px-8 w-full mb-1 @if (request()->get('tab') == 'cards') {{ 'opacity-100' }} @else {{ 'hidden opacity-0' }} @endif">
+            <div class="text-left lg:mt-[40px]">
+                <h1 class="text-xl font-medium">From Catalog Belum Bayar</h1>
+            </div>
+            <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
+                @foreach ($order_catalog_notvalidate as $item)
+                    <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2">Order_date: <span
+                                    class="text-sm font-normal">{{ $item->order_date }}</span> </p>
+                            <p class="text-sm font-medium px-2 pb-4">Total Price: <span
+                                    class="text-sm font-normal">{{ $item->total_price }}</span> </p>
+                        </div>
+                        <a href="{{ route('order.detail', $item->id) }}">
+                            <button class="bg-black text-white w-full rounded-lg py-2">Details</button>
+                        </a>
+                        @php
+                            $count = 0;
+                        @endphp
+                        @foreach ($item->orderDetails as $items)
+                            @if ($items->status == 1)
+                                @php
+                                    $count++;
+                                @endphp
+                            @endif
+                        @endforeach
+                        @if ($count == 0)
+                            @if ($item->is_done == 0)
+                                <button class=" bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800"
+                                    onclick="isdone({{ $item->id }})">Done</button>
+                            @else
+                                <button
+                                    class="bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    disabled>
+                                    Already Done
+                                </button>
+                            @endif
+                        @endif
+
+                    </div>
+                @endforeach
+
+            </div>
+            <div class="text-left lg:mt-[20px]">
+                <h1 class="text-xl font-medium">From Request Belum   Bayar</h1>
+            </div>
+            <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
+
+
+            </div>
         </div>
     </div>
 
-    <!-- Modals -->
 
     <!-- Choose Barang Modal -->
     <div id="chooseBarangModal" class="hidden fixed inset-0 z-[55] bg-black bg-opacity-50 flex items-center justify-center">
@@ -333,7 +424,8 @@
                                             data-te-select-init>
                                             <option value="" selected disabled hidden></option>
                                             @foreach ($barang_juals as $barang_jual)
-                                                <option value="{{ $barang_jual->name }}" data-id="{{ $barang_jual->id }}"
+                                                <option value="{{ $barang_jual->name }}"
+                                                    data-id="{{ $barang_jual->id }}"
                                                     data-price="{{ $barang_jual->price }}">{{ $barang_jual->name }}
                                                     ({{ $barang_jual->stock }})
                                                 </option>
@@ -883,6 +975,72 @@
             var index = $(this).data('index');
             productsReq.splice(index, 1);
             renderInventList();
+        });
+
+        const cardsButton = document.querySelector(".cards-layout-button");
+        const tableButton = document.querySelector(".table-layout-button");
+        const dataCardsLayout = document.querySelector('.data-cards-container');
+        const dataTableLayout = document.querySelector('.data-table-container');
+
+        var lastLayout = localStorage.getItem('lastLayout');
+        console.log("Last Layout:", lastLayout);
+
+        tableButton.addEventListener('click', () => {
+
+            localStorage.setItem("lastLayout", "cards");
+            if (!tableButton.classList.contains('bg-gray-100')) {
+                tableButton.classList.toggle('bg-gray-100');
+                tableButton.classList.toggle('shadow-inner');
+            }
+
+            if (cardsButton.classList.contains('bg-gray-100')) {
+                cardsButton.classList.toggle('bg-gray-100');
+                cardsButton.classList.toggle('shadow-inner');
+            }
+
+            dataTableLayout.style.display = 'initial';
+            dataCardsLayout.style.opacity = 0;
+            dataTableLayout.style.opacity = 1;
+            setTimeout(() => {
+                dataCardsLayout.style.display = 'none';
+            }, 330);
+        });
+
+        cardsButton.addEventListener('click', () => {
+
+            if (!cardsButton.classList.contains('bg-gray-100')) {
+                cardsButton.classList.toggle('bg-gray-100');
+                cardsButton.classList.toggle('shadow-inner');
+            }
+
+            if (tableButton.classList.contains('bg-gray-100')) {
+                tableButton.classList.toggle('bg-gray-100');
+                tableButton.classList.toggle('shadow-inner');
+            }
+
+            dataTableLayout.style.opacity = 0;
+            dataCardsLayout.style.opacity = 1;
+
+            setTimeout(() => {
+                dataTableLayout.style.display = 'none';
+                dataCardsLayout.style.display = 'initial';
+            }, 330);
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            let scrollPosition = 0;
+
+            window.addEventListener('scroll', () => {
+                scrollPosition = window.scrollY;
+            });
+        });
+
+        document.querySelectorAll('h5[data-tab-state]').forEach((el) => {
+            el.addEventListener('click', () => {
+                const url = new URL(window.location.href);
+                url.searchParams.set('tab', el.dataset.tabState);
+                window.history.pushState(null, null, url.toString());
+            });
         });
     </script>
 @endsection
