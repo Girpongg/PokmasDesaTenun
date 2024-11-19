@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use Illuminate\Support\Facades\Log;
-use App\Models\BarangJualDetail;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\BarangJual;
@@ -21,14 +19,12 @@ class OrderController extends Controller
         $order_catalog_notvalidate = Order::where('is_validated', 0)->where('tipe', 1)->get();
         $order = Order::get();
         $barang = BarangJual::all();
-        $bahan = Product::all();
 
         $data = [
             'order_catalog_validate' => $order_catalog_validate,
             'order_request_validate' => $order_request_validate,
             'order_catalog_notvalidate' => $order_catalog_notvalidate,
             'barang_juals' => $barang,
-            'products' => $bahan,
         ];
         return view('admin.order', $data);
     }
@@ -119,42 +115,50 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+        // dd(session('cart'));
+        // $cart = session('cart');
         $data = $request->all();
-        $products = $request->get('products');
+        $products = session('cart');
         $validator = Validator::make(
             $data,
             [
                 'customer_name' => 'required|string',
                 'customer_wa' => 'required|string',
                 'address' => 'required|string',
-                'title' => 'nullable|string',
-                'order_date' => 'required|date',
-                'total_price' => 'required|integer',
+                'judul_pesan' => 'nullable|string',
+                // 'order_date' => 'required|date',
+                // 'total_price' => 'required|integer',
                 'desc' => 'nullable|string',
-                'products' => 'required|array',
-                'products.*.name' => 'required|string',
-                'products.*.quantity' => 'required|integer',
-                'products.*.price' => 'required|integer',
+                // 'products' => 'required|array',
+                // 'products.*.name' => 'nullable|string',
+                // 'products.*.quantity' => 'required|integer',
+                // 'products.*.price' => 'required|integer',
             ],
             [
                 'customer_name.required' => 'Name is required.',
-                'order_date.required' => 'Order date is required.',
+                // 'order_date.required' => 'Order date is required.',
                 'customer_wa.required' => 'Customer WA is required.',
                 'address.required' => 'Customer Address is required.',
-                'title.required' => 'Judul Pesan is required.',
+                'judul_pesan.required' => 'Judul Pesan is required.',
                 'total_price.required' => 'Total Price is required.',
                 'desc.required' => 'Description is required.',
-                'products.required' => 'Products are required.',
-                'products.*.name.required' => 'Product name is required.',
-                'products.*.quantity.required' => 'Product quantity is required.',
-                'products.*.price.required' => 'Product price is required.',
+                // 'products.required' => 'Products are required.',
+                // 'products.*.name.required' => 'Product name is required.',
+                // 'products.*.quantity.required' => 'Product quantity is required.',
+                // 'products.*.price.required' => 'Product price is required.',
             ],
         );
 
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
         }
+
+        $totalPrice = 0;
+        foreach ($products as $product) {
+            $totalPrice += $product['quantity'] * $product['price'];
+        }
+        $data['total_price'] = $totalPrice;
+        $data['order_date'] = today();
         DB::beginTransaction();
         try {
             $data['is_validated'] = 1;
@@ -179,6 +183,7 @@ class OrderController extends Controller
                 }
             }
             DB::commit();
+            session()->forget('cart');
             return response()->json(['message' => 'Data successfully stored', 'success' => true]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -192,20 +197,13 @@ class OrderController extends Controller
             ->where('order_id', $order->id)
             ->get();
         $barang = BarangJual::all();
+
         $data = [
             'nama' => $order,
             'order' => $detail,
             'barang_juals' => $barang,
-        ];        
-        // $notEqualToOneCount = 0;
-        // foreach ($detail as $value) {
-        //     if ($value->status != 1) {
-        //         $notEqualToOneCount++;
-        //     }
-        // }
-        // if ($notEqualToOneCount === count($detail)) {
-        //     return view('admin.order');
-        // }
+        ];
+        // dd('halo');
         return view('admin.detail_order', $data);
     }
 
@@ -224,7 +222,6 @@ class OrderController extends Controller
     
         
     }
-    
     public function acceptOrder(OrderDetail $order)
     {
         $order->update([
