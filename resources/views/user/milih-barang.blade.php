@@ -21,9 +21,9 @@
                 </div>
             </div>
         </a>
-        <div class="grid grid-cols-5 px-12 place-items-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5  px-12 place-items-center">
             @foreach ($catalog as $item)
-                <div class="relative w-[250px] h-[310px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md grid grid-rows-7"
+                <div class="relative w-[250px] h-[310px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md grid grid-rows-7 mb-8"
                     style="background: linear-gradient(to right, #5C4033, #4D4C1C);">
                     <div class="row-span-7 flex flex-col gap-1">
                         <img src="{{ asset('storage/uploads/catalog/' . $item->image) }}" alt="Image"

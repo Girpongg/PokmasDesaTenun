@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('order_detail', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('barangjual_id');
-            $table->foreignId('order_id')->nullable()->constrained('orders', 'id')->nullOnDelete();
+            $table->foreignId('order_id')->nullable()->constrained('orders', 'id')->onDelete('cascade');
             $table->integer('quantity');
             $table->integer('price');
             $table->integer('status')->default(1)->comment('0: reject,1: default, 2: accept');

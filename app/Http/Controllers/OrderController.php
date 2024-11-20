@@ -14,15 +14,105 @@ class OrderController extends Controller
 {
     public function viewOrder()
     {
+        $order_catalog_validate = Order::where('is_validated', 1)->where('tipe', 1)->get();
+        $order_request_validate = Order::where('is_validated', 1)->where('tipe', 2)->get();
+        $order_catalog_notvalidate = Order::where('is_validated', 0)->where('tipe', 1)->get();
         $order = Order::get();
         $barang = BarangJual::all();
 
         $data = [
-            'orders' => $order,
+            'order_catalog_validate' => $order_catalog_validate,
+            'order_request_validate' => $order_request_validate,
+            'order_catalog_notvalidate' => $order_catalog_notvalidate,
             'barang_juals' => $barang,
         ];
         return view('admin.order', $data);
     }
+
+    public function storeRequest(Request $request)
+    {
+        $data = $request->all();
+
+        // Decode the JSON string back into an array
+        if (isset($data['products'])) {
+            $data['products'] = json_decode($data['products'], true);
+        }
+
+        // Validate the request
+        $validator = Validator::make($data, [
+            'title' => 'required|string|max:255',
+            'total_price' => 'required|numeric',
+            'desc' => 'required|string',
+            'products' => 'required|array',
+            'products.*.name' => 'required|string|max:255',
+            'products.*.quantity' => 'required|integer|min:1',
+            // Add other validation rules as needed
+        ], [
+            'title.required' => 'Title is required.',
+            'total_price.required' => 'Total price is required.',
+            'desc.required' => 'Description is required.',
+            'products.required' => 'Products are required.',
+            'products.*.name.required' => 'Product name is required.',
+            'products.*.quantity.required' => 'Product quantity is required.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
+        }
+
+        DB::beginTransaction();
+        try {
+            $data['is_validated'] = 1;
+            $data['tipe'] = 2;
+            $order = Order::create($data);
+
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $path = 'public/uploads/request';
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $fileNameToStore = $originalName . '_' . time() . '_' . uniqid() . '.' . $extension;
+                $file->storePubliclyAs($path, $fileNameToStore);
+
+                $finalData = [
+                    'name' => $data['title'],
+                    'price' => $data['total_price'] ?? 0,
+                    'stock' => 1,
+                    'description' => $data['desc'],
+                    'tipe' => 2,
+                    'image' => $fileNameToStore,
+                ];
+
+                $barangterjual = BarangJual::create($finalData);
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'barangjual_id' => $barangterjual->id,
+                    'quantity' => 1,
+                    'price' => $order->total_price,
+                ]);
+
+                // Process products
+                foreach ($data['products'] as $productsData) {
+                    $bahan = Product::where('name', $productsData['name'])->first();
+                    if ($bahan) {
+                        BarangJualDetail::create([
+                            'barang_jual_id' => $barangterjual->id,
+                            'product_id' => $bahan->id,
+                        ]);
+                    } else {
+                        return response()->json(['message' => 'Product not found', 'error' => true]);
+                    }
+                }
+            }
+
+            DB::commit();
+            return response()->json(['message' => 'Data successfully stored', 'success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Failed to store data', 'error' => true, 'details' => $e->getMessage()]);
+        }
+    }
+
     public function storeKatalog(Request $request)
     {
         // dd(session('cart'));
@@ -160,6 +250,8 @@ class OrderController extends Controller
         $data['order_date'] = today();
         DB::beginTransaction();
         try {
+            $data['is_validated'] = 1;
+            $data['tipe'] = 1;
             $order = Order::create($data);
             foreach ($products as $productData) {
                 // dd($productData);
@@ -178,9 +270,6 @@ class OrderController extends Controller
                 } else {
                     return response()->json(['message' => 'Product not found', 'error' => true]);
                 }
-                $product->update([
-                    'stock' => $product->stock - $productData['quantity'],
-                ]);
             }
             DB::commit();
             session()->forget('cart');
@@ -209,16 +298,27 @@ class OrderController extends Controller
 
     public function declineOrder(OrderDetail $order)
     {
-        $order->update([
-            'status' => 0,
-        ]);
-        return response()->json(['message' => 'Order successfully accepted', 'success' => true]);
+        $order->update(['status' => 0]);
+    
+        $parentOrder = $order->order; 
+        if ($parentOrder->orderDetails->every(fn($detail) => $detail->status == 0)) {
+            $parentOrder->delete();
+            return response()->json(['redirect' => url('/admin/order')]);
+        }
+        else{
+            return response()->json(['message' => 'Order successfully declined', 'success' => true]);
+        }
+    
+        
     }
     public function acceptOrder(OrderDetail $order)
     {
         $order->update([
             'status' => 2,
         ]);
+        $kurang = BarangJual::find($order->barangjual_id);
+        $kurang->stock = $kurang->stock - $order->quantity;
+        $kurang->save();
         return response()->json(['message' => 'Order successfully accepted', 'success' => true]);
     }
 
