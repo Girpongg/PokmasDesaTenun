@@ -23,6 +23,95 @@ class OrderController extends Controller
         ];
         return view('admin.order', $data);
     }
+    public function storeKatalog(Request $request)
+    {
+        // dd(session('cart'));
+        // $cart = session('cart');
+        $data = $request->all();
+        $products = session('cart');
+        $validator = Validator::make(
+            $data,
+            [
+                'customer_name' => 'required|string',
+                'customer_wa' => 'required|string',
+                'address' => 'required|string',
+                'judul_pesan' => 'nullable|string',
+                // 'order_date' => 'required|date',
+                // 'total_price' => 'required|integer',
+                'desc' => 'nullable|string',
+                // 'products' => 'required|array',
+                // 'products.*.name' => 'nullable|string',
+                // 'products.*.quantity' => 'required|integer',
+                // 'products.*.price' => 'required|integer',
+            ],
+            [
+                'customer_name.required' => 'Name is required.',
+                // 'order_date.required' => 'Order date is required.',
+                'customer_wa.required' => 'Customer WA is required.',
+                'address.required' => 'Customer Address is required.',
+                'judul_pesan.required' => 'Judul Pesan is required.',
+                'total_price.required' => 'Total Price is required.',
+                'desc.required' => 'Description is required.',
+                // 'products.required' => 'Products are required.',
+                // 'products.*.name.required' => 'Product name is required.',
+                // 'products.*.quantity.required' => 'Product quantity is required.',
+                // 'products.*.price.required' => 'Product price is required.',
+            ],
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
+        }
+
+        $totalPrice = 0;
+        foreach ($products as $product) {
+            $totalPrice += $product['quantity'] * $product['price'];
+        }
+        $data['total_price'] = $totalPrice;
+        $data['order_date'] = today();
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $path = 'public/uploads/bukti_transfer';
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $fileNameToStore = $originalName . '_' . time() . '_' . uniqid() . '.' . $extension;
+                $file->storePubliclyAs($path, $fileNameToStore);
+            }
+
+            $data['link_bukti_tf'] = $fileNameToStore;
+            $data['is_validated'] = 0;
+            $data['tipe'] = 1;
+            $order = Order::create($data);
+
+            foreach ($products as $productData) {
+                // dd($productData);
+                $product = BarangJual::where('name', $productData['name'])->first();
+                // dd($product);
+                if ($product) {
+                    if ($product->stock < $productData['quantity']) {
+                        return response()->json(['message' => 'Stock is not enough', 'error' => true]);
+                    }
+                    OrderDetail::create([
+                        'order_id' => $order->id,
+                        'barangjual_id' => $product->id,
+                        'quantity' => $productData['quantity'],
+                        'price' => $productData['price'],
+                    ]);
+                } else {
+                    return response()->json(['message' => 'Product not found', 'error' => true]);
+                }
+            }
+            DB::commit();
+            session()->forget('cart');
+            return response()->json(['success' => true, 'message' => 'Data successfully stored']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Failed to store data', 'error' => true] . $e->getMessage());
+        }
+    }
+
     public function store(Request $request)
     {
         // dd(session('cart'));

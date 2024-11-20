@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('title')->nullable();    
             $table->integer('total_price')->nullable();
             $table->integer('is_done')->default(0)->comment('0: not done, 1: done, 2: sudah diambil ');
+            $table->boolean('is_validated')->default(false);
             $table->string('desc')->nullable();
             $table->timestamps();
         });
