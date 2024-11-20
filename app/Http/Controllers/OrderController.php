@@ -142,10 +142,10 @@ class OrderController extends Controller
                 'judul_pesan.required' => 'Judul Pesan is required.',
                 'total_price.required' => 'Total Price is required.',
                 'desc.required' => 'Description is required.',
-                // 'products.required' => 'Products are required.',
-                // 'products.*.name.required' => 'Product name is required.',
-                // 'products.*.quantity.required' => 'Product quantity is required.',
-                // 'products.*.price.required' => 'Product price is required.',
+                'products.required' => 'Products are required.',
+                'products.*.name.required' => 'Product name is required.',
+                'products.*.quantity.required' => 'Product quantity is required.',
+                'products.*.price.required' => 'Product price is required.',
             ],
         );
 
@@ -201,6 +201,7 @@ class OrderController extends Controller
             return response()->json(['message' => 'Failed to store data', 'error' => true] . $e->getMessage());
         }
     }
+ 
 
     public function store(Request $request)
     {
@@ -228,9 +229,9 @@ class OrderController extends Controller
                 // 'order_date.required' => 'Order date is required.',
                 'customer_wa.required' => 'Customer WA is required.',
                 'address.required' => 'Customer Address is required.',
-                'judul_pesan.required' => 'Judul Pesan is required.',
-                'total_price.required' => 'Total Price is required.',
-                'desc.required' => 'Description is required.',
+                // 'judul_pesan.required' => 'Judul Pesan is required.',
+                // 'total_price.required' => 'Total Price is required.',
+                // 'desc.required' => 'Description is required.',
                 // 'products.required' => 'Products are required.',
                 // 'products.*.name.required' => 'Product name is required.',
                 // 'products.*.quantity.required' => 'Product quantity is required.',
