@@ -89,7 +89,7 @@ class BarangJualController extends Controller
     }
     public function viewCatalog()
     {
-        $catalog = BarangJual::all();
+        $catalog = BarangJual::where('tipe','1')->get();
         $data = [
             'catalog' => $catalog,
         ];

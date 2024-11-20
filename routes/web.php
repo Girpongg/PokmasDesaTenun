@@ -24,15 +24,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/home', function() {
     return view('user.home');
-})->name('user.home');
+})->name('home');
 
-Route::get('/add-to-cart/{id}', [BarangJualController::class, 'addToCart'])->name('add-cart');
-Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');
-Route::get('/delete-from-cart/{id}', [BarangJualController::class, 'deleteFromCart'])->name('delete-from-cart');
-Route::get('/barang', [BarangJualController::class, 'viewCatalog'])->name('milih-barang');
-Route::get('/detail-barang/{barang}', [BarangJualController::class, 'viewDetail'])->name('detail-barang');
 Route::get('admin/login', function () {
     return view('admin.login.login');
 });
@@ -47,6 +43,7 @@ Route::get('/detail-payment', function () {
 Route::get('/form-katalog', function () {
     return view('user.form-katalog');
 })->name('form-katalog');
+Route::post('/', [OrderController::class, 'store'])->name('katalog.store');
 
 Route::get('/add-to-cart/{id}', [BarangJualController::class, 'addToCart'])->name('add-cart');
 Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');
@@ -75,7 +72,6 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('/order')->group(function () {
         Route::get('/', [OrderController::class, 'viewOrder'])->name('viewOrder');
-        Route::post('/req', [OrderController::class, 'storeRequest'])->name('order.request');
         Route::post('/', [OrderController::class, 'store'])->name('order.store');
         Route::get('/detail/{order}', [OrderController::class, 'detailOrder'])->name('order.detail');
         Route::put('/acceptOrder/{order}', [OrderController::class, 'acceptOrder'])->name('acceptOrder');
@@ -85,11 +81,9 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('purchasing')->group(function () {
         Route::get('/', [PurchaseController::class, 'index'])->name('purchase.index');
-        Route::get('/products-by-supplier/{supplier_id}', [PurchaseController::class, 'getProductsBySupplier']);
         Route::post('/store', [PurchaseController::class, 'store'])->name('purchase.store');
         Route::delete('/delete/{purchase:id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
         Route::put('/update/{purchase:id}', [PurchaseController::class, 'update'])->name('purchase.update');
-        Route::put('/accept/{purchase:id}', [PurchaseController::class, 'accept'])->name('purchase.accept');
     });
 
     Route::prefix('catalog')->group(function () {

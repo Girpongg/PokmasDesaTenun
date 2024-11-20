@@ -14,8 +14,14 @@
     @foreach ($order as $item)
         <div class="grid grid-cols-6 w-full py-8 rounded-lg shadow-md mb-10 bg-white">
             <div class="col-span-2 px-[30px] h-[200px]">
+                @if ($item->barangJual->tipe == 2)
+                <img src="{{ asset('storage/uploads/request/' . $item->barangJual->image) }}" alt=""
+                    class="w-full h-full">
+                @else
                 <img src="{{ asset('storage/uploads/catalog/' . $item->barangJual->image) }}" alt=""
                     class="w-full h-full">
+                @endif
+                
             </div>
             <div class="col-span-4">
                 <div class="flex flex-col gap-5">

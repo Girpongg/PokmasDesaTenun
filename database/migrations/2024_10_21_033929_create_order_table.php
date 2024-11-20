@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('color')->nullable();
             $table->string('title')->nullable();    
             $table->integer('total_price')->nullable();
+            $table->string('link_bukti_tf')->nullable();
+            $table->integer('tipe')->comment('1: katalog 2: custom');
+            $table->boolean('is_validated')->default(false);
             $table->integer('is_done')->default(0)->comment('0: not done, 1: done, 2: sudah diambil ');
             $table->string('desc')->nullable();
             $table->timestamps();
