@@ -96,7 +96,6 @@
 
     {{-- </div> --}}
 
-
     <div class=" w-[70%] h-auto mx-auto my-[70px] ">
         <h1 data-aos="fade-up" class=" text-[80px] custom-span text-[#5C4033]">Desa Tenun</h1>
         <p data-aos="fade-up" class=" font3 text-[#5C4033]">Lorem ipsum, dolor sit amet consectetur adipisicing elit.

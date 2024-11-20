@@ -2,11 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\BarangJual;
+use Illuminate\Http\Request;
 
 class BarangJualController extends Controller
 {
+
+    public function viewCatalog()
+    {
+        $catalog = BarangJual::all();
+        $data = [
+            'catalog' => $catalog,
+        ];
+        // dd($data);
+        return view('user.milih-barang', $data);
+    }
+
+    public function viewDetail(BarangJual $barang)
+    {
+        $data = [
+            'barang' => $barang,
+        ];
+        // dd($data);
+        return view('user.detail-barang', $data);
+    }
+
+
+    public function addToCart($id)
+    {   
+        // dd($id);
+        $barang = BarangJual::find($id);
+        $cart = session()->get('cart', []);
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        }else {
+            $cart[$id] = [
+                'image' => $barang->image,
+                'id' => $barang->id,
+                'name' => $barang->name,
+                'price' => $barang->price,
+                'description' => $barang->description,
+                'quantity' => 1,
+            ];
+        }
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Item added to cart successfully!');
+    }
+
+    public function deleteFromCart($id)
+    {
+        $cart = session()->get('cart');
+        if (isset($cart[$id])) {
+            if ($cart[$id]['quantity'] > 1) {
+                $cart[$id]['quantity']--;
+            }else {
+                unset($cart[$id]);
+            }
+            session()->put('cart', $cart);
+        }
+        return redirect()->back()->with('success', 'Item removed from cart successfully!');
+    }
+
     public function viewBarangJual()
     {
         $barang_juals = BarangJual::get();
@@ -31,59 +87,7 @@ class BarangJualController extends Controller
         ];
         return view('admin.katalog', $sharedData);
     }
-    public function viewCatalog()
-    {
-        $catalog = BarangJual::where('tipe','1')->get();
-        $data = [
-            'catalog' => $catalog,
-        ];
-        // dd($data);
-        return view('user.milih-barang', $data);
-    }
 
-    public function viewDetail(BarangJual $barang)
-    {
-        $data = [
-            'barang' => $barang,
-        ];
-        // dd($data);
-        return view('user.detail-barang', $data);
-    }
-
-    public function addToCart($id)
-    {
-        // dd($id);
-        $barang = BarangJual::find($id);
-        $cart = session()->get('cart', []);
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                'image' => $barang->image,
-                'id' => $barang->id,
-                'name' => $barang->name,
-                'price' => $barang->price,
-                'description' => $barang->description,
-                'quantity' => 1,
-            ];
-        }
-        session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Item added to cart successfully!');
-    }
-
-    public function deleteFromCart($id)
-    {
-        $cart = session()->get('cart');
-        if (isset($cart[$id])) {
-            if ($cart[$id]['quantity'] > 1) {
-                $cart[$id]['quantity']--;
-            } else {
-                unset($cart[$id]);
-            }
-            session()->put('cart', $cart);
-        }
-        return redirect()->back()->with('success', 'Item removed from cart successfully!');
-    }
 
     public function viewCart()
     {

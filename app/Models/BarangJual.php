@@ -18,7 +18,7 @@ class BarangJual extends Model
         'stock',
         'tipe',
         'description',
-    ]; 
+    ];
     
     public function order()
     {
