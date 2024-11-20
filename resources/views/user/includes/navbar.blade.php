@@ -475,7 +475,7 @@
     </div>
     <div class="nav-collapse">
         <ul class="nav-menu">
-            <a href="{{route('user.home')}}" class="nav-link ">
+            <a href="{{route('home')}}" class="nav-link ">
                 <li>HOME</li>
             </a>
             <a href="{{route('milih-barang')}}" class="nav-link ">
