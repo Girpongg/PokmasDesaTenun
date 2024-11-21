@@ -97,4 +97,13 @@ class BarangJualController extends Controller
         ];
         return view('user.cart', $data);
     }
+
+    public function viewCartPayment()
+    {
+        $cart = session()->get('cart');
+        $data = [
+            'cart' => $cart,
+        ];
+        return view('user.detail-payment', $data);
+    }
 }

@@ -36,9 +36,7 @@ Route::get('admin/login', function () {
 Route::get('/barang', [BarangJualController::class, 'viewCatalog'])->name('milih-barang');
 Route::get('/detail-barang/{barang}', [BarangJualController::class, 'viewDetail'])->name('detail-barang');
 
-Route::get('/detail-payment', function () {
-    return view('user.detail-payment');
-})->name('detail-payment');
+Route::get('/detail-payment', [BarangJualController::class, 'viewCartPayment'])->name('detail-payment');
 
 Route::get('/form-katalog', function () {
     return view('user.form-katalog');
