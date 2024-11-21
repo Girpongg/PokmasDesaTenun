@@ -19,12 +19,14 @@ class OrderController extends Controller
         $order_catalog_notvalidate = Order::where('is_validated', 0)->where('tipe', 1)->get();
         $order = Order::get();
         $barang = BarangJual::all();
+        $bahan = Product::all();
 
         $data = [
             'order_catalog_validate' => $order_catalog_validate,
             'order_request_validate' => $order_request_validate,
             'order_catalog_notvalidate' => $order_catalog_notvalidate,
             'barang_juals' => $barang,
+            'products' => $bahan,
         ];
         return view('admin.order', $data);
     }
