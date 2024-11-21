@@ -9,29 +9,49 @@
 @endsection
 @section('content')
 <div class="grid grid-cols-2 pt-24">
-    <div class="grid grid-cols-1 md:grid-cols-2 px-4 place-items-center">
-        @foreach ($cart as $value)
-            <div class="relative w-[250px] h-[350px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md mb-8 group"
-                style="background: linear-gradient(to right, #5C4033, #4D4C1C);">
-                
-                <!-- Gambar produk dengan tombol silang -->
-                <div class="relative h-2/3">
-                    <img src="{{ $value['image'] }}" alt="{{ $value['name'] }}" 
-                        class="w-full h-full object-cover rounded-sm">
-                </div>
-    
-                <!-- Informasi produk di bawah gambar -->
-                <div class="pt-2 px-4 h-1/3 flex flex-col justify-between">
-                    <h1 class="font4 font-semibold text-[16px] text-[#F5E9D3] group-hover:text-white transition-colors duration-300">{{ $value['name'] }}</h1>
-                    <h1 class="font3 font-bold text-[14px] leading-4 text-[#F5E9D3] group-hover:text-white transition-colors duration-300">
-                        Rp. {{ number_format($value['price'], 0, ',', '.') }}
-                    </h1>
-                    <h1 class="font3 leading-10 mt-2 text-[12px] text-red-100 group-hover:text-red-200 transition-colors duration-300">
-                        Jumlah: {{ $value['quantity'] }}
-                    </h1>
-                </div>
-            </div>
-        @endforeach
+    <div class="grid grid-cols-1 mx-32">
+        <div class="grid grid-cols-1 md:grid-cols-2 place-items-center mt-24 overflow-auto h-[480px]">
+            @foreach ($cart as $value)
+            <div class="relative w-[250px] h-[350px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md mb-6 group"
+            style="background: linear-gradient(to right, #5C4033, #4D4C1C);">
+           <!-- Gambar produk dengan tombol silang -->
+           <div class="relative h-2/3">
+               <img src="{{ $value['image'] }}" alt="{{ $value['name'] }}" 
+                    class="w-full h-full object-cover rounded-sm">
+           </div>
+       
+           <!-- Informasi produk di bawah gambar -->
+           <div class="pt-2 px-4 h-1/3 flex flex-col justify-between">
+               <h1 class="font4 font-semibold text-[16px] text-[#F5E9D3] group-hover:text-white transition-colors duration-300">
+                   {{ $value['name'] }}
+               </h1>
+               <h1 class="font3 font-bold text-[14px] leading-4 text-[#F5E9D3] group-hover:text-white transition-colors duration-300">
+                   Rp. {{ number_format($value['price'], 0, ',', '.') }}
+               </h1>
+               <!-- Bagian jumlah dengan tombol -->
+               <div class="mt-2 mb-3 flex items-center justify-center">
+                   <div class="flex items-center gap-2">
+                       <!-- Tombol Minus -->
+                       <a class="flex justify-center" href="">
+                           <button class="w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300">
+                        </a>
+                           -
+                       </button>
+                       <!-- Angka Jumlah -->
+                       <span class=" text-[#F5E9D3]">{{ $value['quantity'] }}</span>
+                       <!-- Tombol Plus -->
+                       <a class="flex justify-center" href="">
+                           <button class="w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300">
+                               +
+                            </button>
+                        </a>
+                   </div>
+               </div>
+           </div>
+       </div>
+       
+            @endforeach
+        </div>
     </div>
     <div class="w-full pt-24">
         <h1 class="w-full text-center font-[Satisfy] text-5xl font-bold text-[#5c4033]">PEMBAYARAN</h1>
@@ -93,7 +113,7 @@
                                         title: 'Berhasil',
                                         text: 'Pembayaran berhasil'
                                     }).then(() => {
-                                        window.location.reload();
+                                        window.location.href = '/home';
                                     });
                                 } else {
                                     Swal.fire({

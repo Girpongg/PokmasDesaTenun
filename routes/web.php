@@ -44,6 +44,8 @@ Route::get('/form-katalog', function () {
 Route::post('/', [OrderController::class, 'storeKatalog'])->name('katalog.store');
 
 Route::get('/add-to-cart/{id}', [BarangJualController::class, 'addToCart'])->name('add-cart');
+Route::put('/add-to-cart/{id}', [BarangJualController::class, 'plus'])->name('plusItem');
+Route::put('/add-to-cart/{id}', [BarangJualController::class, 'minus'])->name('minusItem');
 Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');
 
 Route::get('/delete-from-cart/{id}', [BarangJualController::class, 'deleteFromCart'])->name('delete-from-cart');

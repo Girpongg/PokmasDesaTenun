@@ -95,6 +95,7 @@ class BarangJualController extends Controller
         $data = [
             'cart' => $cart,
         ];
+        // session()->flush();
         return view('user.cart', $data);
     }
 
@@ -106,4 +107,24 @@ class BarangJualController extends Controller
         ];
         return view('user.detail-payment', $data);
     }
+
+    // public function plus(){
+    //     $cart = session()->get('cart');
+    //     $id = request()->id;
+    //     $cart[$id]['quantity']++;
+    //     session()->put('cart', $cart);
+    //     return redirect()->back();
+    // }
+
+    // public function minus(){
+    //     $cart = session()->get('cart');
+    //     $id = request()->id;
+    //     if ($cart[$id]['quantity'] > 1) {
+    //         $cart[$id]['quantity']--;
+    //     }else {
+    //         unset($cart[$id]);
+    //     }
+    //     session()->put('cart', $cart);
+    //     return redirect()->back();
+    // }
 }
