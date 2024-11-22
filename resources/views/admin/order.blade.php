@@ -817,17 +817,33 @@
 
         $('#submit-req-detail').on('click', function() {
             var productName = $('#name-req').val();
-            var quantity = $('#quantity-req').val();
+            var quantity = parseInt($('#quantity-req').val());
             var selectedOption = document.querySelector('#name-req option:checked');
+            var availableQuantity = parseInt(selectedOption.getAttribute('data-price'));
 
             if (!productName || !quantity) {
                 alert("All fields are required.");
                 return;
             }
-            productsReq.push({
-                name: productName,
-                quantity: quantity
-            });
+
+            var existingProduct = productsReq.find(product => product.name === productName);
+            if (existingProduct) {
+                var newQuantity = existingProduct.quantity + quantity;
+                if (newQuantity > availableQuantity) {
+                    alert("Quantity yang tersedia hanya " + availableQuantity + ". Lakukan input ulang atau update");
+                    return;
+                }
+                existingProduct.quantity = newQuantity;
+            } else {
+                if (quantity > availableQuantity) {
+                    alert("Quantity yang tersedia hanya " + availableQuantity + ". Lakukan input ulang atau update");
+                    return;
+                }
+                productsReq.push({
+                    name: productName,
+                    quantity: quantity
+                });
+            }
 
             renderInventList();
             $('#bahan-form')[0].reset();
