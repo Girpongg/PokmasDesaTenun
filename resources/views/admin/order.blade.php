@@ -44,72 +44,146 @@
             data-te-toggle="modal" data-te-target="#Modal">Add Order Manually</button>
     </div>
 
-    <!-- From Catalog -->
-    <div class="text-left lg:mt-[40px]">
-        <h1 class="text-xl font-medium">From Catalog</h1>
-    </div>
-
-    <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
-        @foreach ($orders as $item)
-            <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
-                <div class=" flex flex-col gap-1">
-                    <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
-                    <p class="text-sm font-medium px-2">Order_date: <span
-                            class="text-sm font-normal">{{ $item->order_date }}</span> </p>
-                    <p class="text-sm font-medium px-2 pb-4">Total Price: <span
-                            class="text-sm font-normal">{{ $item->total_price }}</span> </p>
-                </div>
-                <a href="{{ route('order.detail', $item->id) }}">
-                    <button class="bg-black text-white w-full rounded-lg py-2">Details</button>
-                </a>
-                @php
-                    $count = 0;
-                @endphp
-                @foreach ($item->orderDetails as $items)
-                    @if ($items->status == 1)
+    <div class="flex flex-col w-full py-8 rounded-lg shadow-xl items-center justify-center mb-10">
+        <div class="w-full border-b-2 pt-3 shadow-lg">
+            <div class="w-full grid grid-cols-2">
+                <h5 class="table-layout-button @if (!request()->has('tab') || request()->get('tab') == 'table') {{ 'bg-gray-100 shadow-inner' }} @endif text-center md:text-2xl max-md:text-xl font-bold py-2 border-l-[1px] border-slate-300
+                hover:cursor-pointer select-none transition-all ease-in"
+                    data-tab-state="table">
+                    Sudah Bayar</h5>
+                <h5 class="cards-layout-button @if (request()->get('tab') == 'cards') {{ 'bg-gray-100 shadow-inner' }} @endif text-center md:text-2xl max-md:text-xl font-bold py-2 border-r-[1px] border-slate-300
+                hover:cursor-pointer select-none transition-all ease-in"
+                    data-tab-state="cards">
+                    Belum Bayar</h5>
+            </div>
+        </div>
+        <div
+            class="data-table-container  px-8 w-full mb-1 @if (!request()->has('tab') || request()->get('tab') == 'table') {{ 'opacity-100' }} @else {{ 'hidden opacity-0' }} @endif">
+            <div class="text-left lg:mt-[40px]">
+                <h1 class="text-xl font-medium">From Catalog Sudah Bayar</h1>
+            </div>
+            <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
+                @foreach ($order_catalog_validate as $item)
+                    <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2">Order_date: <span
+                                    class="text-sm font-normal">{{ $item->order_date }}</span> </p>
+                            <p class="text-sm font-medium px-2 pb-4">Total Price: <span
+                                    class="text-sm font-normal">{{ $item->total_price }}</span> </p>
+                        </div>
+                        <a href="{{ route('order.detail', $item->id) }}">
+                            <button class="bg-black text-white w-full rounded-lg py-2">Details</button>
+                        </a>
                         @php
-                            $count++;
+                            $count = 0;
                         @endphp
-                    @endif
+                        @foreach ($item->orderDetails as $items)
+                            @if ($items->status == 1)
+                                @php
+                                    $count++;
+                                @endphp
+                            @endif
+                        @endforeach
+                        @if ($count == 0)
+                            @if ($item->is_done == 0)
+                                <button class=" bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800"
+                                    onclick="isdone({{ $item->id }})">Done</button>
+                            @else
+                                <button
+                                    class="bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    disabled>
+                                    Already Done
+                                </button>
+                            @endif
+                        @endif
+
+                    </div>
                 @endforeach
-                @if ($count == 0)
-                    @if ($item->is_done == 0)
-                        <button class=" bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800"
-                            onclick="isdone({{ $item->id }})">Done</button>
-                    @else
+
+            </div>
+            <div class="text-left lg:mt-[20px]">
+                <h1 class="text-xl font-medium">From Request Sudah Bayar</h1>
+            </div>
+            <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
+                @foreach ($order_request_validate as $item)
+                    <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2">Order_date: <span
+                                    class="text-sm font-normal">{{ $item->order_date }}</span> </p>
+                            <p class="text-sm font-medium px-2 pb-4">Total Price: <span
+                                    class="text-sm font-normal">{{ $item->total_price }}</span> </p>
+                        </div>
+                        <a href="{{ route('order.detail', $item->id) }}">
+                            <button class="bg-black text-white w-full rounded-lg py-2">Details</button>
+                        </a>
+                        @php
+                            $count = 0;
+                        @endphp
+                        @foreach ($item->orderDetails as $items)
+                            @if ($items->status == 1)
+                                @php
+                                    $count++;
+                                @endphp
+                            @endif
+                        @endforeach
+                        @if ($count == 0)
+                            @if ($item->is_done == 0)
+                                <button class=" bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800"
+                                    onclick="isdone({{ $item->id }})">Done</button>
+                            @else
+                                <button
+                                    class="bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    disabled>
+                                    Already Done
+                                </button>
+                            @endif
+                        @endif
+
+                    </div>
+                @endforeach
+
+            </div>
+        </div>
+        <div
+            class="data-cards-container  px-8 w-full mb-1 @if (request()->get('tab') == 'cards') {{ 'opacity-100' }} @else {{ 'hidden opacity-0' }} @endif">
+            <div class="text-left lg:mt-[40px]">
+                <h1 class="text-xl font-medium">From Catalog Belum Bayar</h1>
+            </div>
+            <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
+                @foreach ($order_catalog_notvalidate as $item)
+                    <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2">Order_date: <span
+                                    class="text-sm font-normal">{{ $item->order_date }}</span> </p>
+                            <p class="text-sm font-medium px-2 pb-4">Total Price: <span
+                                    class="text-sm font-normal">{{ $item->total_price }}</span> </p>
+                        </div>
+                        <a href="{{ route('order.detail', $item->id) }}">
+                            <button class="bg-black text-white w-full rounded-lg py-2 my-1">Details</button>
+                        </a>
                         <button
-                            class="bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                            disabled>
-                            Already Done
+                            class="bg-warning text-white w-full rounded-lg py-2 my-1"
+                            onclick='viewDetails({{$item}})'>
+                            Bukti Transfer
                         </button>
-                    @endif
-                @endif
+                        <button class="bg-success text-white w-full rounded-lg py-2 my-1"
+                            onclick="isvalidate({{ $item->id }})">Validasi</button>
+                    </div>
+                @endforeach
 
             </div>
-        @endforeach
-
-    </div>
-
-    <div class="text-left lg:mt-[20px]">
-        <h1 class="text-xl font-medium">By Request</h1>
-    </div>
-
-    <div class="flex flex-row flex-wrap lg:mt-[20px]">
-        <!-- Cards -->
-        <div class="p-2 w-[250px] h-[300px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl grid grid-rows-7">
-            <div class="row-span-6 flex flex-col gap-1">
-                <img src="{{ asset('img/ntt.jpg') }}" alt="Description of the image"
-                    class="w-full h-[45%] rounded-xl object-cover">
-                <h1 class="text-lg font-medium">Kain Sarung Motif Kelelawar</h1>
-                <p class="text-sm font-medium">Kuantitas: <span class="text-sm font-normal">2</span> </p>
-                <p class="text-sm font-medium">Harga: <span class="text-sm font-normal">Menunggu konfirmasi</span> </p>
-                <p class="text-sm font-medium">Pembeli: <span class="text-sm font-normal">Agung Salvatoni</span> </p>
+            <div class="text-left lg:mt-[20px]">
+                <h1 class="text-xl font-medium">From Request Belum Bayar</h1>
             </div>
-            <button class="bg-black text-white w-full rounded-lg py-2" onclick="openModal('modalRequest')">Details</button>
+            <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
+
+
+            </div>
         </div>
     </div>
-
-    <!-- Modals -->
 
     <!-- Choose Barang Modal -->
     <div id="chooseBarangModal" class="hidden fixed inset-0 z-[55] bg-black bg-opacity-50 flex items-center justify-center">
@@ -333,7 +407,8 @@
                                             data-te-select-init>
                                             <option value="" selected disabled hidden></option>
                                             @foreach ($barang_juals as $barang_jual)
-                                                <option value="{{ $barang_jual->name }}" data-id="{{ $barang_jual->id }}"
+                                                <option value="{{ $barang_jual->name }}"
+                                                    data-id="{{ $barang_jual->id }}"
                                                     data-price="{{ $barang_jual->price }}">{{ $barang_jual->name }}
                                                     ({{ $barang_jual->stock }})
                                                 </option>
@@ -471,66 +546,106 @@
         </div>
     </div>
 
-    <!-- Request Modal -->
-    <div id="modalRequest" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-[50%] relative">
-            <button class="absolute top-2 right-2 text-gray-500" onclick="closeModal('modalRequest')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            <div class="grid grid-cols-2">
-                <div class="flex flex-row flex-wrap gap-1">
-                    <!-- Image -->
-                    <img src="{{ asset('img/ntt.jpg') }}" alt="Description of the image"
-                        class="w-auto h-auto rounded-xl object-cover">
-                    <h1 class="font-bold text-xl mt-4">
-                        Kain Sarung Motif Kelelawar
-                    </h1>
-                    <h1 class="text-sm font-medium">Pembeli: <span class="text-sm font-normal">Agung Salvatoni</span>
-                    </h1>
-                    <h1 class="text-sm font-medium">Alamat: <span class="text-sm font-normal">Royal Park 1 C12/09,
-                            Citraland, Surabaya</span> </h1>
-                    <h1 class="text-sm font-medium">Kuantitas: <span class="text-sm font-normal">2</span> </h1>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold">Rincian</h1>
-                    <div class="flex flex-col space-y-2 mt-3">
-                        <div class="flex items-center space-x-2">
-                            <h1 class="text-sm font-medium">Sisir:</h1>
-                            <input type="text" class="border rounded-lg p-1 max-w-xs w-full"
-                                placeholder="Enter Sisir">
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <h1 class="text-sm font-medium">Panjang:</h1>
-                            <input type="text" class="border rounded-lg p-1 max-w-xs w-full"
-                                placeholder="Enter Panjang">
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <h1 class="text-sm font-medium">Lebar:</h1>
-                            <input type="text" class="border rounded-lg p-1 max-w-xs w-full"
-                                placeholder="Enter Lebar">
-                        </div>
+    <div data-te-modal-init
+        class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+        id="modalDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div data-te-modal-dialog-ref
+            class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
+            <div
+                class="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
+                <div
+                    class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+                    <!--Modal title-->
+                    <div class="flex items-center">
+                        <h5 class="mr-2 font-bold text-xl">Pembeli: </h5>
+                        <p id="modal-nama" class="font-bold text-lg"></p>
                     </div>
-                    <h1 class="text-xl font-bold mt-4">Bahan</h1>
-                    <div id="inputContainers" class="space-y-2 mt-3 h-[100px] overflow-hidden overflow-y-scroll">
-                        <!-- Tambah Inputform Baru -->
-                    </div>
-                    <button type="button" id="addMoreButton" class="bg-blue-500 text-white px-2 py-1 rounded-lg mt-3"
-                        onclick="addInput()">+ Add More</button>
+                    <!--Close button-->
+                    <button type="button"
+                        class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                        data-te-modal-dismiss aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
-            </div>
+                <!--Modal body-->
+                <div class="relative flex-auto p-4" data-te-modal-body-ref>
 
-            <div class="flex justify-end mt-6 gap-3">
-                <button class="bg-red-500 text-white px-4 py-2 rounded" onclick="rejectOrder()">Reject</button>
-                <button class="bg-green-500 text-white px-4 py-2 rounded" onclick="acceptOrder()">Accept</button>
+                    <div class="flex items-center">
+                        <h5 class="font-bold">Bukti Transfer : </h5>
+                        <p class="ml-3" id="modal-order"></p>
+                    </div>
+                    {{-- ketua --}}
+                </div>
+                <!--Modal footer-->
+                <div
+                    class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+                    <button type="button"
+                        class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                        data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
+                        Close
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        function viewDetails(item) {
+            console.log(item);
+            const modal = $('#modalDetail');
+            $('#modal-nama').text(item.customer_name);
+            $('#modal-order').text(item.link_bukti_tf);
+            modal.modal('show');
+        }
+
+        function isvalidate(id) {
+            console.log(id);
+            var url_update = "{{ route('validateOrder', ':id') }}".replace(':id', id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to validate this order?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url_update,
+                        type: 'PUT',
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: async function(response) {
+                            if (response.success) {
+                                await Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: response.message,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                })
+                                window.location.reload();
+
+                            } else {
+                                await Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: response.message,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                })
+                            }
+                        }
+                    });
+                }
+            })
+        }
+
         function isdone(id) {
             console.log(id);
             var url_update = "{{ route('DoneOrder', ':id') }}".replace(':id', id);
@@ -899,6 +1014,72 @@
             var index = $(this).data('index');
             productsReq.splice(index, 1);
             renderInventList();
+        });
+
+        const cardsButton = document.querySelector(".cards-layout-button");
+        const tableButton = document.querySelector(".table-layout-button");
+        const dataCardsLayout = document.querySelector('.data-cards-container');
+        const dataTableLayout = document.querySelector('.data-table-container');
+
+        var lastLayout = localStorage.getItem('lastLayout');
+        console.log("Last Layout:", lastLayout);
+
+        tableButton.addEventListener('click', () => {
+
+            localStorage.setItem("lastLayout", "cards");
+            if (!tableButton.classList.contains('bg-gray-100')) {
+                tableButton.classList.toggle('bg-gray-100');
+                tableButton.classList.toggle('shadow-inner');
+            }
+
+            if (cardsButton.classList.contains('bg-gray-100')) {
+                cardsButton.classList.toggle('bg-gray-100');
+                cardsButton.classList.toggle('shadow-inner');
+            }
+
+            dataTableLayout.style.display = 'initial';
+            dataCardsLayout.style.opacity = 0;
+            dataTableLayout.style.opacity = 1;
+            setTimeout(() => {
+                dataCardsLayout.style.display = 'none';
+            }, 330);
+        });
+
+        cardsButton.addEventListener('click', () => {
+
+            if (!cardsButton.classList.contains('bg-gray-100')) {
+                cardsButton.classList.toggle('bg-gray-100');
+                cardsButton.classList.toggle('shadow-inner');
+            }
+
+            if (tableButton.classList.contains('bg-gray-100')) {
+                tableButton.classList.toggle('bg-gray-100');
+                tableButton.classList.toggle('shadow-inner');
+            }
+
+            dataTableLayout.style.opacity = 0;
+            dataCardsLayout.style.opacity = 1;
+
+            setTimeout(() => {
+                dataTableLayout.style.display = 'none';
+                dataCardsLayout.style.display = 'initial';
+            }, 330);
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            let scrollPosition = 0;
+
+            window.addEventListener('scroll', () => {
+                scrollPosition = window.scrollY;
+            });
+        });
+
+        document.querySelectorAll('h5[data-tab-state]').forEach((el) => {
+            el.addEventListener('click', () => {
+                const url = new URL(window.location.href);
+                url.searchParams.set('tab', el.dataset.tabState);
+                window.history.pushState(null, null, url.toString());
+            });
         });
     </script>
 @endsection

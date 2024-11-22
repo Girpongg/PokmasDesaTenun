@@ -212,7 +212,7 @@
         @endif
 
         function deleteCatalog(id) {
-            // console.log("data yang dihapus :", id);
+            console.log("data yang dihapus :", id);
             var url_delete = "{{ route('catalog.delete', ':id') }}".replace(':id', id);
             Swal.fire({
                 title: 'Are you sure?',
