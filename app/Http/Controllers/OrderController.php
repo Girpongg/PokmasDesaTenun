@@ -106,6 +106,9 @@ class OrderController extends Controller
                     } else {
                         return response()->json(['message' => 'Product not found', 'error' => true]);
                     }
+                    $bahan->update([
+                        'quantity' => $bahan->quantity - $productsData['quantity'],
+                    ]);
                 }
             }
 

@@ -482,7 +482,7 @@
                                             <option value="" selected disabled hidden></option>
                                             @foreach ($products as $bahan)
                                                 <option value="{{ $bahan->name }}" data-id="{{ $bahan->id }}"
-                                                    data-price="{{ $bahan->price }}">{{ $bahan->name }}
+                                                    data-price="{{ $bahan->price }}" data-quantity="{{$bahan->quantity}}">{{ $bahan->name }}
                                                     ({{ $bahan->quantity }})
                                                 </option>
                                             @endforeach
@@ -934,15 +934,23 @@
             var productName = $('#name-req').val();
             var quantity = $('#quantity-req').val();
             var selectedOption = document.querySelector('#name-req option:checked');
+            var curQuantity = selectedOption ? selectedOption.getAttribute('data-quantity') : 0;
 
             if (!productName || !quantity) {
                 alert("All fields are required.");
                 return;
             }
-            productsReq.push({
-                name: productName,
-                quantity: quantity
-            });
+
+            if (quantity > curQuantity) {
+                alert("Quantity exceeds available stock.");
+                return;
+            } else {
+
+                productsReq.push({
+                    name: productName,
+                    quantity: quantity
+                });
+            }
 
             renderInventList();
             $('#bahan-form')[0].reset();
