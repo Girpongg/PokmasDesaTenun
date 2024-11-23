@@ -24,9 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/home', function() {
-    return view('user.home');
-})->name('user.home');
+Route::get('/home', [BarangJualController::class, 'viewHome'])->name('user.home');
 
 Route::get('/add-to-cart/{id}', [BarangJualController::class, 'addToCart'])->name('add-cart');
 Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');
@@ -36,6 +34,8 @@ Route::get('/detail-barang/{barang}', [BarangJualController::class, 'viewDetail'
 Route::get('admin/login', function () {
     return view('admin.login.login');
 });
+Route::get('/detail-payment', [BarangJualController::class, 'viewCartPayment'])->name('detail-payment');
+Route::post('/', [OrderController::class, 'storeKatalog'])->name('katalog.store');
 
 Route::prefix('admin')->group(function () {
     Route::prefix('kategori')->group(function () {

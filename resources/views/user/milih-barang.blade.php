@@ -12,7 +12,7 @@
             <div class="fixed z-50 bottom-4 right-4">
                 <div class="relative">
                     <button class="bg-gray-200 hover:bg-gray-500 p-3 rounded-full shadow-2xl">
-                        <img src="{{ asset('assets/cart.png') }}" alt="Cart Button" class="w-14 h-14 p-1">
+                        <img src="{{ asset('img/shopping-cart.png') }}" alt="Cart Button" class="w-14 h-14 p-1">
                     </button>
                     <span
                         class="absolute top-0 right-0 bg-[rgb(92,64,51)] border-white border text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-lg">

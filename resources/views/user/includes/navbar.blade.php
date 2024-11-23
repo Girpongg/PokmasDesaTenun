@@ -482,10 +482,10 @@
                 <li>CATALOG</li>
             </a>
             <a href="" class="nav-link ">
-                <li>EVENTS</li>
+                <li>ABOUT US</li>
             </a>
             <a href="" class="nav-link ">
-                <li>COMPETITIONS</li>
+                <li>CONTACT US</li>
             </a>
         </ul>
     </div>
