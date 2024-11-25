@@ -61,20 +61,25 @@
             <div class="w-full justify-center flex">
                 <form id="payment-form" class="contents">
                     <div class="w-[500px] shadow-xl h-fit p-8 form-cont gap-y-4 flex flex-col mb-16">
+                        <div class="w-full hidden">
+                            <p class="font-semibold">Nama</p>
+                            <input type="text" name="customer_id"
+                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1" value="{{$customer->id}}">
+                        </div>
                         <div class="w-full">
                             <p class="font-semibold">Nama</p>
                             <input type="text" name="customer_name"
-                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1">
+                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1" value="{{$customer->name}}">
                         </div>
                         <div class="w-full">
                             <p class="font-semibold">Nomor HP</p>
                             <input type="text" name="customer_wa"
-                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1">
+                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1" value="{{$customer->customer_wa}}">
                         </div>
                         <div class="w-full">
                             <p class="font-semibold">Alamat</p>
                             <input type="text" name="address"
-                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1">
+                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1" value="{{$customer->address}}">
                         </div>
                         <div class="w-full">
                             <p class="font-semibold">Bukti Transfer</p>

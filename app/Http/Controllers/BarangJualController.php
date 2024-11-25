@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Customer;
 use App\Models\BarangJual;
+use Illuminate\Http\Request;
 
 class BarangJualController extends Controller
 {
@@ -96,8 +97,10 @@ class BarangJualController extends Controller
     public function viewCartPayment()
     {
         $cart = session()->get('cart');
+        $customer = Customer::find(session()->get('id'));
         $data = [
             'cart' => $cart,
+            'customer' => $customer,
         ];
         return view('user.detail-payment', $data);
     }

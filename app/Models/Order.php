@@ -10,8 +10,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'customer_name',
-        'customer_wa',
+        'customer_id',
         'address',
         'size',
         'color',
@@ -29,4 +28,10 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
 }
