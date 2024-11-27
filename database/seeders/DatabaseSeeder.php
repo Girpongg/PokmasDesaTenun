@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SupplierSeeder::class);
         $this->call(Kategori::class);
         $this->call(InventoriSeeder::class);
-        $this->call(BarangJualSeeder::class);
+        // $this->call(BarangJualSeeder::class);
     }
 }

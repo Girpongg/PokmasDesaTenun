@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 class BarangJualController extends Controller
 {
 
+    public function viewHome(){
+        $catalog = BarangJual::all();
+        $data = [
+            'catalog' => $catalog,
+        ];
+        return view('user.home', $data);
+    }
     public function viewCatalog()
     {
         $catalog = BarangJual::all();
@@ -46,7 +53,7 @@ class BarangJualController extends Controller
             ];
         }
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Item added to cart successfully!');
+        return redirect()->route('milih-barang')->with('success', 'Data successfully stored');
     }
 
     public function deleteFromCart($id)
