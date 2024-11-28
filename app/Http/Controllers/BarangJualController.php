@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\BarangJual;
 use Illuminate\Http\Request;
 
@@ -97,10 +98,21 @@ class BarangJualController extends Controller
         ];
         return view('user.cart', $data);
     }
-    public function viewDetailHistory($id)
+    public function viewCartPayment()
     {
-        $histories = BarangJual::get();
-        $data['histories'] = $histories;
-        return view('user.historydetail', $data);
+        $cart = session()->get('cart');
+        $customer = Customer::find(session()->get('id'));
+        $data = [
+            'cart' => $cart,
+            'customer' => $customer,
+        ];
+        return view('user.detail-payment', $data);
+    }
+    public function viewHome(){
+        $catalog = BarangJual::where('tipe','1')->get();
+        $data = [
+            'catalog' => $catalog,
+        ];
+        return view('user.home', $data);
     }
 }

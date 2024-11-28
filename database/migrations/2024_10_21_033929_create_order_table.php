@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->date('order_date');
-            $table->string('customer_name');
-            $table->string('customer_wa');
-            $table->string('address');
+            $table->unsignedBigInteger('customer_id');
+            $table->string('address')->nullable();
             $table->string('size')->nullable();
             $table->string('color')->nullable();
             $table->string('title')->nullable();    
@@ -27,6 +26,7 @@ return new class extends Migration
             $table->boolean('is_validated')->default(false);
             $table->integer('is_done')->default(0)->comment('0: not done, 1: done, 2: sudah diambil ');
             $table->string('desc')->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->timestamps();
         });
     }

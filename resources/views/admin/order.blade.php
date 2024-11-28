@@ -58,7 +58,7 @@
             </div>
         </div>
         <div
-        class="data-table-container  px-8 w-full mb-1 @if (!request()->has('tab') || request()->get('tab') == 'table') {{ 'opacity-100' }} @else {{ 'hidden opacity-0' }} @endif">
+            class="data-table-container  px-8 w-full mb-1 @if (!request()->has('tab') || request()->get('tab') == 'table') {{ 'opacity-100' }} @else {{ 'hidden opacity-0' }} @endif">
             <div class="text-left lg:mt-[40px]">
                 <h1 class="text-xl font-medium">From Catalog Sudah Bayar</h1>
             </div>
@@ -66,7 +66,7 @@
                 @foreach ($order_catalog_validate as $item)
                     <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
                         <div class="flex flex-col gap-1">
-                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer->name }}</p>
                             <p class="text-sm font-medium px-2">Order_date: <span
                                     class="text-sm font-normal">{{ $item->order_date }}</span> </p>
                             <p class="text-sm font-medium px-2 pb-4">Total Price: <span
@@ -109,7 +109,7 @@
                 @foreach ($order_request_validate as $item)
                     <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
                         <div class="flex flex-col gap-1">
-                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer->name }}</p>
                             <p class="text-sm font-medium px-2">Order_date: <span
                                     class="text-sm font-normal">{{ $item->order_date }}</span> </p>
                             <p class="text-sm font-medium px-2 pb-4">Total Price: <span
@@ -147,7 +147,7 @@
             </div>
         </div>
         <div
-        class="data-cards-container  px-8 w-full mb-1 @if (request()->get('tab') == 'cards') {{ 'opacity-100' }} @else {{ 'hidden opacity-0' }} @endif">
+            class="data-cards-container  px-8 w-full mb-1 @if (request()->get('tab') == 'cards') {{ 'opacity-100' }} @else {{ 'hidden opacity-0' }} @endif">
             <div class="text-left lg:mt-[40px]">
                 <h1 class="text-xl font-medium">From Catalog Belum Bayar</h1>
             </div>
@@ -155,44 +155,27 @@
                 @foreach ($order_catalog_notvalidate as $item)
                     <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
                         <div class="flex flex-col gap-1">
-                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer->name }}</p>
                             <p class="text-sm font-medium px-2">Order_date: <span
                                     class="text-sm font-normal">{{ $item->order_date }}</span> </p>
                             <p class="text-sm font-medium px-2 pb-4">Total Price: <span
                                     class="text-sm font-normal">{{ $item->total_price }}</span> </p>
                         </div>
                         <a href="{{ route('order.detail', $item->id) }}">
-                            <button class="bg-black text-white w-full rounded-lg py-2">Details</button>
+                            <button class="bg-black text-white w-full rounded-lg py-2 my-1">Details</button>
                         </a>
-                        @php
-                            $count = 0;
-                        @endphp
-                        @foreach ($item->orderDetails as $items)
-                            @if ($items->status == 1)
-                                @php
-                                    $count++;
-                                @endphp
-                            @endif
-                        @endforeach
-                        @if ($count == 0)
-                            @if ($item->is_done == 0)
-                                <button class=" bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800"
-                                    onclick="isdone({{ $item->id }})">Done</button>
-                            @else
-                                <button
-                                    class="bg-green-600 text-white w-full rounded-lg py-2 mt-2 hover:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                                    disabled>
-                                    Already Done
-                                </button>
-                            @endif
-                        @endif
-
+                        <button class="bg-warning text-white w-full rounded-lg py-2 my-1"
+                            onclick='viewDetails({{ $item }})'>
+                            Bukti Transfer
+                        </button>
+                        <button class="bg-success text-white w-full rounded-lg py-2 my-1"
+                            onclick="isvalidate({{ $item->id }})">Validasi</button>
                     </div>
                 @endforeach
 
             </div>
             <div class="text-left lg:mt-[20px]">
-                <h1 class="text-xl font-medium">From Request Belum   Bayar</h1>
+                <h1 class="text-xl font-medium">From Request Belum Bayar</h1>
             </div>
             <div class="flex flex-row flex-wrap lg:mt-[20px] gap-7">
 
@@ -200,7 +183,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Choose Barang Modal -->
     <div id="chooseBarangModal" class="hidden fixed inset-0 z-[55] bg-black bg-opacity-50 flex items-center justify-center">
@@ -292,20 +274,31 @@
                                 <option value="2">By Request</option>
                             </select>
                         </div>
-                        <div class="relative mb-3" data-te-input-wrapper-init>
-                            <input type="text"
-                                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                                id="customer_name" name="customer_name" placeholder="name" />
-                            <label for="name"
-                                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">
-                                Nama Customer
-                            </label>
+                        <div class="flex gap-x-4">
+                            <div class="relative mb-3 w-full" data-te-input-wrapper-init>
+                                <input type="text"
+                                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                    id="customer_wa" name="customer_wa" placeholder="name" />
+                                <label for="name"
+                                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">
+                                    Customer WA
+                                </label>
+                                <div id="dropdown"
+                                    class="absolute z-10 w-full mt-1 bg-gray-800 rounded-lg shadow-lg hidden">
+                                    <ul id="dropdown-list" class="max-h-60 overflow-y-auto">
+                                        <!-- Options will be dynamically added here -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="w-[30%]">
+                                <button id="kuy"
+                                    class=" bg-green-600 text-white w-full rounded-md h-[75%] font-medium text-xs text-center uppercase">SEARCH</button>
+                            </div>
                         </div>
-
                         <div class="flex gap-x-4">
                             <div class="mb-4 w-full">
-                                <label for="customer_wa" class="ml-1">Nomor WA</label>
-                                <input class="rounded-md w-full animated-input" name="customer_wa" id="customer_wa">
+                                <label for="customer_name" class="ml-1">Customer Name</label>
+                                <input class="rounded-md w-full animated-input" name="customer_name" id="customer_name">
                             </div>
                             <div class="mb-4 w-full">
                                 <label for="price" class="ml-1">Address</label>
@@ -499,7 +492,8 @@
                                             <option value="" selected disabled hidden></option>
                                             @foreach ($products as $bahan)
                                                 <option value="{{ $bahan->name }}" data-id="{{ $bahan->id }}"
-                                                    data-price="{{ $bahan->price }}">{{ $bahan->name }}
+                                                    data-price="{{ $bahan->price }}"
+                                                    data-quantity="{{ $bahan->quantity }}">{{ $bahan->name }}
                                                     ({{ $bahan->quantity }})
                                                 </option>
                                             @endforeach
@@ -563,66 +557,153 @@
         </div>
     </div>
 
-    <!-- Request Modal -->
-    <div id="modalRequest" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-[50%] relative">
-            <button class="absolute top-2 right-2 text-gray-500" onclick="closeModal('modalRequest')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            <div class="grid grid-cols-2">
-                <div class="flex flex-row flex-wrap gap-1">
-                    <!-- Image -->
-                    <img src="{{ asset('img/ntt.jpg') }}" alt="Description of the image"
-                        class="w-auto h-auto rounded-xl object-cover">
-                    <h1 class="font-bold text-xl mt-4">
-                        Kain Sarung Motif Kelelawar
-                    </h1>
-                    <h1 class="text-sm font-medium">Pembeli: <span class="text-sm font-normal">Agung Salvatoni</span>
-                    </h1>
-                    <h1 class="text-sm font-medium">Alamat: <span class="text-sm font-normal">Royal Park 1 C12/09,
-                            Citraland, Surabaya</span> </h1>
-                    <h1 class="text-sm font-medium">Kuantitas: <span class="text-sm font-normal">2</span> </h1>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold">Rincian</h1>
-                    <div class="flex flex-col space-y-2 mt-3">
-                        <div class="flex items-center space-x-2">
-                            <h1 class="text-sm font-medium">Sisir:</h1>
-                            <input type="text" class="border rounded-lg p-1 max-w-xs w-full"
-                                placeholder="Enter Sisir">
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <h1 class="text-sm font-medium">Panjang:</h1>
-                            <input type="text" class="border rounded-lg p-1 max-w-xs w-full"
-                                placeholder="Enter Panjang">
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <h1 class="text-sm font-medium">Lebar:</h1>
-                            <input type="text" class="border rounded-lg p-1 max-w-xs w-full"
-                                placeholder="Enter Lebar">
-                        </div>
+    <div data-te-modal-init
+        class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+        id="modalDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div data-te-modal-dialog-ref
+            class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
+            <div
+                class="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
+                <div
+                    class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+                    <!--Modal title-->
+                    <div class="flex items-center">
+                        <h5 class="mr-2 font-bold text-xl">Pembeli: </h5>
+                        <p id="modal-nama" class="font-bold text-lg"></p>
                     </div>
-                    <h1 class="text-xl font-bold mt-4">Bahan</h1>
-                    <div id="inputContainers" class="space-y-2 mt-3 h-[100px] overflow-hidden overflow-y-scroll">
-                        <!-- Tambah Inputform Baru -->
-                    </div>
-                    <button type="button" id="addMoreButton" class="bg-blue-500 text-white px-2 py-1 rounded-lg mt-3"
-                        onclick="addInput()">+ Add More</button>
+                    <!--Close button-->
+                    <button type="button"
+                        class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                        data-te-modal-dismiss aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
-            </div>
+                <!--Modal body-->
+                <div class="relative flex-auto p-4" data-te-modal-body-ref>
 
-            <div class="flex justify-end mt-6 gap-3">
-                <button class="bg-red-500 text-white px-4 py-2 rounded" onclick="rejectOrder()">Reject</button>
-                <button class="bg-green-500 text-white px-4 py-2 rounded" onclick="acceptOrder()">Accept</button>
+                    <div class="flex items-center">
+                        <h5 class="font-bold">Bukti Transfer : </h5>
+                        <p class="ml-3" id="modal-order"></p>
+                    </div>
+                    {{-- ketua --}}
+                </div>
+                <!--Modal footer-->
+                <div
+                    class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+                    <button type="button"
+                        class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                        data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
+                        Close
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        $(document).ready(function() {
+            const input = $('#customer_wa');
+            const dropdown = $('#dropdown');
+            const dropdownList = $('#dropdown-list');
+            const teams = @json($customers);
+            input.on('input', function() {
+                const query = input.val().toUpperCase();
+                dropdownList.empty();
+
+                teams.forEach(team => {
+                    if (team.customer_wa.toUpperCase().includes(query)) {
+                        const listItem = $('<li>').text(team.customer_wa.toUpperCase())
+                            .addClass('p-2 text-white cursor-pointer hover:bg-indigo-500')
+                            .on('click', function() {
+                                input.val(team.customer_wa.toUpperCase());
+                                $('#score-field').html(team.customer_wa);
+                                dropdown.addClass('hidden');
+                            });
+                        dropdownList.append(listItem);
+                    }
+                })
+                dropdown.removeClass('hidden');
+            });
+        });
+
+        document.getElementById('kuy').addEventListener('click', function() {
+            const noWa = document.getElementById('customer_wa').value;
+
+            fetch('/fetch-customer?no_wa=' + encodeURIComponent(noWa))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('customer_name').value = data.data.name;
+                        document.getElementById('customer_address').value = data.data.address;
+                        document.getElementById('customer_name').disabled = true;
+                        document.getElementById('customer_address').disabled = true;
+                        document.getElementById('customer_wa').disabled = true;
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+
+        function viewDetails(item) {
+            console.log(item);
+            const modal = $('#modalDetail');
+            $('#modal-nama').text(item.customer_name);
+            $('#modal-order').text(item.link_bukti_tf);
+            modal.modal('show');
+        }
+
+        function isvalidate(id) {
+            console.log(id);
+            var url_update = "{{ route('validateOrder', ':id') }}".replace(':id', id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to validate this order?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url_update,
+                        type: 'PUT',
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: async function(response) {
+                            if (response.success) {
+                                await Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: response.message,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                })
+                                window.location.reload();
+
+                            } else {
+                                await Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: response.message,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                })
+                            }
+                        }
+                    });
+                }
+            })
+        }
+
         function isdone(id) {
             console.log(id);
             var url_update = "{{ route('DoneOrder', ':id') }}".replace(':id', id);
@@ -911,15 +992,23 @@
             var productName = $('#name-req').val();
             var quantity = $('#quantity-req').val();
             var selectedOption = document.querySelector('#name-req option:checked');
+            var curQuantity = selectedOption ? selectedOption.getAttribute('data-quantity') : 0;
 
             if (!productName || !quantity) {
                 alert("All fields are required.");
                 return;
             }
-            productsReq.push({
-                name: productName,
-                quantity: quantity
-            });
+
+            if (quantity > curQuantity) {
+                alert("Quantity exceeds available stock.");
+                return;
+            } else {
+
+                productsReq.push({
+                    name: productName,
+                    quantity: quantity
+                });
+            }
 
             renderInventList();
             $('#bahan-form')[0].reset();
