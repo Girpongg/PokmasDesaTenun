@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\OrderDetail;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,5 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(Kategori::class);
         $this->call(InventoriSeeder::class);
         $this->call(BarangJualSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(OrderSeeder::class);
+        $this->call(OrderDetailSeeder::class);
     }
 }

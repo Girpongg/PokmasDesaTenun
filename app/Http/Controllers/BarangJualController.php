@@ -97,4 +97,10 @@ class BarangJualController extends Controller
         ];
         return view('user.cart', $data);
     }
+    public function viewDetailHistory($id)
+    {
+        $histories = BarangJual::get();
+        $data['histories'] = $histories;
+        return view('user.historydetail', $data);
+    }
 }

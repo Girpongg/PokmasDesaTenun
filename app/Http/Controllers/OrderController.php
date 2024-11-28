@@ -29,6 +29,14 @@ class OrderController extends Controller
         return view('admin.order', $data);
     }
 
+    public function viewHistory()
+    {
+        $histories = Order::whereIn('customer_name', ['Cebe', 'Gerry'])->get();
+        // dd($histories);
+        $data['histories'] = $histories;
+        return view('user.history', $data);
+    }
+    
     public function storeRequest(Request $request)
     {
         $data = $request->all();

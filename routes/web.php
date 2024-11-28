@@ -34,6 +34,13 @@ Route::get('admin/login', function () {
 });
 
 Route::get('/barang', [BarangJualController::class, 'viewCatalog'])->name('milih-barang');
+Route::get('/riwayat', [OrderController::class, 'viewHistory'])->name('history');
+Route::get('/riwayatdetail', function () {
+    return view('user.historydetail');
+})->name('historydetail');
+
+
+
 Route::get('/detail-barang/{barang}', [BarangJualController::class, 'viewDetail'])->name('detail-barang');
 
 Route::get('/detail-payment', function () {

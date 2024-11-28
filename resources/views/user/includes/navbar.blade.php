@@ -481,8 +481,11 @@
             <a href="{{route('milih-barang')}}" class="nav-link ">
                 <li>CATALOG</li>
             </a>
+            <a href="{{route('history')}}" class="nav-link ">
+                <li>HISTORY</li>
+            </a>
             <a href="" class="nav-link ">
-                <li>EVENTS</li>
+                <li>COMPETITIONS</li>
             </a>
             <a href="" class="nav-link ">
                 <li>COMPETITIONS</li>
