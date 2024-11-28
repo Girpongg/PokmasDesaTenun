@@ -38,7 +38,7 @@
                 <option value="terlama">Terlama</option>
             </select>
         </div>
-        <div class="w-full grid grid-cols-4 gap-x-4 mt-6" id="pnl-container">
+        <div class="w-full grid grid-cols-4 gap-4 mt-6" id="pnl-container">
             @foreach ($pnls as $pnl)
                 <div class="shadow-lg w-full h-fit p-4 rounded-lg">
                     <p class="font-medium">Pendapatan: <span
