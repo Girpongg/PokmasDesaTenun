@@ -34,16 +34,22 @@
             <select id="sort-options"
                 class="w-1/3 py-1 px-2 rounded focus:outline-none text-[var(--primary)] font-semibold">
                 <option value="">Sort</option>
-                <option value="terbaru">Terbaru</option>
-                <option value="terlama">Terlama</option>
+                <option value="terlama">Terbaru</option>
+                <option value="terbaru">Terlama</option>
             </select>
         </div>
         <div class="w-full grid grid-cols-4 gap-4 mt-6" id="pnl-container">
             @foreach ($pnls as $pnl)
                 <div class="shadow-lg w-full h-fit p-4 rounded-lg">
-                    <p class="font-medium">Pendapatan: <span
-                            class="{{ $pnl['total'] >= 0 ? 'text-green-600' : 'text-red-600' }}">Rp{{ number_format($pnl['total']) }}</span>
-                    </p>
+                    @if ($pnl['total'] >= 0)
+                        <p class="font-medium">Pendapatan: <span class="text-green-600">+
+                                Rp{{ number_format($pnl['total']) }}</span>
+                        </p>
+                    @else
+                        <p class="font-medium">Pendapatan: <span class="text-red-600">-
+                                Rp{{ number_format($pnl['total']) }}</span>
+                        </p>
+                    @endif
                     <p class="font-medium">{{ \Carbon\Carbon::parse($pnl['month'])->format('F Y') }}</p>
                     <button type="button"
                         class="w-fit px-4 text-sm mt-1 bg-primary text-white py-2 rounded font-semibold transition">
@@ -81,7 +87,7 @@
                         </span>
                     </p>
                     <p class="font-medium">${new Date(pnl.month + '-01').toLocaleString('id-ID', { month: 'long', year: 'numeric' })}</p>
-                    <button type="button" onclick="window.location.href = '{{ route('labarugi.show','') }}/${pnl.month}'"
+                    <button type="button" onclick="window.location.href = '{{ route('labarugi.show', '') }}/${pnl.month}'"
                         class="w-full px-4 text-sm mt-1 bg-primary text-white py-2 rounded font-semibold transition">
                         Details
                     </button>

@@ -77,6 +77,7 @@ class ProfitController extends Controller
                 'type' => 'order',
             ];
         }
+        $data['total'] = $orders->sum('total_price') - $expenditures->sum('total_price');
         $data['details'] = $details;
         return view('admin.labarugi-details', $data);
     }

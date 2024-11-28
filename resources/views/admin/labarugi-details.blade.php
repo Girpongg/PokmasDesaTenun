@@ -2,17 +2,12 @@
 
 @section('content')
     <div class="flex flex-col w-full py-8 rounded-lg shadow-xl items-center justify-center mb-10">
-        <h1 class="text-center text-4xl uppercase font-bold mb-2">Catatan Pengeluaran</h1>
+        <h1 class="text-center text-4xl uppercase font-bold mb-2">Laba Rugi
+            {{ \Carbon\Carbon::parse($details[0]['date'])->format('F Y') }}</h1>
     </div>
 
-    <div class="flex flex-col w-full  rounded-lg shadow-xl items-center justify-center mb-2">
+    <div class="flex flex-col w-full rounded-lg shadow-xl items-center justify-center mb-2">
         <div class="w-full flex flex-col items-end mb-3 px-8 pt-5">
-            <div>
-                <button
-                    class="btn-detail mb-7 rounded bg-primary px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgb(59,113,202)],0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgb(59,113,202)],0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgb(59,113,202)],0_4px_18px_0_rgba(20,164,77,0.2)rgb(59,113,202)]rgba(20,164,77,0.1)]"
-                    data-te-toggle="modal" data-te-target="#createModal">Tambah Catatan Pengeluaran</but ton>
-            </div>
-
             <div class="relative mb-4 flex w-full flex-wrap items-stretch">
                 <input id="advanced-search-input" type="search"
                     class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none"
@@ -28,11 +23,23 @@
                     </svg>
                 </button>
             </div>
-            <select id="pnl-filter" class="w-1/3 py-1 px-2 rounded focus:outline-none text-[var(--primary)] font-semibold">
-                <option value="">Filter Laba/Rugi</option>
-                <option value="profit">Laba</option>
-                <option value="loss">Rugi</option>
-            </select>
+            <div class="w-full flex justify-between">
+                @if ($total >= 0)
+                    <p class="font-medium">Total Pendapatan: <span class="text-green-600">+
+                            Rp{{ number_format($total) }}</span>
+                    </p>
+                @else
+                    <p class="font-medium">Total Pendapatan: <span class="text-red-600">-
+                            Rp{{ number_format($total) }}</span>
+                    </p>
+                @endif
+                {{-- <select id="pnl-filter"
+                    class="w-1/3 py-1 px-2 rounded focus:outline-none text-[var(--primary)] font-semibold">
+                    <option value="">Filter Laba/Rugi</option>
+                    <option value="profit">Laba</option>
+                    <option value="loss">Rugi</option>
+                </select> --}}
+            </div>
         </div>
         <div id="datatable" class="w-full px-5 py-5" data-te-fixed-header="true"></div>
     </div>
@@ -65,13 +72,8 @@
                         ...detail,
                         title: detail.title == '-' ? 'Pendapatan Order' : detail.title,
                         total: detail.type == 'order' ?
-                            <
-                            p class = "font-semibold text-green-700" > +Rp$ {
-                                new Intl.NumberFormat('id-ID').format(detail.total)
-                            } < /p> : <
-                            p class = "font-semibold text-red-700" > -Rp$ {
-                                new Intl.NumberFormat('id-ID').format(detail.total)
-                            } < /p>,
+                            `<p class="font-semibold text-green-700">+ Rp${new Intl.NumberFormat('id-ID').format(detail.total)}</p>` :
+                            `<p class="font-semibold text-red-700">- Rp${new Intl.NumberFormat('id-ID').format(detail.total)}</p>`,
                         // total: Rp${new Intl.NumberFormat('id-ID').format(detail.total)},
                         date: new Date(detail.date).toLocaleDateString('id-ID', {
                             weekday: 'long',
