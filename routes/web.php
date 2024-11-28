@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BarangJualController;
 use App\Http\Controllers\ExpenditureController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfitController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/home', function() {
+Route::get('/home', function () {
     return view('user.home');
 })->name('user.home');
 
@@ -83,12 +84,17 @@ Route::prefix('admin')->group(function () {
         Route::get('/{id}/edit', [ProductController::class, 'edits'])->name('catalog.edit');
         Route::put('/{id}', [ProductController::class, 'Catalogupdate'])->name('catalog.update');
         Route::delete('/{id}', [ProductController::class, 'deletecatalog'])->name('catalog.delete');
-    }); 
+    });
 
     Route::prefix('expenditure')->group(function () {
         Route::get('/', [ExpenditureController::class, 'viewExpenditure'])->name('viewExpenditure');
         Route::post('/', [ExpenditureController::class, 'storeExpenditure'])->name('expenditure.store');
         Route::delete('/{id}', [ExpenditureController::class, 'destroy'])->name('expenditure.destroy');
         Route::put('/{id}', [ExpenditureController::class, 'updateExpenditure'])->name('expenditure.update');
+    });
+
+    Route::prefix('labarugi')->name('labarugi.')->group(function () {
+        Route::get('/', [ProfitController::class, 'index'])->name('index');
+        Route::get('/{month}', [ProfitController::class, 'show'])->name('show');
     });
 });
