@@ -33,22 +33,17 @@
                             <!-- Bagian jumlah dengan tombol -->
                             <div class="mt-2 mb-3 flex items-center justify-center">
                                 <div class="flex items-center gap-2">
-                                    <!-- Tombol Minus -->
-                                    <a class="flex justify-center" href="">
-                                        <button
-                                            class="w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300">
-                                    </a>
-                                    -
+                                     <!-- Tombol Minus -->
+                                    <button class="w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300 decrement-btn"
+                                    data-id="{{ $value['id'] }}">
+                                        -
                                     </button>
                                     <!-- Angka Jumlah -->
-                                    <span class=" text-[#F5E9D3]">{{ $value['quantity'] }}</span>
+                                    <span class=" text-[#F5E9D3] quantity" data-id="{{ $value['id']}}">{{ $value['quantity'] }}</span>
                                     <!-- Tombol Plus -->
-                                    <a class="flex justify-center" href="">
-                                        <button
-                                            class="w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300">
-                                            +
-                                        </button>
-                                    </a>
+                                    <button class="increment-btn w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300" data-id="{{ $value['id'] }}" >
+                                        +
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +93,54 @@
     </div>
 
     <script>
+        function updateQuantityInSession(id, newQuantity) {
+            fetch("{{ route('update-qty') }}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: id, quantity: newQuantity })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Quantity updated in session');
+                } else {
+                    console.error('Failed to update quantity in session');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating quantity in session', error);
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+
+        document.querySelectorAll('.increment-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const quantityElement = document.querySelector(`.quantity[data-id="${id}"]`);
+                let quantity = parseInt(quantityElement.innerText);
+                quantityElement.innerText = quantity + 1;
+
+                updateQuantityInSession(id, quantity + 1);
+            });
+        });
+
+        document.querySelectorAll('.decrement-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const quantityElement = document.querySelector(`.quantity[data-id="${id}"]`);
+                let quantity = parseInt(quantityElement.innerText);
+                if (quantity > 1) {
+                    quantityElement.innerText = quantity - 1;
+                }
+
+                updateQuantityInSession(id, quantity - 1);
+            });
+        });
+        
             $('#submit').on('click', function() {
                 Swal.fire({
                     icon: 'warning',

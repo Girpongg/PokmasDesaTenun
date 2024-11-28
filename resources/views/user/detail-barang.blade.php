@@ -1,9 +1,9 @@
 @extends('user.layout')
 @section('content')
 <div class=" min-h-20"></div>
-<div class="grid lg:grid-cols-2">
+<div class="grid lg:grid-cols-2 grid-cols-1">
     <div class="flex justify-center mt-3">
-        <img src="{{ asset('storage/uploads/catalog/' . $barang->image) }}" alt="" class="h-[495px] w-full mt-20 ml-4" />
+        <img src="{{ asset('storage/uploads/catalog/' . $barang->image) }}" alt="" class="h-[495px] w-full mt-20 ml-20" />
     </div>
 
     <div class="flex-col justify-start m-20">

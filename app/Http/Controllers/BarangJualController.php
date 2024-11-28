@@ -69,6 +69,7 @@ class BarangJualController extends Controller
             ];
         }
         session()->put('cart', $cart);
+        // session()->flush();
         return redirect()->back()->with('success', 'Item added to cart successfully!');
     }
 
@@ -110,5 +111,14 @@ class BarangJualController extends Controller
             'catalog' => $catalog,
         ];
         return view('user.home', $data);
+    }
+
+    public function updateQty(Request $request)
+    {
+        $cart = session()->get('cart');
+        $id = $request->id;
+        $cart[$id]['quantity'] = $request->quantity;
+        session()->put('cart', $cart);
+        return redirect()->back();
     }
 }
