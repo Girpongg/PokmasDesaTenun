@@ -37,6 +37,14 @@ class OrderController extends Controller
         return view('admin.order', $data);
     }
 
+    public function viewHistory()
+    {
+        $histories = Order::whereIn('customer_name', ['Cebe', 'Gerry'])->get();
+        // dd($histories);
+        $data['histories'] = $histories;
+        return view('user.history', $data);
+    }
+    
     public function storeRequest(Request $request)
     {
         $data = $request->all();
@@ -141,42 +149,50 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+        // dd(session('cart'));
+        // $cart = session('cart');
         $data = $request->all();
-        $products = $request->get('products');
+        $products = session('cart');
         $validator = Validator::make(
             $data,
             [
                 'customer_name' => 'required|string',
                 'customer_wa' => 'required|string',
                 'address' => 'required|string',
-                'title' => 'nullable|string',
-                'order_date' => 'required|date',
-                'total_price' => 'required|integer',
+                'judul_pesan' => 'nullable|string',
+                // 'order_date' => 'required|date',
+                // 'total_price' => 'required|integer',
                 'desc' => 'nullable|string',
-                'products' => 'required|array',
-                'products.*.name' => 'required|string',
-                'products.*.quantity' => 'required|integer',
-                'products.*.price' => 'required|integer',
+                // 'products' => 'required|array',
+                // 'products.*.name' => 'nullable|string',
+                // 'products.*.quantity' => 'required|integer',
+                // 'products.*.price' => 'required|integer',
             ],
             [
                 'customer_name.required' => 'Name is required.',
-                'order_date.required' => 'Order date is required.',
+                // 'order_date.required' => 'Order date is required.',
                 'customer_wa.required' => 'Customer WA is required.',
                 'address.required' => 'Customer Address is required.',
-                'title.required' => 'Judul Pesan is required.',
+                'judul_pesan.required' => 'Judul Pesan is required.',
                 'total_price.required' => 'Total Price is required.',
                 'desc.required' => 'Description is required.',
-                'products.required' => 'Products are required.',
-                'products.*.name.required' => 'Product name is required.',
-                'products.*.quantity.required' => 'Product quantity is required.',
-                'products.*.price.required' => 'Product price is required.',
+                // 'products.required' => 'Products are required.',
+                // 'products.*.name.required' => 'Product name is required.',
+                // 'products.*.quantity.required' => 'Product quantity is required.',
+                // 'products.*.price.required' => 'Product price is required.',
             ],
         );
 
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
         }
+
+        $totalPrice = 0;
+        foreach ($products as $product) {
+            $totalPrice += $product['quantity'] * $product['price'];
+        }
+        $data['total_price'] = $totalPrice;
+        $data['order_date'] = today();
         DB::beginTransaction();
         try {
             if($customer = Customer::where('customer_wa', $data['customer_wa'])->first()) {
@@ -212,6 +228,7 @@ class OrderController extends Controller
                 }
             }
             DB::commit();
+            session()->forget('cart');
             return response()->json(['message' => 'Data successfully stored', 'success' => true]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -226,6 +243,7 @@ class OrderController extends Controller
             ->get();
         $detail_uang = $order->is_validated;
         $barang = BarangJual::all();
+
         $data = [
             'nama' => $order,
             'order' => $detail,
@@ -256,7 +274,6 @@ class OrderController extends Controller
             return response()->json(['message' => 'Order successfully declined', 'success' => true]);
         }
     }
-
     public function acceptOrder(OrderDetail $order)
     {
         $order->update([
