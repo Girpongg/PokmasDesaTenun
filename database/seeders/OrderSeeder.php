@@ -23,8 +23,7 @@ class OrderSeeder extends Seeder
                     50000,
                     200000
                 )
-            ],
-
+        ],
             [
                 'order_date' => '2024-01-15',
                 'customer_name' => 'Jane Smith',

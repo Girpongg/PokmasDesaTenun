@@ -45,6 +45,10 @@
                             class="{{ $pnl['total'] >= 0 ? 'text-green-600' : 'text-red-600' }}">Rp{{ number_format($pnl['total']) }}</span>
                     </p>
                     <p class="font-medium">{{ \Carbon\Carbon::parse($pnl['month'])->format('F Y') }}</p>
+                    <button type="button"
+                        class="w-fit px-4 text-sm mt-1 bg-primary text-white py-2 rounded font-semibold transition">
+                        Details
+                    </button>
                 </div>
             @endforeach
         </div>
@@ -77,6 +81,10 @@
                         </span>
                     </p>
                     <p class="font-medium">${new Date(pnl.month + '-01').toLocaleString('id-ID', { month: 'long', year: 'numeric' })}</p>
+                    <button type="button" onclick="window.location.href = '{{ route('labarugi.show','') }}/${pnl.month}'"
+                        class="w-full px-4 text-sm mt-1 bg-primary text-white py-2 rounded font-semibold transition">
+                        Details
+                    </button>
                 </div>
             `);
             });

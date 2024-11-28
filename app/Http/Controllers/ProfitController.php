@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expenditures;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +20,7 @@ class ProfitController extends Controller
 
         $orders = DB::table('orders')
             ->select(DB::raw('DATE_FORMAT(order_date, "%Y-%m") as month'), DB::raw('SUM(total_price) as total_order'))
+            ->where('is_validated', 1)
             ->groupBy('month')
             ->get();
 
@@ -45,5 +47,37 @@ class ProfitController extends Controller
 
         $data['pnls'] = $pnl;
         return view('admin.labarugi', $data);
+    }
+
+    public function show($month)
+    {
+        $data['title'] = 'Laba Rugi';
+
+        $expenditures = Expenditures::where('exp_date', 'like', "$month%")->get();
+        $orders = Order::where('is_validated', 1)->where('order_date', 'like', "$month%")->get();
+
+        $data['expenditures'] = $expenditures;
+        $data['orders'] = $orders;
+        $details = [];
+
+        foreach ($expenditures as $expenditure) {
+            $details[] = [
+                'title' => $expenditure->title,
+                'date' => $expenditure->exp_date,
+                'total' => $expenditure->total_price,
+                'type' => 'expenditure',
+            ];
+        }
+        foreach ($orders as $order) {
+            $details[] = [
+                // 'title' => $order->customer->name,
+                'title' => '-',
+                'date' => $order->order_date,
+                'total' => $order->total_price,
+                'type' => 'order',
+            ];
+        }
+        $data['details'] = $details;
+        return view('admin.labarugi-details', $data);
     }
 }
