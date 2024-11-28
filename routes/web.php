@@ -40,6 +40,8 @@ Route::get('/detail-barang/{barang}', [BarangJualController::class, 'viewDetail'
 Route::get('admin/login', function () {
     return view('admin.login.login');
 });
+Route::get('/riwayat', [OrderController::class, 'viewHistory'])->name('history');
+Route::get('/riwayatdetail/{id}',[OrderController::class,'history_detail'])->name('historydetail');
 Route::get('/fetch-customer', [OrderController::class, 'fetchCustomer'])->name('fetch.customer');
 
 Route::get('/detail-payment', [BarangJualController::class, 'viewCartPayment'])->name('detail-payment');

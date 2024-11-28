@@ -62,6 +62,12 @@
     textarea:disabled {
         background: #aaaaaa50 !important;
     }
+
+    pre{
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
 </style>
 
 <body>

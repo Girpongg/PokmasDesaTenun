@@ -411,4 +411,31 @@ class OrderController extends Controller
             ]);
         }
     }
+
+    public function viewHistory()
+    {
+        $customer_id = session('id');
+        if(!$customer_id) {
+            return redirect()->route('login');
+        }
+        $histories = Order::where('customer_id', $customer_id)->get();
+        // dd($histories);
+        $data['histories'] = $histories;
+        return view('user.history', $data);
+    }
+
+    public function history_detail($id)
+    {
+        $order = Order::find($id);
+        $detail = OrderDetail::with('barangJual')
+            ->where('order_id', $order->id)
+            ->get();
+        $barang = BarangJual::all();
+        $data = [
+            'nama' => $order,
+            'order' => $detail,
+            'barang_juals' => $barang,
+        ];
+        return view('user.historydetail', $data);
+    }
 }
