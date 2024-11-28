@@ -10,9 +10,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 50;
+        z-index: 100;
         transition: all 0.3s ease-in-out;
-        overflow: hidden;
         opacity: 1;
         visibility: visible;
     }
@@ -33,7 +32,19 @@
     }
 
     .nav-link {
-        color: #000000;
+        color: #5C4033;
+        font-family: "Ubuntu", sans-serif;
+
+        font-weight: bold;
+        text-decoration: none;
+        letter-spacing: -1px;
+        padding: 0px 24px;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    .nav-links {
+        color: #5C4033;
         font-family: "Ubuntu", sans-serif;
 
         font-weight: bold;
@@ -150,37 +161,35 @@
     }
 
     .register-button {
-        font-family: "Work Sans", sans-serif;
         font-size: 14px;
-        color: #000000;
-        font-weight: 600;
-        padding: 8px 10px;
-        background-color: #59ebff;
-        border: 2px solid #59ebff;
-        border-radius: 20px;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 8px 14px;
+        background: linear-gradient(to right, #5C4033, #4D4C1C);
+        border: 2px solid #5C4033;
+        border-radius: 5px;
     }
 
     .register-button:hover {
-        color: #000000;
-        ;
-        background-color: #ffffff;
-        border: 2px solid #000000;
+        color: #ffffff;
+        background: linear-gradient(to right, #5C4033, #4D4C1C);
+        border: 2px solid #5C4033;
         ;
     }
 
     .signin-button {
-        font-family: "Work Sans", sans-serif;
-        color: #dedace;
+        color: #5C4033;
         font-size: 14px;
-        font-weight: 500;
-        padding: 8px 10px;
-        border: 2px solid #dedace;
+        font-weight: bold;
+        padding: 8px 11px;
+        border: 2px solid #5C4033;
         border-radius: 5px;
     }
 
     .signin-button:hover {
-        background-color: #2a271d;
+        background: linear-gradient(to right, #5C4033, #4D4C1C);
         border: 2px solid #141414;
+        color: #ffffff;
     }
 
     @media (max-width: 1024px) {
@@ -475,19 +484,44 @@
     </div>
     <div class="nav-collapse">
         <ul class="nav-menu">
-            <a href="{{route('user.home')}}" class="nav-link ">
+            <a href="{{ route('user.home') }}" class="nav-link ">
                 <li>HOME</li>
             </a>
-            <a href="{{route('milih-barang')}}" class="nav-link ">
+            <a href="{{ route('milih-barang') }}" class="nav-link ">
                 <li>CATALOG</li>
             </a>
             <a href="" class="nav-link ">
-                <li>EVENTS</li>
+                <li>ABOUT US</li>
             </a>
             <a href="" class="nav-link ">
-                <li>COMPETITIONS</li>
+                <li>CONTACT US</li>
             </a>
         </ul>
+        <div class="login-container">
+            @if (session()->has('email'))
+                <a class="nav-links flex select-none" id="dropdownKatalogButton" aria-expanded="false">
+                    <img src="{{ asset('img/faqperson.png') }}" alt="Profile Photo"
+                        class="w-7 h-7 rounded-full mr-2 hidden xl:inline-block">
+                    {{ Session::get('name') }}
+                    <span class="ml-1 m-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" class="w-4 h-4">
+                            <path
+                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" />
+                        </svg>
+                    </span>
+                </a>
+                <ul
+                    class="absolute z-[99999] hidden min-w-max list-none bg-gray-50  text-gray-900 rounded-lg shadow-md p-2 text-base xl:ml-7">
+                    <li><a class="block px-4 py-2 font4 " href="">Dashboard Profile</a></li>
+                    <li><a class="block px-4 py-2 font4" href="">Paper Submission</a></li>
+                    <li><a class="block px-4 py-2 font4 text-red-900" href="{{route('logout')}}">Log Out</a>
+                    </li>
+                </ul>
+            @elseif (!session()->has('email'))
+                <a href="{{ route('register') }}" class="register-button duration-300 ease">REGISTER</a>
+                <a href="{{ route('login') }}" class="signin-button duration-300 ease">SIGN IN</a>
+            @endif
+        </div>
     </div>
     <div class="hamburger" id="hamburger">
         <svg class="ham ham6" viewBox="0 0 100 100" width="49" onclick="this.classList.toggle('active')">
@@ -502,8 +536,10 @@
 </nav>
 
 <script>
-    document.querySelector('#dropdownKatalogButton').addEventListener('click', function() {
-        const dropdownMenu = this.nextElementSibling;
-        dropdownMenu.classList.toggle('hidden');
+    $(document).ready(function() {
+        $('#dropdownKatalogButton').on('click', function() {
+            const dropdownMenu = $(this).next();
+            dropdownMenu.toggleClass('hidden');
+        });
     });
 </script>

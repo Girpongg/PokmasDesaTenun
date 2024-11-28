@@ -66,7 +66,7 @@
                 @foreach ($order_catalog_validate as $item)
                     <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
                         <div class="flex flex-col gap-1">
-                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer->name }}</p>
                             <p class="text-sm font-medium px-2">Order_date: <span
                                     class="text-sm font-normal">{{ $item->order_date }}</span> </p>
                             <p class="text-sm font-medium px-2 pb-4">Total Price: <span
@@ -109,7 +109,7 @@
                 @foreach ($order_request_validate as $item)
                     <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
                         <div class="flex flex-col gap-1">
-                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer->name }}</p>
                             <p class="text-sm font-medium px-2">Order_date: <span
                                     class="text-sm font-normal">{{ $item->order_date }}</span> </p>
                             <p class="text-sm font-medium px-2 pb-4">Total Price: <span
@@ -155,7 +155,7 @@
                 @foreach ($order_catalog_notvalidate as $item)
                     <div class="p-2 w-[250px] h-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white rounded-xl">
                         <div class="flex flex-col gap-1">
-                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer_name }}</p>
+                            <p class="text-sm font-medium px-2 pt-4">Buyer : {{ $item->customer->name }}</p>
                             <p class="text-sm font-medium px-2">Order_date: <span
                                     class="text-sm font-normal">{{ $item->order_date }}</span> </p>
                             <p class="text-sm font-medium px-2 pb-4">Total Price: <span
@@ -164,9 +164,8 @@
                         <a href="{{ route('order.detail', $item->id) }}">
                             <button class="bg-black text-white w-full rounded-lg py-2 my-1">Details</button>
                         </a>
-                        <button
-                            class="bg-warning text-white w-full rounded-lg py-2 my-1"
-                            onclick='viewDetails({{$item}})'>
+                        <button class="bg-warning text-white w-full rounded-lg py-2 my-1"
+                            onclick='viewDetails({{ $item }})'>
                             Bukti Transfer
                         </button>
                         <button class="bg-success text-white w-full rounded-lg py-2 my-1"
@@ -275,20 +274,31 @@
                                 <option value="2">By Request</option>
                             </select>
                         </div>
-                        <div class="relative mb-3" data-te-input-wrapper-init>
-                            <input type="text"
-                                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                                id="customer_name" name="customer_name" placeholder="name" />
-                            <label for="name"
-                                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">
-                                Nama Customer
-                            </label>
+                        <div class="flex gap-x-4">
+                            <div class="relative mb-3 w-full" data-te-input-wrapper-init>
+                                <input type="text"
+                                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                    id="customer_wa" name="customer_wa" placeholder="name" />
+                                <label for="name"
+                                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">
+                                    Customer WA
+                                </label>
+                                <div id="dropdown"
+                                    class="absolute z-10 w-full mt-1 bg-gray-800 rounded-lg shadow-lg hidden">
+                                    <ul id="dropdown-list" class="max-h-60 overflow-y-auto">
+                                        <!-- Options will be dynamically added here -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="w-[30%]">
+                                <button id="kuy"
+                                    class=" bg-green-600 text-white w-full rounded-md h-[75%] font-medium text-xs text-center uppercase">SEARCH</button>
+                            </div>
                         </div>
-
                         <div class="flex gap-x-4">
                             <div class="mb-4 w-full">
-                                <label for="customer_wa" class="ml-1">Nomor WA</label>
-                                <input class="rounded-md w-full animated-input" name="customer_wa" id="customer_wa">
+                                <label for="customer_name" class="ml-1">Customer Name</label>
+                                <input class="rounded-md w-full animated-input" name="customer_name" id="customer_name">
                             </div>
                             <div class="mb-4 w-full">
                                 <label for="price" class="ml-1">Address</label>
@@ -482,7 +492,8 @@
                                             <option value="" selected disabled hidden></option>
                                             @foreach ($products as $bahan)
                                                 <option value="{{ $bahan->name }}" data-id="{{ $bahan->id }}"
-                                                    data-price="{{ $bahan->price }}">{{ $bahan->name }}
+                                                    data-price="{{ $bahan->price }}"
+                                                    data-quantity="{{ $bahan->quantity }}">{{ $bahan->name }}
                                                     ({{ $bahan->quantity }})
                                                 </option>
                                             @endforeach
@@ -593,6 +604,53 @@
     </div>
 
     <script>
+        $(document).ready(function() {
+            const input = $('#customer_wa');
+            const dropdown = $('#dropdown');
+            const dropdownList = $('#dropdown-list');
+            const teams = @json($customers);
+            input.on('input', function() {
+                const query = input.val().toUpperCase();
+                dropdownList.empty();
+
+                teams.forEach(team => {
+                    if (team.customer_wa.toUpperCase().includes(query)) {
+                        const listItem = $('<li>').text(team.customer_wa.toUpperCase())
+                            .addClass('p-2 text-white cursor-pointer hover:bg-indigo-500')
+                            .on('click', function() {
+                                input.val(team.customer_wa.toUpperCase());
+                                $('#score-field').html(team.customer_wa);
+                                dropdown.addClass('hidden');
+                            });
+                        dropdownList.append(listItem);
+                    }
+                })
+                dropdown.removeClass('hidden');
+            });
+        });
+
+        document.getElementById('kuy').addEventListener('click', function() {
+            const noWa = document.getElementById('customer_wa').value;
+
+            fetch('/fetch-customer?no_wa=' + encodeURIComponent(noWa))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('customer_name').value = data.data.name;
+                        document.getElementById('customer_address').value = data.data.address;
+                        document.getElementById('customer_name').disabled = true;
+                        document.getElementById('customer_address').disabled = true;
+                        document.getElementById('customer_wa').disabled = true;
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+
         function viewDetails(item) {
             console.log(item);
             const modal = $('#modalDetail');
@@ -934,15 +992,23 @@
             var productName = $('#name-req').val();
             var quantity = $('#quantity-req').val();
             var selectedOption = document.querySelector('#name-req option:checked');
+            var curQuantity = selectedOption ? selectedOption.getAttribute('data-quantity') : 0;
 
             if (!productName || !quantity) {
                 alert("All fields are required.");
                 return;
             }
-            productsReq.push({
-                name: productName,
-                quantity: quantity
-            });
+
+            if (quantity > curQuantity) {
+                alert("Quantity exceeds available stock.");
+                return;
+            } else {
+
+                productsReq.push({
+                    name: productName,
+                    quantity: quantity
+                });
+            }
 
             renderInventList();
             $('#bahan-form')[0].reset();

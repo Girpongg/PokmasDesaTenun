@@ -25,10 +25,11 @@
             @foreach ($catalog as $item)
                 <div class="relative w-[250px] h-[310px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md grid grid-rows-7 mb-8"
                     style="background: linear-gradient(to right, #5C4033, #4D4C1C);">
-                    <div class="row-span-7 flex flex-col gap-1">
+                    <button class="row-span-7 flex flex-col gap-1 text-left"
+                    onclick="window.location.href='{{ route('detail-barang', $item->id) }}'">
                         <img src="{{ asset('storage/uploads/catalog/' . $item->image) }}" alt="Image"
                             class="w-full h-[150px] object-cover rounded-sm">
-                        <div class="pt-2 px-4 ">
+                        <div class="pt-4 px-4 ">
                             <h1 class="font4 font-semibold text-[16px] text-[#F5E9D3]">{{ $item->name }}</h1>
                             <h1 class="font3 font-bold text-[14px] leading-4 text-[#F5E9D3]">Rp. {{ $item->price }}</h1>
                             <h1 class="font3 leading-5 mt-2 text-[12px] text-red-100">Stok Tersisa {{ $item->stock }} pcs
@@ -36,11 +37,11 @@
                         </div>
                         <a class="flex justify-center" href="{{ route('add-cart', $item->id) }}">
                             <button
-                                class="rounded-md font4 w-full inline-block !bg-[#dfdfdf] m-4 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out focus:shadow-md focus:outline-none focus:ring-0  active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                                Masukkan ke Tas
-                            </button>
+                            class="rounded-md font4 w-full inline-block !bg-[#dfdfdf] m-4 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-2xl transition duration-150 ease-in-out focus:shadow-md focus:outline-none focus:ring-0  active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                            Masukkan ke Tas
+                        </button>
                         </a>
-                    </div>
+                    </button>
                 </div>
             @endforeach
         </div>
