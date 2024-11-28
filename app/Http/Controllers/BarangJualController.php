@@ -115,6 +115,15 @@ class BarangJualController extends Controller
         return view('user.detail-payment', $data);
     }
 
+    public function updateQty(Request $request)
+    {
+        $cart = session()->get('cart');
+        $id = $request->id;
+        $cart[$id]['quantity'] = $request->quantity;
+        session()->put('cart', $cart);
+        return redirect()->back();
+    }
+
     // public function plus(){
     //     $cart = session()->get('cart');
     //     $id = request()->id;

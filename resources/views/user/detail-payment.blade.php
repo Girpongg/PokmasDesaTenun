@@ -14,14 +14,14 @@
             @foreach ($cart as $value)
             <div class="relative w-[250px] h-[350px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md mb-6 group"
             style="background: linear-gradient(to right, #5C4033, #4D4C1C);">
-           <!-- Gambar produk dengan tombol silang -->
-           <div class="relative h-2/3">
+            <!-- Gambar produk dengan tombol silang -->
+            <div class="relative h-2/3">
                <img src="{{ $value['image'] }}" alt="{{ $value['name'] }}" 
                     class="w-full h-full object-cover rounded-sm">
-           </div>
+            </div>
        
-           <!-- Informasi produk di bawah gambar -->
-           <div class="pt-2 px-4 h-1/3 flex flex-col justify-between">
+            <!-- Informasi produk di bawah gambar -->
+            <div class="pt-2 px-4 h-1/3 flex flex-col justify-between">
                <h1 class="font4 font-semibold text-[16px] text-[#F5E9D3] group-hover:text-white transition-colors duration-300">
                    {{ $value['name'] }}
                </h1>
@@ -32,24 +32,20 @@
                <div class="mt-2 mb-3 flex items-center justify-center">
                    <div class="flex items-center gap-2">
                        <!-- Tombol Minus -->
-                       <a class="flex justify-center" href="">
-                           <button class="w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300">
-                        </a>
+                       <button class="w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300 decrement-btn"
+                                data-id="{{ $value['id'] }}">
                            -
                        </button>
                        <!-- Angka Jumlah -->
-                       <span class=" text-[#F5E9D3]">{{ $value['quantity'] }}</span>
+                       <span class=" text-[#F5E9D3] quantity" data-id="{{ $value['id']}}">{{ $value['quantity'] }}</span>
                        <!-- Tombol Plus -->
-                       <a class="flex justify-center" href="">
-                           <button class="w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300">
-                               +
-                            </button>
-                        </a>
+                        <button class="increment-btn w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300" data-id="{{ $value['id'] }}" >
+                            +
+                        </button>
                    </div>
                </div>
-           </div>
-       </div>
-       
+            </div>
+            </div>
             @endforeach
         </div>
     </div>
@@ -89,7 +85,54 @@
 </div>
 
     <script>
+        function updateQuantityInSession(id, newQuantity) {
+            fetch("{{ route('update-qty') }}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: id, quantity: newQuantity })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Quantity updated in session');
+                } else {
+                    console.error('Failed to update quantity in session');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating quantity in session', error);
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+
+        document.querySelectorAll('.increment-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const quantityElement = document.querySelector(`.quantity[data-id="${id}"]`);
+                let quantity = parseInt(quantityElement.innerText);
+                quantityElement.innerText = quantity + 1;
+
+                updateQuantityInSession(id, quantity + 1);
+            });
+        });
+
+        document.querySelectorAll('.decrement-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const quantityElement = document.querySelector(`.quantity[data-id="${id}"]`);
+                let quantity = parseInt(quantityElement.innerText);
+                if (quantity > 1) {
+                    quantityElement.innerText = quantity - 1;
+                }
+
+                updateQuantityInSession(id, quantity - 1);
+            });
+        });
+        
             $('#submit').on('click', function() {
                 Swal.fire({
                     icon: 'warning',

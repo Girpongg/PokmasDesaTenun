@@ -45,6 +45,7 @@ Route::get('/add-to-cart/{id}', [BarangJualController::class, 'addToCart'])->nam
 Route::put('/add-to-cart/{id}', [BarangJualController::class, 'plus'])->name('plusItem');
 Route::put('/add-to-cart/{id}', [BarangJualController::class, 'minus'])->name('minusItem');
 Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');
+Route::post('/cart/update', [BarangJualController::class, 'updateQty'])->name('update-qty');
 
 Route::get('/delete-from-cart/{id}', [BarangJualController::class, 'deleteFromCart'])->name('delete-from-cart');
 
