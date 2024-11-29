@@ -513,7 +513,6 @@
                 <ul
                     class="absolute z-[99999] hidden min-w-max list-none bg-gray-50  text-gray-900 rounded-lg shadow-md p-2 text-base xl:ml-7">
                     <li><a class="block px-4 py-2 font4 " href="">Dashboard Profile</a></li>
-                    <li><a class="block px-4 py-2 font4" href="">Paper Submission</a></li>
                     <li><a class="block px-4 py-2 font4 text-red-900" href="{{route('logout')}}">Log Out</a>
                     </li>
                 </ul>

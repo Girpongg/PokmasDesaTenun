@@ -28,7 +28,7 @@ class LoginController extends Controller
         $validasi = Validator::make($data, [
             'name' => 'required|string',
             'address' => 'required|string',
-            'customer_wa' => 'required|integer',
+            'customer_wa' => 'required|string',
             'email' => 'nullable|email',
             'password' => 'required',
             'passwordConfirmation' => 'required|same:password'
@@ -36,7 +36,6 @@ class LoginController extends Controller
             'name.required' => 'Nama harus diisi',
             'address.required' => 'Alamat harus diisi',
             'customer_wa.required' => 'Nomor WA harus diisi',
-            'customer_wa.integer' => 'Nomor WA harus berupa angka',
             'email.email' => 'Email tidak valid',
             'password.required' => 'Password harus diisi',
             'password.confirmed' => 'Password tidak sama',
