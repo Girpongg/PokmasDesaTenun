@@ -22,7 +22,7 @@ class OrderController extends Controller
         $order_request_validate = Order::where('is_validated', 1)->where('tipe', 2)->where('is_done', 0)->get();
         $order_catalog_notvalidate = Order::where('is_validated', 0)->where('tipe', 1)->get();
         $order = Order::get();
-        $barang = BarangJual::all();
+        $barang = BarangJual::where('tipe', 1)->get();
         $bahan = Product::all();
         $customer = Customer::all();
 
@@ -410,5 +410,32 @@ class OrderController extends Controller
                 'message' => 'Customer tidak ditemukan.',
             ]);
         }
+    }
+
+    public function viewHistory()
+    {
+        $customer_id = session('id');
+        if(!$customer_id) {
+            return redirect()->route('login');
+        }
+        $histories = Order::where('customer_id', $customer_id)->get();
+        // dd($histories);
+        $data['histories'] = $histories;
+        return view('user.history', $data);
+    }
+
+    public function history_detail($id)
+    {
+        $order = Order::find($id);
+        $detail = OrderDetail::with('barangJual')
+            ->where('order_id', $order->id)
+            ->get();
+        $barang = BarangJual::all();
+        $data = [
+            'nama' => $order,
+            'order' => $detail,
+            'barang_juals' => $barang,
+        ];
+        return view('user.historydetail', $data);
     }
 }
