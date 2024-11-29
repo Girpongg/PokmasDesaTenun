@@ -34,6 +34,7 @@ Route::post('/register', [LoginController::class, 'store'])->name('register.stor
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/orderselesai', [OrderController::class, 'viewOrderSelesai'])->name('orderselesai');
 Route::get('/add-to-cart/{id}', [BarangJualController::class, 'addToCart'])->name('add-cart');
+Route::post('/cart/update', [BarangJualController::class, 'updateQty'])->name('update-qty');
 Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');
 Route::get('/delete-from-cart/{id}', [BarangJualController::class, 'deleteFromCart'])->name('delete-from-cart');
 Route::get('/barang', [BarangJualController::class, 'viewCatalog'])->name('milih-barang');
@@ -41,6 +42,8 @@ Route::get('/detail-barang/{barang}', [BarangJualController::class, 'viewDetail'
 Route::get('admin/login', function () {
     return view('admin.login.login');
 });
+Route::get('/riwayat', [OrderController::class, 'viewHistory'])->name('history');
+Route::get('/riwayatdetail/{id}',[OrderController::class,'history_detail'])->name('historydetail');
 Route::get('/fetch-customer', [OrderController::class, 'fetchCustomer'])->name('fetch.customer');
 
 Route::get('/detail-payment', [BarangJualController::class, 'viewCartPayment'])->name('detail-payment');

@@ -69,18 +69,15 @@ class BarangJualController extends Controller
             ];
         }
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Item added to cart successfully!');
+        return redirect('/barang')->with('success', 'Item added to cart successfully!');
     }
 
     public function deleteFromCart($id)
     {
         $cart = session()->get('cart');
         if (isset($cart[$id])) {
-            if ($cart[$id]['quantity'] > 1) {
-                $cart[$id]['quantity']--;
-            } else {
-                unset($cart[$id]);
-            }
+            unset($cart[$id]);
+            
             session()->put('cart', $cart);
         }
         return redirect()->back()->with('success', 'Item removed from cart successfully!');
@@ -110,5 +107,14 @@ class BarangJualController extends Controller
             'catalog' => $catalog,
         ];
         return view('user.home', $data);
+    }
+
+    public function updateQty(Request $request)
+    {
+        $cart = session()->get('cart');
+        $id = $request->id;
+        $cart[$id]['quantity'] = $request->quantity;
+        session()->put('cart', $cart);
+        return redirect()->back();
     }
 }
