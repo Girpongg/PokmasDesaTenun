@@ -963,56 +963,33 @@
         });
         let productsReq = [];
 
-        $('#submit-detail').on('click', function() {
-            var productName = $('#name').val();
-            var quantity = $('#quantity').val();
-            var selectedOption = document.querySelector('#name option:checked');
-            var unitprice = selectedOption ? selectedOption.getAttribute('data-price') : 0;
-            var totalPrice = unitprice * quantity;
-
-            if (!productName || !quantity) {
-                alert("All fields are required.");
-                return;
-            }
-            products.push({
-                name: productName,
-                quantity: quantity,
-                price: unitprice,
-                totalPrice: totalPrice
-            });
-
-
-
-            renderProductList();
-            $('#product-form')[0].reset();
-            $('#detailModal').modal('hide');
-        });
-
         $('#submit-req-detail').on('click', function() {
             var productName = $('#name-req').val();
-            var quantity = $('#quantity-req').val();
+            var quantity = parseInt($('#quantity-req').val(), 10); // awalnya kalau cuma val dibacanya string, makanya diparse ke integer
             var selectedOption = document.querySelector('#name-req option:checked');
-            var curQuantity = selectedOption ? selectedOption.getAttribute('data-quantity') : 0;
+            var curQuantity = selectedOption ? parseInt(selectedOption.getAttribute('data-quantity'), 10) : 0; // Convert to integer
 
             if (!productName || !quantity) {
-                alert("All fields are required.");
+                document.getElementById('error-message').textContent = "All fields are required.";
                 return;
             }
 
             if (quantity > curQuantity) {
-                alert("Quantity exceeds available stock.");
+                alert('Quantity exceeds available stock');
                 return;
-            } else {
+            } else{
 
                 productsReq.push({
                     name: productName,
                     quantity: quantity
                 });
-            }
 
-            renderInventList();
-            $('#bahan-form')[0].reset();
-            $('#reqModal').modal('hide');
+                selectedOption.setAttribute('data-quantity', curQuantity - quantity);
+
+                renderInventList();
+                $('#bahan-form')[0].reset();
+                $('#reqModal').modal('hide');
+            }
         });
 
 
