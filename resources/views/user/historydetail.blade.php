@@ -9,14 +9,14 @@
         </div>
 
         <a href="{{route('history')}}"><button
-                class=" bg-[#5C4033] text-white hover:bg-[#4D4C1C] px-4 py-2 my-5 rounded-md">back</button></a>
+                class=" bg-[#5C4033] text-white hover:bg-[#4D4C1C] px-4 py-2 my-5 rounded-md">Back</button></a>
 
-        <div class="space-y-6">
+        <div class="">
             @foreach ($order as $item)
                 <div
                     class="bg-white shadow-lg rounded-xl overflow-hidden flex flex-col lg:flex-row items-center border border-gray-200 relative">
 
-                    <div class="w-full lg:w-1/3 h-48 m-5">
+                    <div class="w-full lg:w-1/3  h-48 m-5">
                         <img src="{{ asset('storage/uploads/catalog/' . $item->barangJual->image) }}" alt="Sarung Tenun Biru"
                             class="object-contain w-full h-full">
                         <!-- Menggunakan object-contain agar gambar tidak terpotong dan sesuai ukuran card -->

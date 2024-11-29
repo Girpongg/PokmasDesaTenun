@@ -22,7 +22,7 @@ class OrderController extends Controller
         $order_request_validate = Order::where('is_validated', 1)->where('tipe', 2)->where('is_done', 0)->get();
         $order_catalog_notvalidate = Order::where('is_validated', 0)->where('tipe', 1)->get();
         $order = Order::get();
-        $barang = BarangJual::all();
+        $barang = BarangJual::where('tipe', 1)->get();
         $bahan = Product::all();
         $customer = Customer::all();
 

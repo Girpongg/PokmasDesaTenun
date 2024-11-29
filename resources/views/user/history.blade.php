@@ -24,7 +24,7 @@
                                 <p class="text-gray-600 font3"><pre><strong>Address                  :</strong>  {{ $history->address }}</pre> </p>
                                 <p class="text-gray-600 font3"><pre><strong>Total Price             :</strong>  Rp{{ number_format($history->total_price, 0, ',', '.') }}</pre></p>
                                 <p class="text-gray-600 font3"><pre><strong>Tipe                         :</strong>  {{ $history->tipe == 1 ? 'Katalog' : ($history->tipe == 2 ? 'Custom' : 'Tidak Diketahui') }}</pre></p>
-                                <p class="text-gray-600 font3"><pre><strong>Status                     :</strong>  {{ $history->is_done == 0 ? 'Barang masih diproses' : ($history->id_done == 1 ? 'Barang sudah jadi' : ($history->is_done == 2 ?? 'Barang sudah diambil')) }}</pre></p>
+                                <p class="text-gray-600 font3"><pre><strong>Status                     :</strong>  {{ $history->is_validated == 0 ? 'Pembayaran Belum Divalidasi' : ($history->is_done == 0 ? 'Barang masih diproses' : ($history->is_done == 1 ? 'Barang sudah jadi' : ($history->is_done == 2 ?? 'Barang sudah diambil'))) }}</pre></p>
                             </div>
                         </div>
 
