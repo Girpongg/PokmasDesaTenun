@@ -5,19 +5,6 @@
         <div class="text-center mb-14">
             <h1 class="text-[54px] font-bold mb-2 custom-span text-[#5C4033]" data-aos="zoom-in-up">Cart</h1>
         </div>
-        <a href="{{ route('cart') }}">
-            <div class="fixed z-50 bottom-4 right-4">
-                <div class="relative">
-                    <button class="bg-gray-200 hover:bg-gray-500 p-3 rounded-full shadow-2xl">
-                        <img src="{{ asset('assets/cart.png') }}" alt="Cart Button" class="w-14 h-14 p-1">
-                    </button>
-                    <span
-                        class="absolute top-0 right-0 bg-[rgb(92,64,51)] border-white border text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-lg">
-                        {{ count(session('cart', [])) }}
-                    </span>
-                </div>
-            </div>
-        </a>
         
         @if ($cart == null)
             <div class="text-center">
@@ -33,8 +20,8 @@
                         
                         <!-- Gambar produk dengan tombol silang -->
                         <div class="relative h-2/3">
-                            <img src="{{ $value['image'] }}" alt="{{ $value['name'] }}" 
-                                class="w-full h-full object-cover rounded-sm group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ asset('storage/uploads/catalog/' . $value['image']) }}" alt="{{ $value['name'] }}" 
+                                class="w-full h-full object-cover rounded-sm transition-transform duration-300">
                             
                             <!-- Tombol silang di atas gambar -->
                             <a href="{{ route('delete-from-cart', $value) }}">
