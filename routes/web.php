@@ -1,13 +1,17 @@
 <?php
 
+use App\Models\Product;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+=========
+use App\Http\Controllers\BarangJualController;
+>>>>>>>>> Temporary merge branch 2
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\BarangJualController;
 use App\Http\Controllers\ExpenditureController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfitController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 

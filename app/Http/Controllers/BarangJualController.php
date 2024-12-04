@@ -112,13 +112,4 @@ class BarangJualController extends Controller
         ];
         return view('user.home', $data);
     }
-
-    public function updateQty(Request $request)
-    {
-        $cart = session()->get('cart');
-        $id = $request->id;
-        $cart[$id]['quantity'] = $request->quantity;
-        session()->put('cart', $cart);
-        return redirect()->back();
-    }
 }

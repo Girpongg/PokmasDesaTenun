@@ -22,7 +22,8 @@ class OrderController extends Controller
         $order_request_validate = Order::where('is_validated', 1)->where('tipe', 2)->where('is_done', 0)->get();
         $order_catalog_notvalidate = Order::where('is_validated', 0)->where('tipe', 1)->get();
         $order = Order::get();
-        $barang = BarangJual::where('tipe', 1)->get();
+        $barang = BarangJual::all();
+<<<<<<<<< Temporary merge branch 1
         $bahan = Product::all();
         $customer = Customer::all();
 
@@ -274,7 +275,10 @@ class OrderController extends Controller
             return response()->json(['message' => 'Order successfully declined', 'success' => true]);
         }
     }
+<<<<<<<<< Temporary merge branch 1
 
+=========
+>>>>>>>>> Temporary merge branch 2
     public function acceptOrder(OrderDetail $order)
     {
         $order->update([
