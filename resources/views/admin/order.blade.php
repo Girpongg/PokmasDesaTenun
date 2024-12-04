@@ -991,7 +991,28 @@
                 $('#reqModal').modal('hide');
             }
         });
+        
 
+         $('#submit-detail').on('click', function() {
+            var productName = $('#name').val();
+            var quantity = $('#quantity').val();
+            var selectedOption = document.querySelector('#name option:checked');
+            var unitprice = selectedOption ? selectedOption.getAttribute('data-price') : 0;
+            var totalPrice = unitprice * quantity;
+            if (!productName || !quantity) {
+                alert("All fields are required.");
+                return;
+            }
+            products.push({
+                name: productName,
+                quantity: quantity,
+                price: unitprice,
+                totalPrice: totalPrice
+            });
+            renderProductList();
+            $('#product-form')[0].reset();
+            $('#detailModal').modal('hide');
+        });
 
         function renderProductList() {
             $('#product-list').empty();
