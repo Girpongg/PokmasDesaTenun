@@ -559,7 +559,7 @@
 
     <div data-te-modal-init
         class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-        id="modalDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        id="modalDetail" aria-labelledby="exampleModalLabel">
         <div data-te-modal-dialog-ref
             class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
             <div
@@ -585,9 +585,10 @@
                 <div class="relative flex-auto p-4" data-te-modal-body-ref>
 
                     <div class="flex items-center">
-                        <h5 class="font-bold">Bukti Transfer : </h5>
-                        <p class="ml-3" id="modal-order"></p>
+                        <img class="ml-3" id="modal-order" alt="Bukti Transfer"
+                            style="max-width: 100%; height: auto;" />
                     </div>
+
                     {{-- ketua --}}
                 </div>
                 <!--Modal footer-->
@@ -654,10 +655,20 @@
         function viewDetails(item) {
             console.log(item);
             const modal = $('#modalDetail');
-            $('#modal-nama').text(item.customer_name);
-            $('#modal-order').text(item.link_bukti_tf);
+            $('#modal-nama').text(item.customer.name);
+            const baseUrl = "{{ asset('storage/uploads/bukti_transfer') }}";
+            const imageElement = $('#modal-order');
+
+            if (item.link_bukti_tf) {
+                const fullPath = `${baseUrl}/${item.link_bukti_tf}`;
+                imageElement.attr('src', fullPath);
+                imageElement.show();
+            } else {
+                imageElement.hide();
+            }
             modal.modal('show');
         }
+
 
         function isvalidate(id) {
             console.log(id);
@@ -965,9 +976,11 @@
 
         $('#submit-req-detail').on('click', function() {
             var productName = $('#name-req').val();
-            var quantity = parseInt($('#quantity-req').val(), 10); // awalnya kalau cuma val dibacanya string, makanya diparse ke integer
+            var quantity = parseInt($('#quantity-req').val(),
+                10); // awalnya kalau cuma val dibacanya string, makanya diparse ke integer
             var selectedOption = document.querySelector('#name-req option:checked');
-            var curQuantity = selectedOption ? parseInt(selectedOption.getAttribute('data-quantity'), 10) : 0; // Convert to integer
+            var curQuantity = selectedOption ? parseInt(selectedOption.getAttribute('data-quantity'), 10) :
+                0; // Convert to integer
 
             if (!productName || !quantity) {
                 document.getElementById('error-message').textContent = "All fields are required.";
@@ -977,7 +990,7 @@
             if (quantity > curQuantity) {
                 alert('Quantity exceeds available stock');
                 return;
-            } else{
+            } else {
 
                 productsReq.push({
                     name: productName,
@@ -991,9 +1004,9 @@
                 $('#reqModal').modal('hide');
             }
         });
-        
 
-         $('#submit-detail').on('click', function() {
+
+        $('#submit-detail').on('click', function() {
             var productName = $('#name').val();
             var quantity = $('#quantity').val();
             var selectedOption = document.querySelector('#name option:checked');
