@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\BarangJualController;
-use App\Http\Controllers\ExpenditureController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfitController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProfitController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\BarangJualController;
+use App\Http\Controllers\ExpenditureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,11 @@ Route::prefix('admin')->group(function () {
         Route::put('/{id}', [SupplierController::class, 'update'])->name('supplier.update');
         Route::delete('/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
     });
-
+    Route::prefix('customer')->group(function () {
+        Route::get('/', [CustomerController::class, 'viewCustomer'])->name('viewCustomer');
+        Route::put('/{id}', [CustomerController::class, 'update'])->name('customer.update');
+        Route::delete('/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+    });
     Route::prefix('/order')->group(function () {
         Route::get('/', [OrderController::class, 'viewOrder'])->name('viewOrder');
         Route::post('/req', [OrderController::class, 'storeRequest'])->name('order.request');
