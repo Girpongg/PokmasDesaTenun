@@ -12,11 +12,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangJualController;
 use App\Http\Controllers\ExpenditureController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfitController;
 use App\Http\Middleware\AdminMiddleware;
-use App\Models\Product;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
