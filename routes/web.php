@@ -9,6 +9,7 @@ use App\Http\Controllers\BarangJualController;
 use App\Http\Controllers\ExpenditureController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfitController;
+use App\Http\Middleware\AdminMiddleware;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -23,12 +24,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/home', [BarangJualController::class, 'viewHome'])->name('user.home');
-Route::get('/login',[LoginController::class, 'login'])->name('login');
-Route::post('/login',[LoginController::class, 'logins'])->name('login.store');
+Route::get('/', [BarangJualController::class, 'viewHome'])->name('user.home');
+Route::get('/home', [BarangJualController::class, 'viewHome'])->name('user.homepage');
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/login', [LoginController::class, 'logins'])->name('login.store');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::post('/register', [LoginController::class, 'store'])->name('register.store');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -39,17 +38,20 @@ Route::get('/cart', [BarangJualController::class, 'viewCart'])->name('cart');
 Route::get('/delete-from-cart/{id}', [BarangJualController::class, 'deleteFromCart'])->name('delete-from-cart');
 Route::get('/barang', [BarangJualController::class, 'viewCatalog'])->name('milih-barang');
 Route::get('/detail-barang/{barang}', [BarangJualController::class, 'viewDetail'])->name('detail-barang');
-Route::get('admin/login', function () {
-    return view('admin.login.login');
-});
+
 Route::get('/riwayat', [OrderController::class, 'viewHistory'])->name('history');
-Route::get('/riwayatdetail/{id}',[OrderController::class,'history_detail'])->name('historydetail');
+Route::get('/riwayatdetail/{id}', [OrderController::class, 'history_detail'])->name('historydetail');
 Route::get('/fetch-customer', [OrderController::class, 'fetchCustomer'])->name('fetch.customer');
 
 Route::get('/detail-payment', [BarangJualController::class, 'viewCartPayment'])->name('detail-payment');
 Route::post('/', [OrderController::class, 'storeKatalog'])->name('katalog.store');
 
-Route::prefix('admin')->group(function () {
+
+Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::post('admin/auth', [AdminController::class, 'auth'])->name('admin.auth');
+
+Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {
+    Route::get('/', [AdminController::class, 'viewKategori'])->name('viewKategori');
     Route::prefix('kategori')->group(function () {
         Route::get('/', [AdminController::class, 'viewKategori'])->name('viewKategori');
         Route::post('/', [AdminController::class, 'store'])->name('kategori.store');

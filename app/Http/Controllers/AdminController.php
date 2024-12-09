@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Product;
@@ -11,6 +12,7 @@ use App\Utils\HttpResponse;
 use Illuminate\Http\Request;
 use App\Utils\HttpResponseCode;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,7 +22,7 @@ class AdminController extends Controller
 
     public function viewKategori()
     {
-        
+
         $kategori = Kategori::get();
         // dd($kategori);
         $i = 0;
@@ -109,7 +111,7 @@ class AdminController extends Controller
             $temp['unit'] = $product->unit;
             $temp['price'] = $product->price;
             $temp['quantity'] = $product->quantity;
-            $temp['category'] = $product->kategoris->name??'Belum ada';
+            $temp['category'] = $product->kategoris->name ?? 'Belum ada';
             $temp['supplier'] = $product->supplier->name;
             $data[] = $temp;
         }
@@ -182,8 +184,9 @@ class AdminController extends Controller
     }
 
 
-    public function updateInventory(Request $request, $id){
-        $data = $request->only('name', 'unit', 'price', 'quantity', 'category','supplier_id');
+    public function updateInventory(Request $request, $id)
+    {
+        $data = $request->only('name', 'unit', 'price', 'quantity', 'category', 'supplier_id');
         $units = array_map(fn($unit) => $unit->label(), Unit::cases());
 
         $valid = Validator::make(
@@ -226,7 +229,29 @@ class AdminController extends Controller
 
         $product->update($data);
         return response()->json(['success' => true, 'message' => 'Update Product Success', 'data' => $product], 200);
+    }
 
+    public function login()
+    {
+
+        $data['title'] = 'Admin Login';
+
+        return view('admin.login.login');
+    }
+
+    public function auth(Request $request)
+    {
+        $admin = Admin::where('email', $request->email)->first();
+
+        if (($admin && Hash::check($request->password, $admin->password))) {
+            session()->put('id', $admin->id);
+            session()->put('email', $admin->email);
+            session()->put('name', $admin->name);
+
+            return redirect()->route('viewKategori')->with('success', 'Login berhasil!');
+        } else {
+            return redirect()->route('admin.login')->with('error', 'Email atau password salah!');
+        }
     }
 }
 enum Unit

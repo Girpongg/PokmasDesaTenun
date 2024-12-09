@@ -48,6 +48,15 @@
         color: #454556 !important;
     }
 
+    .swal2-confirm {
+        background: rgb(46, 143, 255) !important;
+    }
+
+    .swal2-deny,
+    .swal2-cancel {
+        background: rgb(255, 79, 79) !important;
+    }
+
     input,
     textarea,
     select {
@@ -63,7 +72,7 @@
         background: #aaaaaa50 !important;
     }
 
-    pre{
+    pre {
         font-family: "Ubuntu", sans-serif;
         font-weight: 400;
         font-style: normal;
@@ -79,7 +88,8 @@
                 preflight: false,
             },
         };
-    </script> <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
@@ -88,7 +98,7 @@
     @yield('style')
     @yield('content')
     @yield('script')
-   
+
 
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/js/tw-elements.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
