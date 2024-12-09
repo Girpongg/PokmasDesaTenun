@@ -25,7 +25,7 @@ return new class extends Migration
             $table->boolean('is_validated')->default(false);
             $table->integer('is_done')->default(0)->comment('0: not done, 1: done, 2: sudah diambil');
             $table->string('desc')->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });
     }
