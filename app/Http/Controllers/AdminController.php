@@ -239,6 +239,13 @@ class AdminController extends Controller
         return view('admin.login.login');
     }
 
+    public function logout()
+    {
+        session()->flush();
+        return redirect()->route('admin.login');
+    }
+
+
     public function auth(Request $request)
     {
         $admin = Admin::where('email', $request->email)->first();
