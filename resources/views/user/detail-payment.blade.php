@@ -33,15 +33,19 @@
                             <!-- Bagian jumlah dengan tombol -->
                             <div class="mt-2 mb-3 flex items-center justify-center">
                                 <div class="flex items-center gap-2">
-                                     <!-- Tombol Minus -->
-                                    <button class="w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300 decrement-btn"
-                                    data-id="{{ $value['id'] }}">
+                                    <!-- Tombol Minus -->
+                                    <button
+                                        class="w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300 decrement-btn"
+                                        data-id="{{ $value['id'] }}">
                                         -
                                     </button>
                                     <!-- Angka Jumlah -->
-                                    <span class=" text-[#F5E9D3] quantity" data-id="{{ $value['id']}}">{{ $value['quantity'] }}</span>
+                                    <span class=" text-[#F5E9D3] quantity"
+                                        data-id="{{ $value['id'] }}">{{ $value['quantity'] }}</span>
                                     <!-- Tombol Plus -->
-                                    <button class="increment-btn w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300" data-id="{{ $value['id'] }}" >
+                                    <button
+                                        class="increment-btn w-6 h-6 flex items-center justify-center border border-green-500 rounded-full text-green-500 hover:bg-green-500 hover:text-white transition-colors duration-300"
+                                        data-id="{{ $value['id'] }}">
                                         +
                                     </button>
                                 </div>
@@ -52,29 +56,32 @@
             </div>
         </div>
         <div class="w-full pt-24">
-            <h1 class="w-full text-center font-[Satisfy] text-5xl font-bold text-[#5c4033]">PEMBAYARAN</h1>
+            <h1 class="w-full text-center custom-span text-5xl font-bold text-[#5c4033]">Pembayaran</h1>
             <div class="w-full justify-center flex">
                 <form id="payment-form" class="contents">
                     <div class="w-[500px] shadow-xl h-fit p-8 form-cont gap-y-4 flex flex-col mb-16">
                         <div class="w-full hidden">
                             <p class="font-semibold">Nama</p>
                             <input type="text" name="customer_id"
-                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1" value="{{$customer->id}}">
+                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1" value="{{ $customer->id }}">
                         </div>
                         <div class="w-full">
                             <p class="font-semibold">Nama</p>
                             <input type="text" name="customer_name"
-                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1" value="{{$customer->name}}">
+                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1"
+                                value="{{ $customer->name }}">
                         </div>
                         <div class="w-full">
                             <p class="font-semibold">Nomor HP</p>
                             <input type="text" name="customer_wa"
-                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1" value="{{$customer->customer_wa}}">
+                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1"
+                                value="{{ $customer->customer_wa }}">
                         </div>
                         <div class="w-full">
                             <p class="font-semibold">Alamat</p>
                             <input type="text" name="address"
-                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1" value="{{$customer->address}}">
+                                class="w-full h-[35px] border-2 rounded border-[#5c4033] pl-1"
+                                value="{{ $customer->address }}">
                         </div>
                         <div class="w-full">
                             <p class="font-semibold">Bukti Transfer</p>
@@ -95,52 +102,55 @@
     <script>
         function updateQuantityInSession(id, newQuantity) {
             fetch("{{ route('update-qty') }}", {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id: id, quantity: newQuantity })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('Quantity updated in session');
-                } else {
-                    console.error('Failed to update quantity in session');
-                }
-            })
-            .catch(error => {
-                console.error('Error updating quantity in session', error);
-            });
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                        quantity: newQuantity
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Quantity updated in session');
+                    } else {
+                        console.error('Failed to update quantity in session');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating quantity in session', error);
+                });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
 
-        document.querySelectorAll('.increment-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                const quantityElement = document.querySelector(`.quantity[data-id="${id}"]`);
-                let quantity = parseInt(quantityElement.innerText);
-                quantityElement.innerText = quantity + 1;
+            document.querySelectorAll('.increment-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const quantityElement = document.querySelector(`.quantity[data-id="${id}"]`);
+                    let quantity = parseInt(quantityElement.innerText);
+                    quantityElement.innerText = quantity + 1;
 
-                updateQuantityInSession(id, quantity + 1);
+                    updateQuantityInSession(id, quantity + 1);
+                });
             });
-        });
 
-        document.querySelectorAll('.decrement-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                const quantityElement = document.querySelector(`.quantity[data-id="${id}"]`);
-                let quantity = parseInt(quantityElement.innerText);
-                if (quantity > 1) {
-                    quantityElement.innerText = quantity - 1;
-                }
+            document.querySelectorAll('.decrement-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const quantityElement = document.querySelector(`.quantity[data-id="${id}"]`);
+                    let quantity = parseInt(quantityElement.innerText);
+                    if (quantity > 1) {
+                        quantityElement.innerText = quantity - 1;
+                    }
 
-                updateQuantityInSession(id, quantity - 1);
+                    updateQuantityInSession(id, quantity - 1);
+                });
             });
-        });
-        
+
             $('#submit').on('click', function() {
                 Swal.fire({
                     icon: 'warning',

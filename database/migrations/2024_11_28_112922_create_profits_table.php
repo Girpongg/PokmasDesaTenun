@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expenditures', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->integer('total_price');
-            $table->date('exp_date');
-            $table->text('description')->nullable();
+        Schema::create('profits', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->timestamps();
         });
     }
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expenditures');
+        Schema::dropIfExists('profits');
     }
 };

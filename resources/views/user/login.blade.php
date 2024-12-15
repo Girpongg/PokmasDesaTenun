@@ -75,7 +75,7 @@
             <div class="flex flex-col items-center">
                 <input
                     class="bg-white bg-opacity-[0.1] block text-left my-2 w-[100%] p-3 border-solid border-[1px] border-white rounded-lg "
-                    type="text" placeholder="Email" name="email">
+                    type="text" placeholder="Nomor Telepon" name="customer_wa">
                 <input
                     class="bg-white bg-opacity-[0.1] block text-left my-2 w-[100%] p-3 border-solid border-[1px] border-white rounded-lg "
                     type="password" placeholder="Password" name="password">
