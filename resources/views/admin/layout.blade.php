@@ -80,24 +80,9 @@
         data-te-sidenav-accordion="true">
         <a class="mb-3 flex flex-col items-center justify-center border-b-2 border-solid border-gray-100 py-6 outline-none"
             href="" data-te-ripple-init data-te-ripple-color="primary">
-            <span class="text-center font-bold">Pokmas<br>Desa Penenun<br>Jombang</span>
+            <span class="text-center font-bold">Pokmas<br>Wastra Sejahtera<br>Jombang</span>
         </a>
         <ul class="relative m-0 list-none px-[0.2rem] pb-12" data-te-sidenav-menu-ref>
-            <li class="relative">
-                <a class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
-                    data-te-sidenav-link-ref href="">
-                    <span class="mr-4 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="h-3.5 w-3.5">
-                            <path
-                                d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
-                            <path
-                                d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
-                        </svg>
-                    </span>
-                    <span>Overview</span>
-                </a>
-            </li>
             <span class="px-6 py-4 text-[0.6rem] font-bold uppercase text-gray-600 dark:text-gray-400">Modul</span>
             <li class="relative">
                 <a class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
@@ -376,10 +361,10 @@
                         </svg>
                     </button>
                     <div id="modulAccordion" class="hidden pl-4 space-y-1">
-                        <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Orders</a>
-                        <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Purchasing</a>
-                        <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Inventory</a>
-                        <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Order Selesai</a>
+                        <a href="{{route('viewOrder')}}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Orders</a>
+                        <a href="{{route('purchase.index')}}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Purchasing</a>
+                        <a href="{{route('viewInventory')}}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Inventory</a>
+                        <a href="{{ route('orderselesai') }}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Order Selesai</a>
                     </div>
 
                     <div class="border-t border-gray-200">
@@ -394,16 +379,16 @@
                             </svg>
                         </button>
                         <div id="financialAccordion" class="hidden pl-4 space-y-1">
-                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Cashflow</a>
-                            <a href="#"
-                                class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Reconciliation</a>
+                            <a href="{{ route('labarugi.index') }}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Laba Rugi</a>
+                            <a href="{{ route('viewExpenditure') }}"
+                                class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Pengeluaran</a>
                         </div>
                     </div>
                     <div class="border-t border-gray-200">
                         <button
                             class="w-full flex items-center justify-between py-2 px-4 bg-gray-100 text-neutral-600 transition focus:outline-none"
                             type="button" data-te-collapse-init data-te-target="#masterAccordion">
-                            <span>Master</span>
+                            <span>Master Data</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -411,10 +396,10 @@
                             </svg>
                         </button>
                         <div id="masterAccordion" class="hidden pl-4 space-y-1">
-                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Supplier</a>
-                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Kategori</a>
-                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Customer</a>
-                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Katalog</a>
+                            <a href="/admin/supplier" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Supplier</a>
+                            <a href="/admin/kategori" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Kategori</a>
+                            <a href="/admin/customer" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Customer</a>
+                            <a href="{{ route('view.catalog') }}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Katalog</a>
                         </div>
                     </div>
                 </div>
