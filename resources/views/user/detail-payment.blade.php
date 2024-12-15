@@ -8,9 +8,10 @@
     </style>
 @endsection
 @section('content')
-    <div class="grid grid-cols-2 pt-24">
-        <div class="grid grid-cols-1 mx-32">
-            <div class="grid grid-cols-1 md:grid-cols-2 place-items-center mt-24 overflow-auto h-[480px]">
+    <div class="grid lg:grid-cols-2 grid-cols-1 pt-24">
+        <div class="grid grid-cols-1 lg:mx-32">
+            <h1 class="w-full text-center custom-span text-5xl font-bold text-[#5c4033] lg:mb-0 mb-12">Isi Cart</h1>
+            <div class="grid grid-cols-1 lg:grid-cols-2 place-items-center overflow-auto h-[480px] mb-24">
                 @foreach ($cart as $value)
                     <div class="relative w-[250px] h-[350px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md mb-6 group"
                         style="background: linear-gradient(to right, #5C4033, #4D4C1C);">
@@ -55,7 +56,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="w-full pt-24">
+        <div class="w-full">
             <h1 class="w-full text-center custom-span text-5xl font-bold text-[#5c4033]">Pembayaran</h1>
             <div class="w-full justify-center flex">
                 <form id="payment-form" class="contents">

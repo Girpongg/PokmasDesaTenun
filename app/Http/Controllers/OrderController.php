@@ -228,7 +228,103 @@ class OrderController extends Controller
         }
     }
  
+    public function storeKatalog(Request $request)
+    {
+        // dd(session('cart'));
+        // $cart = session('cart');
+        // dd($request->all());
+        $data = $request->all();
+        $products = session('cart');
+        $validator = Validator::make(
+            $data,
+            [
+                'customer_id' => 'required|integer|exists:customers,id',
+                'address' => 'required|string',
+                'judul_pesan' => 'nullable|string',
+                // 'order_date' => 'required|date',
+                // 'total_price' => 'required|integer',
+                'desc' => 'nullable|string',
+                // 'products' => 'required|array',
+                // 'products.*.name' => 'nullable|string',
+                // 'products.*.quantity' => 'required|integer',
+                // 'products.*.price' => 'required|integer',
+            ],
+            [
+                'customer_id.required' => 'Customer ID is required.',
+                'customer_id.integer' => 'Customer ID must be an integer.',
+                'customer_id.exists' => 'Customer ID not found.',
+                'address.required' => 'Customer Address is required.',
+                'judul_pesan.required' => 'Judul Pesan is required.',
+                'total_price.required' => 'Total Price is required.',
+                'desc.required' => 'Description is required.',
+                'products.required' => 'Products are required.',
+                'products.*.name.required' => 'Product name is required.',
+                'products.*.quantity.required' => 'Product quantity is required.',
+                'products.*.price.required' => 'Product price is required.',
+            ],
+        );
 
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
+        }
+
+        $totalPrice = 0;
+        foreach ($products as $product) {
+            $totalPrice += $product['quantity'] * $product['price'];
+        }
+        $data['total_price'] = $totalPrice;
+        $data['order_date'] = today();
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $path = 'public/uploads/bukti_transfer';
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $fileNameToStore = $originalName . '_' . time() . '_' . uniqid() . '.' . $extension;
+                $file->storePubliclyAs($path, $fileNameToStore);
+            }
+
+            $data['link_bukti_tf'] = $fileNameToStore;
+            $data['is_validated'] = 0;
+            $data['tipe'] = 1;
+
+            $order = Order::create([
+                'customer_id' => $data['customer_id'],
+                'address' => $data['address'],
+                'order_date' => $data['order_date'],
+                'total_price' => $data['total_price'],
+                'link_bukti_tf' => $data['link_bukti_tf'],
+                'is_validated' => $data['is_validated'],
+                'tipe' => $data['tipe'],
+            ]);
+
+            foreach ($products as $productData) {
+                // dd($productData);
+                $product = BarangJual::where('name', $productData['name'])->first();
+                // dd($product);
+                if ($product) {
+                    if ($product->stock < $productData['quantity']) {
+                        return response()->json(['message' => 'Stock is not enough', 'error' => true]);
+                    }
+                    OrderDetail::create([
+                        'order_id' => $order->id,
+                        'barangjual_id' => $product->id,
+                        'quantity' => $productData['quantity'],
+                        'price' => $productData['price'],
+                    ]);
+                } else {
+                    return response()->json(['message' => 'Product not found', 'error' => true]);
+                }
+            }
+            DB::commit();
+            session()->forget('cart');
+            return response()->json(['success' => true, 'message' => 'Data successfully stored']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Failed to store data', 'error' => true] . $e->getMessage());
+        }
+    }
     public function store(Request $request)
     {
         // dd(session('cart'));
@@ -380,103 +476,6 @@ class OrderController extends Controller
             'is_validated' => 1,
         ]);
         return response()->json(['message' => 'Order successfully accepted', 'success' => true]);
-    }
-    public function storeKatalog(Request $request)
-    {
-        // dd(session('cart'));
-        // $cart = session('cart');
-        // dd($request->all());
-        $data = $request->all();
-        $products = session('cart');
-        $validator = Validator::make(
-            $data,
-            [
-                'customer_id' => 'required|integer|exists:customers,id',
-                'address' => 'required|string',
-                'judul_pesan' => 'nullable|string',
-                // 'order_date' => 'required|date',
-                // 'total_price' => 'required|integer',
-                'desc' => 'nullable|string',
-                // 'products' => 'required|array',
-                // 'products.*.name' => 'nullable|string',
-                // 'products.*.quantity' => 'required|integer',
-                // 'products.*.price' => 'required|integer',
-            ],
-            [
-                'customer_id.required' => 'Customer ID is required.',
-                'customer_id.integer' => 'Customer ID must be an integer.',
-                'customer_id.exists' => 'Customer ID not found.',
-                'address.required' => 'Customer Address is required.',
-                'judul_pesan.required' => 'Judul Pesan is required.',
-                'total_price.required' => 'Total Price is required.',
-                'desc.required' => 'Description is required.',
-                'products.required' => 'Products are required.',
-                'products.*.name.required' => 'Product name is required.',
-                'products.*.quantity.required' => 'Product quantity is required.',
-                'products.*.price.required' => 'Product price is required.',
-            ],
-        );
-
-        if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()->first(), 'error' => true]);
-        }
-
-        $totalPrice = 0;
-        foreach ($products as $product) {
-            $totalPrice += $product['quantity'] * $product['price'];
-        }
-        $data['total_price'] = $totalPrice;
-        $data['order_date'] = today();
-        DB::beginTransaction();
-        try {
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $path = 'public/uploads/bukti_transfer';
-                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $extension = $file->getClientOriginalExtension();
-                $fileNameToStore = $originalName . '_' . time() . '_' . uniqid() . '.' . $extension;
-                $file->storePubliclyAs($path, $fileNameToStore);
-            }
-
-            $data['link_bukti_tf'] = $fileNameToStore;
-            $data['is_validated'] = 0;
-            $data['tipe'] = 1;
-
-            $order = Order::create([
-                'customer_id' => $data['customer_id'],
-                'address' => $data['address'],
-                'order_date' => $data['order_date'],
-                'total_price' => $data['total_price'],
-                'link_bukti_tf' => $data['link_bukti_tf'],
-                'is_validated' => $data['is_validated'],
-                'tipe' => $data['tipe'],
-            ]);
-
-            foreach ($products as $productData) {
-                // dd($productData);
-                $product = BarangJual::where('name', $productData['name'])->first();
-                // dd($product);
-                if ($product) {
-                    if ($product->stock < $productData['quantity']) {
-                        return response()->json(['message' => 'Stock is not enough', 'error' => true]);
-                    }
-                    OrderDetail::create([
-                        'order_id' => $order->id,
-                        'barangjual_id' => $product->id,
-                        'quantity' => $productData['quantity'],
-                        'price' => $productData['price'],
-                    ]);
-                } else {
-                    return response()->json(['message' => 'Product not found', 'error' => true]);
-                }
-            }
-            DB::commit();
-            session()->forget('cart');
-            return response()->json(['success' => true, 'message' => 'Data successfully stored']);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['message' => 'Failed to store data', 'error' => true] . $e->getMessage());
-        }
     }
 
     public function viewOrderSelesai()

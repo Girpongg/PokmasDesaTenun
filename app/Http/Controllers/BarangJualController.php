@@ -10,7 +10,7 @@ class BarangJualController extends Controller
 {
 
     public function viewHome(){
-        $catalog = BarangJual::all();
+        $catalog = BarangJual::where('tipe','1')->get();
         $data = [
             'catalog' => $catalog,
         ];
@@ -112,13 +112,6 @@ class BarangJualController extends Controller
             'customer' => $customer,
         ];
         return view('user.detail-payment', $data);
-    }
-    public function viewHome(){
-        $catalog = BarangJual::where('tipe','1')->get();
-        $data = [
-            'catalog' => $catalog,
-        ];
-        return view('user.home', $data);
     }
 
     public function updateQty(Request $request)
