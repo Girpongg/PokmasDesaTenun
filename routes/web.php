@@ -49,6 +49,7 @@ Route::post('/', [OrderController::class, 'storeKatalog'])->name('katalog.store'
 
 
 Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 Route::post('admin/auth', [AdminController::class, 'auth'])->name('admin.auth');
 
 Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function () {

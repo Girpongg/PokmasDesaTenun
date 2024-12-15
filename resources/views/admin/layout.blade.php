@@ -411,15 +411,17 @@
                             </svg>
                         </button>
                         <div id="masterAccordion" class="hidden pl-4 space-y-1">
-                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Users</a>
-                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Settings</a>
+                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Supplier</a>
+                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Kategori</a>
+                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Customer</a>
+                            <a href="#" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Katalog</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Logout -->
                 <div class="relative flex items-center mt-4">
-                    <a class="pl-2 text-secondary-500 transition hover:text-secondary-400" href="#">
+                    <a class="pl-2 text-secondary-500 transition hover:text-secondary-400" href="{{ route('admin.logout') }}">
                         <span class="[&>svg]:w-5">
                             <svg class="w-[24px] h-[24px] fill-[#ff6b6b]" viewBox="0 0 512 512"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -431,7 +433,6 @@
                     </a>
                 </div>
             </div>
-            <!-- Repeat accordion sections here -->
         </div>
         </div>
     </nav>
