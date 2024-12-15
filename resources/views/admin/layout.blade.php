@@ -43,6 +43,11 @@
         .swal2-cancel {
             background: rgb(255, 79, 79) !important;
         }
+
+        input:disabled,
+        textarea:disabled {
+            background: #aaaaaa50 !important;
+        }
     </style>
 
     @yield('style')
@@ -75,24 +80,9 @@
         data-te-sidenav-accordion="true">
         <a class="mb-3 flex flex-col items-center justify-center border-b-2 border-solid border-gray-100 py-6 outline-none"
             href="" data-te-ripple-init data-te-ripple-color="primary">
-            <span class="text-center font-bold">Pokmas<br>Desa Penenun<br>Jombang</span>
+            <span class="text-center font-bold">Pokmas<br>Wastra Sejahtera<br>Jombang</span>
         </a>
         <ul class="relative m-0 list-none px-[0.2rem] pb-12" data-te-sidenav-menu-ref>
-            <li class="relative">
-                <a class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
-                    data-te-sidenav-link-ref href="">
-                    <span class="mr-4 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="h-3.5 w-3.5">
-                            <path
-                                d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
-                            <path
-                                d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
-                        </svg>
-                    </span>
-                    <span>Overview</span>
-                </a>
-            </li>
             <span class="px-6 py-4 text-[0.6rem] font-bold uppercase text-gray-600 dark:text-gray-400">Modul</span>
             <li class="relative">
                 <a class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
@@ -147,10 +137,27 @@
                     <span>Inventory</span>
                 </a>
             </li>
+            <li class="relative">
+                <a class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
+                    data-te-sidenav-link-ref href="{{ route('orderselesai') }}">
+                    <span class="mr-4 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-300">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M0 4.6A2.6 2.6 0 0 1 2.6 2h18.8A2.6 2.6 0 0 1 24 4.6v.8A2.6 2.6 0 0 1 21.4 8H21v10.6c0 1.33-1.07 2.4-2.4 2.4H5.4C4.07 21 3 19.93 3 18.6V8h-.4A2.6 2.6 0 0 1 0 5.4v-.8ZM2.6 4a.6.6 0 0 0-.6.6v.8a.6.6 0 0 0 .6.6h18.8a.6.6 0 0 0 .6-.6v-.8a.6.6 0 0 0-.6-.6H2.6ZM8 10a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2H8Z"
+                                    fill="#a3a3a3"></path>
+                            </g>
+                        </svg>
+                    </span>
+                    <span>Order Selesai</span>
+                </a>
+            </li>
             <li class="relative pt-6">
                 <span
                     class="px-6 py-4 text-[0.6rem] font-bold uppercase text-gray-600 dark:text-gray-400">Finansial</span>
-                <a href=""
+                <a href="{{ route('labarugi.index') }}"
                     class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
                     data-te-sidenav-link-ref>
                     <span class="mr-4 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-300">
@@ -187,8 +194,7 @@
                 </a>
             </li>
             <li class="relative pt-6">
-                <span
-                    class="px-6 py-4 text-[0.6rem] font-bold uppercase text-gray-600 dark:text-gray-400">Master</span>
+                <span class="px-6 py-4 text-[0.6rem] font-bold uppercase text-gray-600 dark:text-gray-400">Master</span>
                 <a href="/admin/supplier"
                     class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
                     data-te-sidenav-link-ref>
@@ -238,7 +244,8 @@
                 </a>
             </li>
             <li class="relative">
-                <a class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
+                <a href="/admin/customer"
+                    class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
                     data-te-sidenav-link-ref href="">
                     <span class="mr-4 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-300">
                         <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
@@ -302,9 +309,8 @@
                 </a>
             </li>
             <li class="relative pt-6">
-                <span
-                    class="px-6 py-4 text-[0.6rem] font-bold uppercase text-gray-600 dark:text-gray-400">Logout</span>
-                <a href=""
+                <span class="px-6 py-4 text-[0.6rem] font-bold uppercase text-gray-600 dark:text-gray-400">Logout</span>
+                <a href="{{ route('logout') }}"
                     class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
                     data-te-sidenav-link-ref>
                     <span class="mr-4 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:text-gray-400 dark:[&>svg]:text-gray-300">
@@ -324,15 +330,15 @@
     {{-- NAVBAR --}}
     <!-- Main navigation container -->
     <nav
-        class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4 block md:hidden">
+        class="xl:hidden relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md dark:bg-neutral-600">
         <div class="flex w-full flex-wrap items-center justify-between px-3">
             <!-- Hamburger button for mobile view -->
             <button
-                class="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 sm:hidden"
-                type="button" data-te-collapse-init data-te-target="#navbarSupportedContent12"
-                aria-controls="navbarSupportedContent12" aria-expanded="false" aria-label="Toggle navigation">
+                class="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline focus:outline-none focus:ring-0 dark:text-neutral-200 sm:hidden"
+                type="button" data-te-collapse-init data-te-target="#mainNavbar" aria-controls="mainNavbar"
+                aria-expanded="false" aria-label="Toggle navigation">
                 <!-- Hamburger icon -->
-                <span class="[&>svg]:w-7">
+                <span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-7 w-7">
                         <path fill-rule="evenodd"
                             d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
@@ -341,50 +347,82 @@
                 </span>
             </button>
 
-            <!-- Collapsible navigation container -->
-            <div class="!visible hidden flex-grow basis-[100%] items-center sm:!flex sm:basis-auto"
-                id="navbarSupportedContent12" data-te-collapse-item>
-                <!-- Left navigation links -->
-                <ul class="list-style-none mr-auto flex flex-col pl-0 sm:flex-row" data-te-navbar-nav-ref>
-                    {{-- Dashboard --}}
-                    <li class="my-4 pl-2 sm:my-0 sm:pl-0 sm:pr-1" data-te-nav-item-ref>
-                        <a class="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 sm:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-                            href="" data-te-nav-link-ref>Overview</a>
-                    </li>
-                    <li class="my-4 pl-2 sm:my-0 sm:pl-0 sm:pr-1" data-te-nav-item-ref>
-                        <a class="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 sm:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-                            href="{{ url('/admin/order') }}" data-te-nav-link-ref>Order</a>
-                    </li>
-                    <li class="my-4 pl-2 sm:my-0 sm:pl-0 sm:pr-1" data-te-nav-item-ref>
-                        <a class="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 sm:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-                            href="" data-te-nav-link-ref>Purchasing</a>
-                    </li>
-                    <li class="my-4 pl-2 sm:my-0 sm:pl-0 sm:pr-1" data-te-nav-item-ref>
-                        <a class="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 sm:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-                            href="" data-te-nav-link-ref>Order</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Right elements -->
-            <div class="relative flex items-center">
-                <!-- Logout Icon -->
-                <a class="pl-2 my-auto sm:mb-0 sm:mr-4 text-secondary-500 transition duration-200 hover:text-secondary-400 hover:ease-in-out focus:text-secondary-400 disabled:text-black/30 motion-reduce:transition-none"
-                    href="">
-                    <span class="[&>svg]:w-5">
-                        <svg class="w-[24px] h-[24px] fill-[#ff6b6b]" viewBox="0 0 512 512"
-                            xmlns="http://www.w3.org/2000/svg">
-
-                            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                            <path
-                                d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
-                            </path>
+            <!-- Main Navbar -->
+            <div id="mainNavbar" class="hidden sm:flex sm:flex-row w-full space-y-2 sm:space-y-0">
+                <!-- Accordion navigation -->
+                <div class="flex-col gap-3 border-t border-gray-200">
+                    <button
+                        class="w-full flex items-center justify-between mt-1 py-2 px-4 bg-gray-100 text-neutral-600 transition focus:outline-none"
+                        type="button" data-te-collapse-init data-te-target="#modulAccordion">
+                        <span>Modul</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
-                    </span>
-                </a>
+                    </button>
+                    <div id="modulAccordion" class="hidden pl-4 space-y-1">
+                        <a href="{{route('viewOrder')}}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Orders</a>
+                        <a href="{{route('purchase.index')}}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Purchasing</a>
+                        <a href="{{route('viewInventory')}}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Inventory</a>
+                        <a href="{{ route('orderselesai') }}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Order Selesai</a>
+                    </div>
+
+                    <div class="border-t border-gray-200">
+                        <button
+                            class="w-full flex items-center justify-between py-2 px-4 bg-gray-100 text-neutral-600 transition focus:outline-none"
+                            type="button" data-te-collapse-init data-te-target="#financialAccordion">
+                            <span>Finansial</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="financialAccordion" class="hidden pl-4 space-y-1">
+                            <a href="{{ route('labarugi.index') }}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Laba Rugi</a>
+                            <a href="{{ route('viewExpenditure') }}"
+                                class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Pengeluaran</a>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-200">
+                        <button
+                            class="w-full flex items-center justify-between py-2 px-4 bg-gray-100 text-neutral-600 transition focus:outline-none"
+                            type="button" data-te-collapse-init data-te-target="#masterAccordion">
+                            <span>Master Data</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="masterAccordion" class="hidden pl-4 space-y-1">
+                            <a href="/admin/supplier" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Supplier</a>
+                            <a href="/admin/kategori" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Kategori</a>
+                            <a href="/admin/customer" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Customer</a>
+                            <a href="{{ route('view.catalog') }}" class="block py-2 text-sm text-neutral-600 hover:text-neutral-800">Katalog</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logout -->
+                <div class="relative flex items-center mt-4">
+                    <a class="pl-2 text-secondary-500 transition hover:text-secondary-400" href="{{ route('admin.logout') }}">
+                        <span class="[&>svg]:w-5">
+                            <svg class="w-[24px] h-[24px] fill-[#ff6b6b]" viewBox="0 0 512 512"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                                </path>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
             </div>
         </div>
+        </div>
     </nav>
+
+
 
 
     <div class="ml-0 md:ml-60 px-3 md:px-8 py-2 md:py-3">
@@ -412,8 +450,8 @@
                         data-te-toast-dismiss aria-label="Close">
                         <span
                             class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="h-6 w-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </span>

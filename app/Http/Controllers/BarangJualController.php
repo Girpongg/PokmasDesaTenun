@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\BarangJual;
 use Illuminate\Http\Request;
 
@@ -53,18 +54,15 @@ class BarangJualController extends Controller
             ];
         }
         session()->put('cart', $cart);
-        return redirect()->route('milih-barang')->with('success', 'Data successfully stored');
+        return redirect('/barang')->with('success', 'Item added to cart successfully!');
     }
 
     public function deleteFromCart($id)
     {
         $cart = session()->get('cart');
         if (isset($cart[$id])) {
-            if ($cart[$id]['quantity'] > 1) {
-                $cart[$id]['quantity']--;
-            }else {
-                unset($cart[$id]);
-            }
+            unset($cart[$id]);
+            
             session()->put('cart', $cart);
         }
         return redirect()->back()->with('success', 'Item removed from cart successfully!');
@@ -105,14 +103,22 @@ class BarangJualController extends Controller
         // session()->flush();
         return view('user.cart', $data);
     }
-
     public function viewCartPayment()
     {
         $cart = session()->get('cart');
+        $customer = Customer::find(session()->get('id'));
         $data = [
             'cart' => $cart,
+            'customer' => $customer,
         ];
         return view('user.detail-payment', $data);
+    }
+    public function viewHome(){
+        $catalog = BarangJual::where('tipe','1')->get();
+        $data = [
+            'catalog' => $catalog,
+        ];
+        return view('user.home', $data);
     }
 
     public function updateQty(Request $request)
@@ -123,24 +129,4 @@ class BarangJualController extends Controller
         session()->put('cart', $cart);
         return redirect()->back();
     }
-
-    // public function plus(){
-    //     $cart = session()->get('cart');
-    //     $id = request()->id;
-    //     $cart[$id]['quantity']++;
-    //     session()->put('cart', $cart);
-    //     return redirect()->back();
-    // }
-
-    // public function minus(){
-    //     $cart = session()->get('cart');
-    //     $id = request()->id;
-    //     if ($cart[$id]['quantity'] > 1) {
-    //         $cart[$id]['quantity']--;
-    //     }else {
-    //         unset($cart[$id]);
-    //     }
-    //     session()->put('cart', $cart);
-    //     return redirect()->back();
-    // }
 }
