@@ -504,7 +504,7 @@
 
         </ul>
         <div class="login-container">
-            @if (session()->has('email'))
+            @if (session()->has('phone'))
                 <a class="nav-links flex select-none" id="dropdownKatalogButton" aria-expanded="false">
                     <img src="{{ asset('img/faqperson.png') }}" alt="Profile Photo"
                         class="w-7 h-7 rounded-full mr-2 hidden xl:inline-block">
@@ -521,7 +521,7 @@
                     <li><a class="block px-4 py-2 font4 text-red-900" href="{{ route('logout') }}">Log Out</a>
                     </li>
                 </ul>
-            @elseif (!session()->has('email'))
+            @elseif (!session()->has('phone'))
                 <a href="{{ route('register') }}" class="register-button duration-300 ease">REGISTER</a>
                 <a href="{{ route('login') }}" class="signin-button duration-300 ease">SIGN IN</a>
             @endif

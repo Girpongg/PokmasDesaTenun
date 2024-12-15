@@ -75,7 +75,7 @@ class LoginController extends Controller
             return redirect()->to(route('login'))->with('error', $error);
         }
         $request->session()->put('id', $panitia->id);
-        $request->session()->put('phone', $panitia->phone);
+        $request->session()->put('phone', $panitia->customer_wa);
         $request->session()->put('name', $panitia->name);
         return redirect()->to(route('user.home'));
     }

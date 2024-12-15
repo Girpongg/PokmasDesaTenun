@@ -11,7 +11,7 @@
         </div>
         <div class="space-y-6">
             @if ($histories->isEmpty())
-                <p class="text-center text-gray-500 font3">Tidak ada data history untuk ditampilkan.</p>
+                <p class="text-center text-gray-500 font3 mb-16">Tidak ada data history untuk ditampilkan.</p>
             @else
                 @foreach ($histories as $history)
                     <div
