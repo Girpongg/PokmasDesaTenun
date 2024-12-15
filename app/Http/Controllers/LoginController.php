@@ -14,7 +14,7 @@ class LoginController extends Controller
 
     public function login()
     {
-        return view('user.login');
+        return view('user.login'); 
     }
 
     public function register()
