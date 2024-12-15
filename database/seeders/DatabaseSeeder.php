@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(Kategori::class);
         $this->call(InventoriSeeder::class);
         // $this->call(OrderSeeder::class);
-        $this->call(ExpanditureSeeder::class);
-        $this->call(CustomerSeeder::class);
+        // $this->call(ExpanditureSeeder::class);
+        // $this->call(CustomerSeeder::class);
         $this->call(AdminSeeder::class);
     }
 }
